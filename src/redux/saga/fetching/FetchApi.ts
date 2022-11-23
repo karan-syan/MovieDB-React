@@ -1,9 +1,19 @@
 import axios from "axios";
-import { MOVIE_DB_BASE_URL } from "../../../util/constants";
-import { CallBaseParameter } from "../../../util/type";
+import {
+  CallMoviePopular,
+  CallMovieSLider,
+  FetchMoviePayload,
+} from "../../action/ActionCallApi";
+import { ActionType } from "typesafe-actions";
+import { MOVIE_DB_BASE_URL } from "../../../util/url";
 
-export const fetchApiSlider = async (payload: string) => {
-  let data = await axios.get(payload);
+export const FetchApi = async (
+  params: FetchMoviePayload
+  // | ActionType<typeof CallMoviePopular.request>
+) => {
+  const url = `${MOVIE_DB_BASE_URL}${params.url}?api_key=${process.env.REACT_APP_API_KEY}`;
+  console.log(url);
+  let data = await axios.get(url);
   console.log(data.data);
   return data.data.results;
 };

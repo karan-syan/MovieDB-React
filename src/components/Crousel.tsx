@@ -1,16 +1,16 @@
 import React from "react";
-import { MOVIE_DB_IMG_URL } from "../util/constants";
-import { MovieApiInteface } from "../util/type";
+import { MOVIE_DB_IMG_URL } from "../util/url";
+import { IMovie } from "../util/type";
 
-export default function Crousel({ item }: { item: MovieApiInteface[] }) {
+export default function Crousel({ item }: { item: IMovie[] }) {
   return (
-    <div className="flex justify-center xl:pt-3 mb-4">
+    <div className="flex justify-center xl:mt-3 mb-8 drop-shadow-2xl">
       <div
         id="carouselExampleCaptions"
-        className="carousel slide relative xl:w-5/6 2xl:w-3/4"
+        className="carousel slide relative"
         data-bs-ride="carousel"
       >
-        <div className="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4">
+        <div className="carousel-indicators absolute right-0 bottom-0 left-0 flex justify-center p-0 mb-4 z-20">
           <button
             type="button"
             data-bs-target="#carouselExampleCaptions"
@@ -23,6 +23,7 @@ export default function Crousel({ item }: { item: MovieApiInteface[] }) {
             if (index > 0 && index <= 10) {
               return (
                 <button
+                  key={index}
                   type="button"
                   data-bs-target="#carouselExampleCaptions"
                   data-bs-slide-to={`${index}`}
@@ -36,14 +37,31 @@ export default function Crousel({ item }: { item: MovieApiInteface[] }) {
           {item.map((val, index) => {
             if (index === 1) {
               return (
-                <div className="carousel-item active relative float-left w-full">
-                  <img
-                    src={`${MOVIE_DB_IMG_URL}${val.backdrop_path}`}
-                    className="block w-full xl:rounded-3xl"
-                    alt="..."
-                  />
-                  <div className="carousel-caption hidden md:block absolute text-center">
-                    <p>{val.title}</p>
+                <div
+                  className="carousel-item active relative float-left w-full"
+                  key={index}
+                >
+                  <div className="flex w-full">
+                    <div className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight bg-bg_clr hidden md:flex md:px-2 xl:text-lg">
+                      <h1 className="mb-1 text-base xl:text-xl font-extrabold">
+                        {val.title ? val.title : val.name}
+                      </h1>
+                      <h1 className="mb-2 opacity-50 text-xm xl:text-base">
+                        {val.release_date}
+                      </h1>
+                      <h1 className="mb-1 line-clamp-3 w-11/12">
+                        {val.overview}
+                      </h1>
+                    </div>
+                    <div
+                      className="w-1/5 bg-gradient-to-r from-bg_clr z-10 absolute hidden h-full md:inline-block"
+                      style={{ left: "39.85%" }}
+                    ></div>
+                    <img
+                      src={`${MOVIE_DB_IMG_URL}${val.backdrop_path}`}
+                      className="block w-full md:w-3/5 z-0"
+                      alt="..."
+                    />
                   </div>
                 </div>
               );
@@ -54,13 +72,27 @@ export default function Crousel({ item }: { item: MovieApiInteface[] }) {
                   className="carousel-item relative float-left w-full"
                   key={index}
                 >
-                  <img
-                    src={`${MOVIE_DB_IMG_URL}${val.backdrop_path}`}
-                    className="block w-full xl:rounded-3xl"
-                    alt="..."
-                  />
-                  <div className="carousel-caption hidden md:block absolute text-center">
-                    <p>{val.title}</p>
+                  <div className="flex w-full">
+                    <div className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight bg-bg_clr hidden md:flex md:px-2 xl:text-lg">
+                      <h1 className="mb-1 text-base xl:text-xl font-extrabold">
+                        {val.title ? val.title : val.name}
+                      </h1>
+                      <h1 className="mb-2 opacity-50 text-xm xl:text-base">
+                        {val.release_date}
+                      </h1>
+                      <h1 className="mb-1 line-clamp-3 w-11/12">
+                        {val.overview}
+                      </h1>
+                    </div>
+                    <div
+                      className="w-1/5 bg-gradient-to-r from-bg_clr z-10 absolute hidden h-full md:inline-block"
+                      style={{ left: "39.85%" }}
+                    ></div>
+                    <img
+                      src={`${MOVIE_DB_IMG_URL}${val.backdrop_path}`}
+                      className="block w-full md:w-3/5 z-0"
+                      alt="..."
+                    />
                   </div>
                 </div>
               );

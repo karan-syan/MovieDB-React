@@ -1,4 +1,4 @@
-import { MOVIE_DB_IMG_URL } from "../util/constants";
+import { MOVIE_DB_IMG_URL } from "../util/url";
 
 export default function MovieBox({ img, id }: { img: string; id: number }) {
   return (

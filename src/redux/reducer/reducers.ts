@@ -1,40 +1,101 @@
-import { SAVE_DATA_FOR_MOVIE, SAVE_DATA_FOR_TV } from "../../util/constants";
-import { MovieApiInteface, TvApiInteface } from "../../util/type";
+import { combineReducers } from "redux";
+import { ActionType, getType } from "typesafe-actions";
+import * as actions from "../action/ActionCallApi";
+import { IMovie } from "../../util/type";
+import { CallMovieSLider } from "../action/ActionCallApi";
 
-interface parameter {
-  type: string;
-  payload: MovieApiInteface[];
-}
-interface parameter2 {
-  type: string;
-  payload: TvApiInteface[];
+interface IState {
+  loading: boolean;
+  Data: IMovie[];
 }
 
-export const BaseApiReducer = (
-  state: MovieApiInteface[] = [],
-  action: parameter
+// const InitialState: IState = {
+//   Data: [],
+//   loading: false,
+// };
+
+const MovieSliderReducer = (
+  state: IState = {
+    Data: [],
+    loading: false,
+  },
+  action: ActionType<typeof actions>
 ) => {
   switch (action.type) {
-    case SAVE_DATA_FOR_MOVIE:
-      state = action.payload;
-      console.log(action.payload);
-      return state;
+    case getType(CallMovieSLider.request):
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case getType(CallMovieSLider.success):
+      return {
+        ...state,
+        loading: false,
+        Data: action.payload,
+      };
 
     default:
       return state;
   }
 };
-export const TvApiReducer = (
-  state: TvApiInteface[] = [],
-  action: parameter2
+const PopularMovieReducer = (
+  state: IState = {
+    Data: [],
+    loading: false,
+  },
+  action: ActionType<typeof actions>
 ) => {
   switch (action.type) {
-    case SAVE_DATA_FOR_TV:
-      state = action.payload;
-      console.log(action.payload);
-      return state;
+    case getType(actions.CallMoviePopular.request):
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case getType(actions.CallMoviePopular.success):
+      return {
+        ...state,
+        loading: true,
+        Data: action.payload,
+      };
 
     default:
       return state;
   }
 };
+const PopularShowsReducer = (
+  state: IState = {
+    Data: [],
+    loading: false,
+  },
+  action: ActionType<typeof actions>
+) => {
+  switch (action.type) {
+    case getType(actions.CallTvPopular.request):
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case getType(actions.CallTvPopular.success):
+      return {
+        ...state,
+        loading: true,
+        Data: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const movieReducer = combineReducers({
+  // upcomingMovie: TvApiReducer_4,
+  PopularMovies: PopularMovieReducer,
+  MovieSlider: MovieSliderReducer,
+});
+export const tvReducer = combineReducers({
+  PopularShows: PopularShowsReducer,
+  // trendingMovies: TvApiReducer_3,
+});

@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <div
       className="flex items-center justify-between px-3 font-bold"
-      style={{ height: "7.5vh", backgroundColor: "#000814" }}
+      style={{ height: "7.5vh" }}
     >
       {/* visible in only mobile or tabled */}
       <div className="flex items-center ml-2 mr-10 sm:hidden">
