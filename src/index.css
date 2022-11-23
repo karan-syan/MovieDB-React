@@ -4,7 +4,8 @@
 @tailwind components;
 @tailwind utilities;
 body {
-  background: #08101c;
+  background-color: #08101c;
+  background-image: linear-gradient(to right, #08101c, #00040a);
   font-family: "Comfortaa", cursive;
   color: white;
   padding: 0px;

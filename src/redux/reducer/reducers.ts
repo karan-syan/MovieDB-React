@@ -36,6 +36,7 @@ const MovieSliderReducer = (
       return state;
   }
 };
+
 const PopularMovieReducer = (
   state: IState = InitialState,
   action: ActionType<typeof actions>
@@ -48,6 +49,28 @@ const PopularMovieReducer = (
       };
 
     case getType(actions.CallMoviePopular.success):
+      return {
+        ...state,
+        loading: true,
+        Data: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+const UpcomingMovieReducer = (
+  state: IState = InitialState,
+  action: ActionType<typeof actions>
+) => {
+  switch (action.type) {
+    case getType(actions.CallMovieUpcoming.request):
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case getType(actions.CallMovieUpcoming.success):
       return {
         ...state,
         loading: true,
@@ -80,13 +103,41 @@ const PopularShowsReducer = (
       return state;
   }
 };
+const TvTrendingReducer = (
+  state: IState = InitialState,
+  action: ActionType<typeof actions>
+) => {
+  switch (action.type) {
+    case getType(actions.CallTvTrending.request):
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case getType(actions.CallTvTrending.success):
+      return {
+        ...state,
+        loading: true,
+        Data: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
 
 export const movieReducer = combineReducers({
-  // upcomingMovie: TvApiReducer_4,
+  UpcomingMovie: UpcomingMovieReducer,
   PopularMovies: PopularMovieReducer,
   MovieSlider: MovieSliderReducer,
 });
+
+export const TrendingReducer = combineReducers({
+  TvTrending: TvTrendingReducer,
+  // MovieTrending: MovieTrendingReducer
+});
+
 export const tvReducer = combineReducers({
   PopularShows: PopularShowsReducer,
-  // trendingMovies: TvApiReducer_3,
+  // trendingMovies: TvApiReducer_3/,
 });

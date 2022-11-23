@@ -3,16 +3,20 @@ import Header from "../components/Header";
 import {
   CallMoviePopular,
   CallMovieSLider,
+  CallMovieUpcoming,
   CallTvLatest,
   CallTvPopular,
   CallTvRecommend,
+  CallTvTrending,
 } from "../redux/action/ActionCallApi";
 import {
   latest_movie_url,
   popular_movie_url,
   popular_tv_url,
   trending_movie_url,
+  trending_tv_url,
   trending_url,
+  upcoming_movie_url,
 } from "../util/url";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Crousel from "../components/Crousel";
@@ -34,7 +38,13 @@ export default function Home() {
     (state: ApplicationState) => state.tv.PopularShows
   );
 
-  const [val, setval] = useState<number>(PopularMovies.Data.length);
+  const UpcomingMovies = useSelector(
+    (state: ApplicationState) => state.movie.UpcomingMovie
+  );
+
+  const TrendingShows = useSelector(
+    (state: ApplicationState) => state.trend.TvTrending
+  );
 
   useEffect(() => {
     console.log(PopularMovies.Data.length);
@@ -56,24 +66,30 @@ export default function Home() {
         url: popular_tv_url,
       })
     );
-    // dispatch(
-    //   CallTvRecommend.request({
-    //     url: Reccomo,
-    //   })
-    // );
+    dispatch(
+      CallMovieUpcoming.request({
+        url: upcoming_movie_url,
+      })
+    );
+    dispatch(
+      CallTvTrending.request({
+        url: trending_tv_url,
+      })
+    );
   }, [dispatch]);
 
   return (
-    <div className="bg-gradient-to-r from-bg_clr_2 to-bg_clr">
+    <div>
       <Header />
       <div
         className="flex overflow-auto w-full flex-col"
         style={{ height: "92.5vh" }}
       >
         <Crousel item={MoviesSlider.Data} />
+        <ListRow item={TrendingShows.Data} title={"Trending Tv Shows"} />
         <ListRow item={PopularMovies.Data} title={"Popular Movies"} />
         <ListRow item={PopularShows.Data} title={"Popular Tv Shows"} />
-        {/* <ListRow item={PopularShows.Data} title={"Popular Tv Shows"} /> */}
+        <ListRow item={UpcomingMovies.Data} title={"Upcoming Movies"} />
         <Footer />
       </div>
     </div>
