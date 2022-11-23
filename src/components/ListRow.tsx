@@ -19,7 +19,6 @@ export default function ListRow({
       <div className="flex justify-between items-center">
         <h1 className="font-extrabold ml-4 sm:text-2xl lg:text-3xl mb-3">
           {title}
-          {item.length}
         </h1>
         <button className="flex items-center justify-center text-xs sm:text-base lg:text-lg">
           <h1>See More</h1>

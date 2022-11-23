@@ -9,16 +9,13 @@ interface IState {
   Data: IMovie[];
 }
 
-// const InitialState: IState = {
-//   Data: [],
-//   loading: false,
-// };
+const InitialState: IState = {
+  Data: [],
+  loading: false,
+};
 
 const MovieSliderReducer = (
-  state: IState = {
-    Data: [],
-    loading: false,
-  },
+  state: IState = InitialState,
   action: ActionType<typeof actions>
 ) => {
   switch (action.type) {
@@ -40,10 +37,7 @@ const MovieSliderReducer = (
   }
 };
 const PopularMovieReducer = (
-  state: IState = {
-    Data: [],
-    loading: false,
-  },
+  state: IState = InitialState,
   action: ActionType<typeof actions>
 ) => {
   switch (action.type) {
@@ -65,10 +59,7 @@ const PopularMovieReducer = (
   }
 };
 const PopularShowsReducer = (
-  state: IState = {
-    Data: [],
-    loading: false,
-  },
+  state: IState = InitialState,
   action: ActionType<typeof actions>
 ) => {
   switch (action.type) {

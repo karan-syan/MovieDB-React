@@ -71,14 +71,6 @@ export default function Home() {
         style={{ height: "92.5vh" }}
       >
         <Crousel item={MoviesSlider.Data} />
-        <h1>{val}</h1>
-        <button
-          onClick={() => {
-            setval(PopularMovies.Data.length);
-          }}
-        >
-          click
-        </button>
         <ListRow item={PopularMovies.Data} title={"Popular Movies"} />
         <ListRow item={PopularShows.Data} title={"Popular Tv Shows"} />
         {/* <ListRow item={PopularShows.Data} title={"Popular Tv Shows"} /> */}
