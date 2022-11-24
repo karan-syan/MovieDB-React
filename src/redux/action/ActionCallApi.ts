@@ -90,6 +90,7 @@ export const CallTvTrending = createAsyncAction(
   "FETCH_TV_TRENDING_SUCCESS",
   "FETCH_TV_TRENDING_FAILURE"
 )<FetchMoviePayload, IMovie[], Error>();
+
 export const CallMovieTrending = createAsyncAction(
   "FETCH_MOVIE_TRENDING_REQUEST",
   "FETCH_MOVIE_TRENDING_SUCCESS",

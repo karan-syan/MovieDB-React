@@ -9,6 +9,7 @@ export const latest_movie_url = `movie/latest`;
 export const popular_movie_url = `movie/popular`;
 export const top_rated_movie_url = `movie/top_rated`;
 export const upcoming_movie_url = `movie/upcoming`;
+export const now_playing_movie_url = `/movie/now_playing`;
 
 export const popular_tv_url = `tv/popular`;
 export const top_rated = `tv/popular`;

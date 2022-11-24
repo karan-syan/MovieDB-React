@@ -5,6 +5,7 @@ import {
   CallMovieSLider,
   CallMovieUpcoming,
   CallTvPopular,
+  CallTvRecommend,
   CallTvTrending,
 } from "../action/ActionCallApi";
 import { getType, ActionType } from "typesafe-actions";
@@ -67,6 +68,18 @@ function* TvTrending(params: ActionType<typeof CallTvTrending.request>) {
   }
 }
 
+function* TvRecommend(params: ActionType<typeof CallTvRecommend.request>) {
+  try {
+    yield console.log("saga ", params.payload.url);
+    const payload: IMovie[] = yield call(FetchApi, params.payload);
+    yield console.log("saga ", payload);
+    yield put(CallTvRecommend.success(payload));
+  } catch (error) {
+    yield console.log("saga ", error);
+    yield put({ type: CallTvRecommend.failure, error });
+  }
+}
+
 export function* Movie_Saga() {
   yield all([
     takeEvery(getType(CallMovieSLider.request), MovieSlider),
@@ -74,5 +87,6 @@ export function* Movie_Saga() {
     takeEvery(getType(CallMovieUpcoming.request), MovieUpcoming),
     takeEvery(getType(CallTvPopular.request), TvPopular),
     takeEvery(getType(CallTvTrending.request), TvTrending),
+    takeEvery(getType(CallTvRecommend.request), TvRecommend),
   ]);
 }

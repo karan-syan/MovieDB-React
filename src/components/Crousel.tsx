@@ -42,19 +42,21 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                   key={index}
                 >
                   <div className="flex w-full">
-                    <div className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight bg-bg_clr hidden md:flex md:px-2 xl:text-lg">
+                    <div className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight bg-black hidden md:flex md:px-2 xl:text-lg">
                       <h1 className="mb-1 text-base xl:text-xl font-extrabold">
                         {val.title ? val.title : val.name}
                       </h1>
                       <h1 className="mb-2 opacity-50 text-xm xl:text-base">
-                        {val.release_date}
+                        {val.release_date
+                          ? val.release_date
+                          : val.first_air_date}
                       </h1>
                       <h1 className="mb-1 line-clamp-3 w-11/12">
                         {val.overview}
                       </h1>
                     </div>
                     <div
-                      className="w-1/5 bg-gradient-to-r from-bg_clr z-10 absolute hidden h-full md:inline-block"
+                      className="w-1/5 bg-gradient-to-r from-black z-10 absolute hidden h-full md:inline-block"
                       style={{ left: "39.85%" }}
                     ></div>
                     <img
@@ -73,19 +75,21 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                   key={index}
                 >
                   <div className="flex w-full">
-                    <div className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight bg-bg_clr hidden md:flex md:px-2 xl:text-lg">
+                    <div className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight bg-black hidden md:flex md:px-2 xl:text-lg">
                       <h1 className="mb-1 text-base xl:text-xl font-extrabold">
                         {val.title ? val.title : val.name}
                       </h1>
                       <h1 className="mb-2 opacity-50 text-xm xl:text-base">
-                        {val.release_date}
+                        {val.release_date
+                          ? val.release_date
+                          : val.first_air_date}
                       </h1>
                       <h1 className="mb-1 line-clamp-3 w-11/12">
                         {val.overview}
                       </h1>
                     </div>
                     <div
-                      className="w-1/5 bg-gradient-to-r from-bg_clr z-10 absolute hidden h-full md:inline-block"
+                      className="w-1/5 bg-gradient-to-r from-black z-10 absolute hidden h-full md:inline-block"
                       style={{ left: "39.85%" }}
                     ></div>
                     <img

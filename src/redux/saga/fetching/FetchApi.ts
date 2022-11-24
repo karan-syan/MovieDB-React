@@ -11,7 +11,7 @@ export const FetchApi = async (
   params: FetchMoviePayload
   // | ActionType<typeof CallMoviePopular.request>
 ) => {
-  const url = `${MOVIE_DB_BASE_URL}${params.url}?api_key=${process.env.REACT_APP_API_KEY}`;
+  const url = `${MOVIE_DB_BASE_URL}${params.url}?api_key=${process.env.REACT_APP_API_KEY}&page=${params.page}`;
   console.log(url);
   let data = await axios.get(url);
   console.log(data.data);

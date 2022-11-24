@@ -126,6 +126,29 @@ const TvTrendingReducer = (
   }
 };
 
+const RecommendShowsReducer = (
+  state: IState = InitialState,
+  action: ActionType<typeof actions>
+) => {
+  switch (action.type) {
+    case getType(actions.CallTvRecommend.request):
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case getType(actions.CallTvRecommend.success):
+      return {
+        ...state,
+        loading: true,
+        Data: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
 export const movieReducer = combineReducers({
   UpcomingMovie: UpcomingMovieReducer,
   PopularMovies: PopularMovieReducer,
@@ -139,5 +162,6 @@ export const TrendingReducer = combineReducers({
 
 export const tvReducer = combineReducers({
   PopularShows: PopularShowsReducer,
+  TvRecommend: RecommendShowsReducer,
   // trendingMovies: TvApiReducer_3/,
 });

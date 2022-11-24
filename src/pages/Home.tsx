@@ -23,9 +23,12 @@ import Crousel from "../components/Crousel";
 import { ApplicationState } from "../redux/root/rootReducer";
 import Footer from "../components/Footer";
 import ListRow from "../components/ListRow";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Home() {
   const dispatch = useDispatch();
+
+  const [val, setval] = useState<number>(1);
 
   const MoviesSlider = useSelector(
     (state: ApplicationState) => state.movie.MovieSlider
@@ -46,34 +49,45 @@ export default function Home() {
     (state: ApplicationState) => state.trend.TvTrending
   );
 
-  useEffect(() => {
-    console.log(PopularMovies.Data.length);
-  }, [PopularMovies.Data.length]);
+  const RecommendShows = useSelector(
+    (state: ApplicationState) => state.tv.TvRecommend
+  );
 
   useEffect(() => {
     dispatch(
       CallMovieSLider.request({
         url: trending_url,
+        page: 1,
       })
     );
     dispatch(
       CallMoviePopular.request({
         url: popular_movie_url,
+        page: val,
       })
     );
     dispatch(
       CallTvPopular.request({
         url: popular_tv_url,
+        page: 1,
       })
     );
     dispatch(
       CallMovieUpcoming.request({
         url: upcoming_movie_url,
+        page: 1,
       })
     );
     dispatch(
       CallTvTrending.request({
         url: trending_tv_url,
+        page: 1,
+      })
+    );
+    dispatch(
+      CallTvRecommend.request({
+        url: "tv/46261/recommendations",
+        page: 1,
       })
     );
   }, [dispatch]);
@@ -86,10 +100,11 @@ export default function Home() {
         style={{ height: "92.5vh" }}
       >
         <Crousel item={MoviesSlider.Data} />
-        <ListRow item={TrendingShows.Data} title={"Trending Tv Shows"} />
         <ListRow item={PopularMovies.Data} title={"Popular Movies"} />
+        <ListRow item={TrendingShows.Data} title={"Trending Tv Shows"} />
         <ListRow item={PopularShows.Data} title={"Popular Tv Shows"} />
         <ListRow item={UpcomingMovies.Data} title={"Upcoming Movies"} />
+        <ListRow item={RecommendShows.Data} title={"Animated Series"} />
         <Footer />
       </div>
     </div>
