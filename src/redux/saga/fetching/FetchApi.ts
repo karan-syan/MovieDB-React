@@ -1,9 +1,5 @@
 import axios from "axios";
-import {
-  CallMoviePopular,
-  CallMovieSLider,
-  FetchMoviePayload,
-} from "../../action/ActionCallApi";
+import { FetchMoviePayload } from "../../action/ActionCallApi";
 import { ActionType } from "typesafe-actions";
 import { MOVIE_DB_BASE_URL } from "../../../util/url";
 

@@ -15,7 +15,7 @@ function TabButton({ Name }: { Name: string }) {
   return (
     <button
       type="button"
-      className={`px-2 text-xs sm:text-sm md:text-base md:px-4 md:py-2  font-medium ${
+      className={`px-2 py-1 text-xs sm:text-sm md:text-base md:px-4 md:py-2  font-medium ${
         urlparams.get("type") === Name
           ? "bg-white text-gray-900"
           : "bg-transparent text-white"

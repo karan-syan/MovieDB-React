@@ -1,8 +1,9 @@
 import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
 import { IMovie } from "../../util/type";
 import {
+  CallCrouselSlider,
   CallMoviePopular,
-  CallMovieSLider,
+  CallMovies,
   CallMovieUpcoming,
   CallTvPopular,
   CallTvRecommend,
@@ -11,15 +12,15 @@ import {
 import { getType, ActionType } from "typesafe-actions";
 import { FetchApi } from "./fetching/FetchApi";
 
-function* MovieSlider(params: ActionType<typeof CallMovieSLider.request>) {
+function* CrouselSlider(params: ActionType<typeof CallCrouselSlider.request>) {
   try {
     yield console.log("saga ", params.payload.url);
     const payload: IMovie[] = yield call(FetchApi, params.payload);
     yield console.log("saga ", payload);
-    yield put(CallMovieSLider.success(payload));
+    yield put(CallCrouselSlider.success(payload));
   } catch (error) {
     yield console.log("saga ", error);
-    yield put({ type: CallMovieSLider.failure, error });
+    yield put({ type: CallCrouselSlider.failure, error });
   }
 }
 
@@ -79,14 +80,26 @@ function* TvRecommend(params: ActionType<typeof CallTvRecommend.request>) {
     yield put({ type: CallTvRecommend.failure, error });
   }
 }
+function* Movies(params: ActionType<typeof CallMovies.request>) {
+  try {
+    yield console.log("saga ", params.payload.url);
+    const payload: IMovie[] = yield call(FetchApi, params.payload);
+    yield console.log("saga ", payload);
+    yield put(CallMovies.success(payload));
+  } catch (error) {
+    yield console.log("saga ", error);
+    yield put({ type: CallMovies.failure, error });
+  }
+}
 
 export function* Movie_Saga() {
   yield all([
-    takeEvery(getType(CallMovieSLider.request), MovieSlider),
+    takeEvery(getType(CallCrouselSlider.request), CrouselSlider),
     takeEvery(getType(CallMoviePopular.request), MoviePopular),
     takeEvery(getType(CallMovieUpcoming.request), MovieUpcoming),
     takeEvery(getType(CallTvPopular.request), TvPopular),
     takeEvery(getType(CallTvTrending.request), TvTrending),
     takeEvery(getType(CallTvRecommend.request), TvRecommend),
+    takeEvery(getType(CallMovies.request), Movies),
   ]);
 }

@@ -42,7 +42,10 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                   key={index}
                 >
                   <div className="flex w-full">
-                    <div className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight bg-black hidden md:flex md:px-2 xl:text-lg">
+                    <div
+                      className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight hidden md:flex md:px-2 xl:text-lg"
+                      style={{ background: "#00040a" }}
+                    >
                       <h1 className="mb-1 text-base xl:text-xl font-extrabold">
                         {val.title ? val.title : val.name}
                       </h1>
@@ -56,8 +59,12 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                       </h1>
                     </div>
                     <div
-                      className="w-1/5 bg-gradient-to-r from-black z-10 absolute hidden h-full md:inline-block"
-                      style={{ left: "39.85%" }}
+                      className="w-1/5 z-10 absolute hidden h-full md:inline-block"
+                      style={{
+                        left: "39.85%",
+                        backgroundImage:
+                          "linear-gradient(to right, #00040a, rgba(255,0,0,0))",
+                      }}
                     ></div>
                     <img
                       src={`${MOVIE_DB_IMG_URL}${val.backdrop_path}`}
@@ -75,7 +82,10 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                   key={index}
                 >
                   <div className="flex w-full">
-                    <div className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight bg-black hidden md:flex md:px-2 xl:text-lg">
+                    <div
+                      className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight hidden md:flex md:px-2 xl:text-lg"
+                      style={{ background: "#00040a" }}
+                    >
                       <h1 className="mb-1 text-base xl:text-xl font-extrabold">
                         {val.title ? val.title : val.name}
                       </h1>
@@ -89,8 +99,12 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                       </h1>
                     </div>
                     <div
-                      className="w-1/5 bg-gradient-to-r from-black z-10 absolute hidden h-full md:inline-block"
-                      style={{ left: "39.85%" }}
+                      className="w-1/5 z-10 absolute hidden h-full md:inline-block"
+                      style={{
+                        left: "39.85%",
+                        backgroundImage:
+                          "linear-gradient(to right, #00040a, rgba(255,0,0,0))",
+                      }}
                     ></div>
                     <img
                       src={`${MOVIE_DB_IMG_URL}${val.backdrop_path}`}

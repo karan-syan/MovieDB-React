@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import {
   CallMoviePopular,
-  CallMovieSLider,
+  CallCrouselSlider,
   CallMovieUpcoming,
   CallTvLatest,
   CallTvPopular,
@@ -31,7 +31,7 @@ export default function Home() {
   const [val, setval] = useState<number>(1);
 
   const MoviesSlider = useSelector(
-    (state: ApplicationState) => state.movie.MovieSlider
+    (state: ApplicationState) => state.movie.CrouselSlider
   );
   const PopularMovies = useSelector(
     (state: ApplicationState) => state.movie.PopularMovies
@@ -55,39 +55,45 @@ export default function Home() {
 
   useEffect(() => {
     dispatch(
-      CallMovieSLider.request({
+      CallCrouselSlider.request({
         url: trending_url,
         page: 1,
+        NewData: true,
       })
     );
     dispatch(
       CallMoviePopular.request({
         url: popular_movie_url,
         page: val,
+        NewData: true,
       })
     );
     dispatch(
       CallTvPopular.request({
         url: popular_tv_url,
         page: 1,
+        NewData: true,
       })
     );
     dispatch(
       CallMovieUpcoming.request({
         url: upcoming_movie_url,
         page: 1,
+        NewData: true,
       })
     );
     dispatch(
       CallTvTrending.request({
         url: trending_tv_url,
         page: 1,
+        NewData: true,
       })
     );
     dispatch(
       CallTvRecommend.request({
         url: "tv/46261/recommendations",
         page: 1,
+        NewData: true,
       })
     );
   }, [dispatch]);

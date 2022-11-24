@@ -5,9 +5,10 @@ export interface FetchMoviePayload {
   page?: number;
   id?: number;
   url: string;
+  NewData: boolean;
 }
 
-export const CallMovieSLider = createAsyncAction(
+export const CallCrouselSlider = createAsyncAction(
   "FETCH_MOVIE_SLIDER_REQUEST",
   "FETCH_MOVIE_SLIDER_SUCCESS",
   "FETCH_MOVIE_SLIDER_FAILURE"
@@ -95,4 +96,16 @@ export const CallMovieTrending = createAsyncAction(
   "FETCH_MOVIE_TRENDING_REQUEST",
   "FETCH_MOVIE_TRENDING_SUCCESS",
   "FETCH_MOVIE_TRENDING_FAILURE"
+)<FetchMoviePayload, IMovie[], Error>();
+
+export const CallMovies = createAsyncAction(
+  "FETCH_MOVIES_REQUEST",
+  "FETCH_MOVIES_SUCCESS",
+  "FETCH_MOVIES_FAILURE"
+)<FetchMoviePayload, IMovie[], Error>();
+
+export const CallTvs = createAsyncAction(
+  "FETCH_TVS_REQUEST",
+  "FETCH_TVS_SUCCESS",
+  "FETCH_TVS_FAILURE"
 )<FetchMoviePayload, IMovie[], Error>();

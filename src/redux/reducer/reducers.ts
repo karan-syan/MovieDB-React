@@ -2,7 +2,7 @@ import { combineReducers } from "redux";
 import { ActionType, getType } from "typesafe-actions";
 import * as actions from "../action/ActionCallApi";
 import { IMovie } from "../../util/type";
-import { CallMovieSLider } from "../action/ActionCallApi";
+import { CallCrouselSlider } from "../action/ActionCallApi";
 
 interface IState {
   loading: boolean;
@@ -14,18 +14,18 @@ const InitialState: IState = {
   loading: false,
 };
 
-const MovieSliderReducer = (
+const CrouselSliderReducer = (
   state: IState = InitialState,
   action: ActionType<typeof actions>
 ) => {
   switch (action.type) {
-    case getType(CallMovieSLider.request):
+    case getType(CallCrouselSlider.request):
       return {
         ...state,
         loading: true,
       };
 
-    case getType(CallMovieSLider.success):
+    case getType(CallCrouselSlider.success):
       return {
         ...state,
         loading: false,
@@ -149,10 +149,64 @@ const RecommendShowsReducer = (
   }
 };
 
+const MoviesReducer = (
+  state: IState = InitialState,
+  action: ActionType<typeof actions>
+) => {
+  switch (action.type) {
+    case getType(actions.CallMovies.request):
+      if (action.payload.NewData) {
+        return {
+          ...state,
+          Data: [],
+          loading: true,
+        };
+      } else {
+        return {
+          ...state,
+          loading: true,
+        };
+      }
+
+    case getType(actions.CallMovies.success):
+      return {
+        ...state,
+        loading: true,
+        Data: [...state.Data, ...action.payload],
+      };
+
+    default:
+      return state;
+  }
+};
+const TvsReducer = (
+  state: IState = InitialState,
+  action: ActionType<typeof actions>
+) => {
+  switch (action.type) {
+    case getType(actions.CallTvs.request):
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case getType(actions.CallTvs.success):
+      return {
+        ...state,
+        loading: true,
+        Data: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
 export const movieReducer = combineReducers({
   UpcomingMovie: UpcomingMovieReducer,
   PopularMovies: PopularMovieReducer,
-  MovieSlider: MovieSliderReducer,
+  Movies: MoviesReducer,
+  CrouselSlider: CrouselSliderReducer,
 });
 
 export const TrendingReducer = combineReducers({
@@ -163,5 +217,5 @@ export const TrendingReducer = combineReducers({
 export const tvReducer = combineReducers({
   PopularShows: PopularShowsReducer,
   TvRecommend: RecommendShowsReducer,
-  // trendingMovies: TvApiReducer_3/,
+  Tvs: TvsReducer,
 });
