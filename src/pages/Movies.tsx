@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import InfiniteScroll from "react-infinite-scroll-component";
-
 import { CallCrouselSlider, CallMovies } from "../redux/action/ActionCallApi";
 import {
   upcoming_movie_url,
   popular_movie_url,
-  latest_movie_url,
   now_playing_movie_url,
   top_rated_movie_url,
 } from "../util/url";
@@ -23,11 +21,12 @@ import {
   Upcoming,
 } from "../util/constants";
 import MovieBox from "../components/MovieBox";
+import { delay } from "redux-saga/effects";
 
+let pg = 1;
 export default function Movies() {
   const dispatch = useDispatch();
   const [query, setQuery] = useSearchParams();
-  const [pg, setpg] = useState<number>(1);
   const MoviesSlider = useSelector(
     (state: ApplicationState) => state.movie.CrouselSlider
   );
@@ -37,56 +36,10 @@ export default function Movies() {
   const myparams = window.location.search;
   const urlparams = new URLSearchParams(myparams);
 
-  function FetchData(newdata: boolean) {
-    console.log("new data ", newdata, pg);
-    switch (query.get("type")) {
-      case Popular:
-        dispatch(
-          CallMovies.request({
-            url: popular_movie_url,
-            page: pg,
-            NewData: newdata,
-          })
-        );
-        break;
-
-      case Top_rated:
-        dispatch(
-          CallMovies.request({
-            url: top_rated_movie_url,
-            page: pg,
-            NewData: newdata,
-          })
-        );
-        break;
-      case Now_playing:
-        dispatch(
-          CallMovies.request({
-            url: now_playing_movie_url,
-            page: pg,
-            NewData: newdata,
-          })
-        );
-        break;
-
-      case Upcoming:
-        dispatch(
-          CallMovies.request({
-            url: upcoming_movie_url,
-            page: pg,
-            NewData: newdata,
-          })
-        );
-        break;
-      default:
-        console.error("Wrong param type");
-        break;
-    }
-  }
-
   useEffect(() => {
-    setpg(1);
-    console.log("movies");
+    if (!urlparams.has("type")) {
+      setQuery({ type: Popular });
+    }
     dispatch(
       CallCrouselSlider.request({
         url: popular_movie_url,
@@ -94,14 +47,45 @@ export default function Movies() {
         NewData: true,
       })
     );
-    console.log(urlparams.get("type"));
-    console.log(pg);
+
     if (urlparams.has("type")) {
-      FetchData(true);
-    } else {
-      setQuery({ type: Popular });
+      console.log("i am being ", urlparams.get("type"));
+      FetchData(true, 1);
     }
   }, [dispatch, urlparams.get("type")]);
+
+  function dispatchFun(url: string, newdata: boolean, page: number) {
+    dispatch(
+      CallMovies.request({
+        url: url,
+        page: page,
+        NewData: newdata,
+      })
+    );
+  }
+
+  function FetchData(newdata: boolean, page: number) {
+    switch (urlparams.get("type")) {
+      case Popular:
+        dispatchFun(popular_movie_url, newdata, page);
+        break;
+
+      case Top_rated:
+        dispatchFun(top_rated_movie_url, newdata, page);
+        break;
+
+      case Now_playing:
+        dispatchFun(now_playing_movie_url, newdata, page);
+        break;
+
+      case Upcoming:
+        dispatchFun(upcoming_movie_url, newdata, page);
+        break;
+      default:
+        console.error("Wrong param type");
+        break;
+    }
+  }
 
   return (
     <div className="w-full">
@@ -112,10 +96,10 @@ export default function Movies() {
       </div>
       <div className="flex flex-wrap justify-evenly">
         <InfiniteScroll
-          dataLength={MoviesData.Data.length} //This is important field to render the next data
+          dataLength={MoviesData.Data.length}
           next={() => {
-            setpg(pg + 1);
-            FetchData(false);
+            pg = pg + 1;
+            FetchData(false, pg);
           }}
           hasMore={true}
           loader={<h4>Loading...</h4>}
@@ -124,7 +108,6 @@ export default function Movies() {
               <b>Yay! You have seen it all</b>
             </p>
           }
-          // below props only if you need pull down functionality
         >
           {MoviesData.Data.map((item, index) => {
             return <MovieBox id={item.id} img={item.poster_path} key={index} />;

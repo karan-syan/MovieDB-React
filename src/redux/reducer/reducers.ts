@@ -11,7 +11,7 @@ interface IState {
 
 const InitialState: IState = {
   Data: [],
-  loading: false,
+  loading: true,
 };
 
 const CrouselSliderReducer = (
