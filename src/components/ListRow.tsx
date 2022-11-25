@@ -27,7 +27,7 @@ export default function ListRow({
       </div>
       <div className="overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide">
         {item.map((val, index) => {
-          return <MovieBox key={index} id={val.id} img={val.poster_path} />;
+          return <MovieBox key={index} item={val} />;
         })}
       </div>
     </div>

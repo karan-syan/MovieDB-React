@@ -12,5 +12,6 @@ export const upcoming_movie_url = `movie/upcoming`;
 export const now_playing_movie_url = `/movie/now_playing`;
 
 export const popular_tv_url = `tv/popular`;
-export const top_rated = `tv/popular`;
+export const top_rated_tv_url = `tv/popular`;
 export const upcoming_tv_url = `movie/upcoming`;
+export const now_playing_tv_url = `/tv/airing_today`;

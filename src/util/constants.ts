@@ -1,6 +1,7 @@
 // constants
-export const Popular = "Popular";
-export const Latest = "Latest";
-export const Upcoming = "Upcoming";
-export const Top_rated = "Top-Rated";
-export const Now_playing = "Now-Playing";
+export const Popular = "popular";
+export const Latest = "latest";
+export const Upcoming = "upcoming";
+export const Top_rated = "top-rated";
+export const Now_playing = "now-playing";
+export const Trending = "trending";

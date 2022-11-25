@@ -7,6 +7,7 @@ import {
   popular_movie_url,
   now_playing_movie_url,
   top_rated_movie_url,
+  trending_movie_url,
 } from "../util/url";
 import { useDispatch, useSelector } from "react-redux";
 import Crousel from "../components/Crousel";
@@ -18,10 +19,10 @@ import {
   Now_playing,
   Popular,
   Top_rated,
+  Trending,
   Upcoming,
 } from "../util/constants";
 import MovieBox from "../components/MovieBox";
-import { delay } from "redux-saga/effects";
 
 let pg = 1;
 export default function Movies() {
@@ -81,18 +82,50 @@ export default function Movies() {
       case Upcoming:
         dispatchFun(upcoming_movie_url, newdata, page);
         break;
+      case Trending:
+        dispatchFun(trending_movie_url, newdata, page);
+        break;
       default:
         console.error("Wrong param type");
         break;
     }
   }
 
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  const handleScroll = () => {
+    const currentScrollPos = window.scrollY;
+
+    if (currentScrollPos > prevScrollPos) {
+      setVisible(false);
+    } else {
+      setVisible(true);
+    }
+
+    setPrevScrollPos(currentScrollPos);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
   return (
     <div className="w-full">
-      <Header />
+      <div className={`${visible ? "sticky top-0 z-10" : ""}`}>
+        <Header />
+      </div>
       <Crousel item={MoviesSlider.Data} />
-      <div className="flex justify-center mb-3">
-        <ButtonGroup />
+      <div
+        className="flex justify-center py-2 mb-3 sticky z-20"
+        style={{
+          top: visible ? "7.5vh" : "0vh",
+          // background: "#08101c",
+          backgroundImage: "linear-gradient(to right, #00040a,#08101c)",
+        }}
+      >
+        <ButtonGroup varient="movie" />
       </div>
       <div className="flex flex-wrap justify-evenly">
         <InfiniteScroll
@@ -110,7 +143,7 @@ export default function Movies() {
           }
         >
           {MoviesData.Data.map((item, index) => {
-            return <MovieBox id={item.id} img={item.poster_path} key={index} />;
+            return <MovieBox item={item} key={index} />;
           })}
         </InfiniteScroll>
       </div>

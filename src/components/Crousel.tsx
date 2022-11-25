@@ -1,8 +1,10 @@
 import React from "react";
 import { MOVIE_DB_IMG_URL } from "../util/url";
 import { IMovie } from "../util/type";
+import { useNavigate } from "react-router-dom";
 
 export default function Crousel({ item }: { item: IMovie[] }) {
+  const navigate = useNavigate();
   return (
     <div className="flex justify-center xl:mt-3 mb-8 drop-shadow-2xl">
       <div
@@ -39,9 +41,14 @@ export default function Crousel({ item }: { item: IMovie[] }) {
               return (
                 <div
                   className="carousel-item active relative float-left w-full"
+                  onClick={() => {
+                    val.name
+                      ? navigate(`/tv/details/:${val.id}`)
+                      : navigate(`/movie/details/:${val.id}`);
+                  }}
                   key={index}
                 >
-                  <div className="flex w-full">
+                  <div className="flex w-full cursor-pointer">
                     <div
                       className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight hidden md:flex md:px-2 xl:text-lg"
                       style={{ background: "#00040a" }}
@@ -80,8 +87,13 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                 <div
                   className="carousel-item relative float-left w-full"
                   key={index}
+                  onClick={() => {
+                    val.name
+                      ? navigate(`/tv/details/:${val.id}`)
+                      : navigate(`/movie/details/:${val.id}`);
+                  }}
                 >
-                  <div className="flex w-full">
+                  <div className="flex w-full cursor-pointer">
                     <div
                       className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight hidden md:flex md:px-2 xl:text-lg"
                       style={{ background: "#00040a" }}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { BiMenu, BiSearch } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate, NavLink } from "react-router-dom";
@@ -7,11 +7,14 @@ import Name from "./Name";
 
 export default function Header() {
   const navigate = useNavigate();
-  let li_Style = " ";
+
   return (
     <div
-      className="flex items-center justify-between px-3 font-bold"
-      style={{ height: "7.5vh" }}
+      className={`flex items-center w-full justify-between px-3 font-bold`}
+      style={{
+        height: "7.5vh",
+        backgroundImage: "linear-gradient(to right, #08101c, #00040a)",
+      }}
     >
       {/* visible in only mobile or tabled */}
       <div className="flex items-center ml-2 mr-10 sm:hidden">

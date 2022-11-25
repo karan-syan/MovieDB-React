@@ -5,6 +5,7 @@ import {
   Now_playing,
   Popular,
   Top_rated,
+  Trending,
   Upcoming,
 } from "../util/constants";
 
@@ -15,7 +16,7 @@ function TabButton({ Name }: { Name: string }) {
   return (
     <button
       type="button"
-      className={`px-2 py-1 text-xs sm:text-sm md:text-base md:px-4 md:py-2  font-medium ${
+      className={`px-1 py-2 text-xs sm:px-2 sm:text-sm md:text-base md:px-4 font-medium ${
         urlparams.get("type") === Name
           ? "bg-white text-gray-900"
           : "bg-transparent text-white"
@@ -26,12 +27,12 @@ function TabButton({ Name }: { Name: string }) {
         });
       }}
     >
-      {Name}
+      {Name.charAt(0).toUpperCase() + Name.slice(1)}
     </button>
   );
 }
 
-export default function ButtonGroup() {
+export default function ButtonGroup({ varient }: { varient: "tv" | "movie" }) {
   return (
     <div
       className={`inline-flex shadow-sm justify-center w-full"
@@ -41,7 +42,8 @@ export default function ButtonGroup() {
       {/* <TabButton Name={Latest} /> */}
       <TabButton Name={Top_rated} />
       <TabButton Name={Now_playing} />
-      <TabButton Name={Upcoming} />
+      {varient === "tv" ? null : <TabButton Name={Upcoming} />}
+      <TabButton Name={Trending} />
     </div>
   );
 }

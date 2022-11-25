@@ -149,7 +149,7 @@ const RecommendShowsReducer = (
   }
 };
 
-const MoviesReducer = (
+const MainReducer = (
   state: IState = InitialState,
   action: ActionType<typeof actions>
 ) => {
@@ -205,7 +205,7 @@ const TvsReducer = (
 export const movieReducer = combineReducers({
   UpcomingMovie: UpcomingMovieReducer,
   PopularMovies: PopularMovieReducer,
-  Movies: MoviesReducer,
+  Movies: MainReducer,
   CrouselSlider: CrouselSliderReducer,
 });
 
@@ -217,5 +217,5 @@ export const TrendingReducer = combineReducers({
 export const tvReducer = combineReducers({
   PopularShows: PopularShowsReducer,
   TvRecommend: RecommendShowsReducer,
-  Tvs: TvsReducer,
+  Tvs: MainReducer,
 });
