@@ -1,6 +1,6 @@
 import React from "react";
-import { MOVIE_DB_IMG_URL } from "../util/url";
-import { IMovie } from "../util/type";
+import { MOVIE_DB_IMG_URL } from "../utils/url";
+import { IMovie } from "../utils/type";
 import { MdOutlineDoubleArrow } from "react-icons/md";
 import MovieBox from "./MovieBox";
 

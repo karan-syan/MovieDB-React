@@ -17,7 +17,7 @@ import {
   trending_tv_url,
   trending_url,
   upcoming_movie_url,
-} from "../util/url";
+} from "../utils/url";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Crousel from "../components/Crousel";
 import { ApplicationState } from "../redux/root/rootReducer";

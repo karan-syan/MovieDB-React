@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { ActionType, getType } from "typesafe-actions";
 import * as actions from "../action/ActionCallApi";
-import { IMovie } from "../../util/type";
+import { IMovie } from "../../utils/type";
 import { CallCrouselSlider } from "../action/ActionCallApi";
 
 interface IState {

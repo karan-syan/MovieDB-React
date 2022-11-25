@@ -1,5 +1,5 @@
 import { createAsyncAction } from "typesafe-actions";
-import { IMovie } from "../../util/type";
+import { IMovie } from "../../utils/type";
 
 export interface FetchMoviePayload {
   page?: number;

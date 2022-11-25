@@ -11,13 +11,13 @@ import {
   top_rated_tv_url,
   now_playing_tv_url,
   trending_tv_url,
-} from "../util/url";
+} from "../utils/url";
 import { useDispatch, useSelector } from "react-redux";
 import Crousel from "../components/Crousel";
 import { ApplicationState } from "../redux/root/rootReducer";
 import ButtonGroup from "../components/ButtonGroup";
 import { useParams, useSearchParams } from "react-router-dom";
-import { Now_playing, Popular, Top_rated, Trending } from "../util/constants";
+import { Now_playing, Popular, Top_rated, Trending } from "../utils/constants";
 import MovieBox from "../components/MovieBox";
 import { delay } from "redux-saga/effects";
 

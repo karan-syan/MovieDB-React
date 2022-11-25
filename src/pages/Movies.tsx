@@ -8,7 +8,7 @@ import {
   now_playing_movie_url,
   top_rated_movie_url,
   trending_movie_url,
-} from "../util/url";
+} from "../utils/url";
 import { useDispatch, useSelector } from "react-redux";
 import Crousel from "../components/Crousel";
 import { ApplicationState } from "../redux/root/rootReducer";
@@ -21,7 +21,7 @@ import {
   Top_rated,
   Trending,
   Upcoming,
-} from "../util/constants";
+} from "../utils/constants";
 import MovieBox from "../components/MovieBox";
 
 let pg = 1;

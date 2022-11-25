@@ -1,6 +1,6 @@
 import React from "react";
-import { MOVIE_DB_IMG_URL } from "../util/url";
-import { IMovie } from "../util/type";
+import { MOVIE_DB_IMG_URL } from "../utils/url";
+import { IMovie } from "../utils/type";
 import { useNavigate } from "react-router-dom";
 
 export default function Crousel({ item }: { item: IMovie[] }) {
@@ -43,8 +43,8 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                   className="carousel-item active relative float-left w-full"
                   onClick={() => {
                     val.name
-                      ? navigate(`/tv/details/:${val.id}`)
-                      : navigate(`/movie/details/:${val.id}`);
+                      ? navigate(`/tv/details/${val.id}`)
+                      : navigate(`/movie/details/${val.id}`);
                   }}
                   key={index}
                 >
@@ -89,8 +89,8 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                   key={index}
                   onClick={() => {
                     val.name
-                      ? navigate(`/tv/details/:${val.id}`)
-                      : navigate(`/movie/details/:${val.id}`);
+                      ? navigate(`/tv/details/${val.id}`)
+                      : navigate(`/movie/details/${val.id}`);
                   }}
                 >
                   <div className="flex w-full cursor-pointer">

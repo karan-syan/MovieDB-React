@@ -1,5 +1,5 @@
 import axios from "axios";
-import { trending_movie_url } from "../util/url";
+import { trending_movie_url } from "../utils/url";
 
 // export const fetchMovies = async (payload: string) => {
 //   const data = await makeRequest(trending_movie_url);

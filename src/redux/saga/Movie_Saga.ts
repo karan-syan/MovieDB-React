@@ -1,5 +1,5 @@
 import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { IMovie } from "../../util/type";
+import { IMovie } from "../../utils/type";
 import {
   CallCrouselSlider,
   CallMoviePopular,

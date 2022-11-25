@@ -7,7 +7,7 @@ import {
   Top_rated,
   Trending,
   Upcoming,
-} from "../util/constants";
+} from "../utils/constants";
 
 function TabButton({ Name }: { Name: string }) {
   const myparams = window.location.search;
