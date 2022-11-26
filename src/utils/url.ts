@@ -1,5 +1,5 @@
 export const MOVIE_DB_BASE_URL = "https://api.themoviedb.org/3/";
-export const MOVIE_DB_IMG_URL = "https://image.tmdb.org/t/p/original/";
+export const MOVIE_DB_IMG_URL = "https://image.tmdb.org/t/p/original";
 
 export const trending_movie_url = `trending/movie/day`;
 export const trending_tv_url = `trending/tv/day`;

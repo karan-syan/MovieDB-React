@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { ActionType, getType } from "typesafe-actions";
 import * as actions from "../action/ActionCallApi";
-import { IMovie } from "../../utils/type";
+import { IMovie, ITvDetails } from "../../utils/type";
 import { CallCrouselSlider } from "../action/ActionCallApi";
 
 interface IState {
@@ -9,8 +9,77 @@ interface IState {
   Data: IMovie[];
 }
 
+interface IStateDetails {
+  loading: boolean;
+  Data: ITvDetails;
+}
+
 const InitialState: IState = {
   Data: [],
+  loading: true,
+};
+
+const InitialStateTvDetail: IStateDetails = {
+  Data: {
+    adult: false,
+    backdrop_path: "",
+    created_by: [],
+    episode_run_time: [],
+    first_air_date: "",
+    genres: [],
+    homepage: "",
+    id: 0,
+    in_production: false,
+    languages: [],
+    last_air_date: "",
+    last_episode_to_air: {
+      air_date: "",
+      episode_number: 0,
+      id: 0,
+      name: "",
+      overview: "",
+      production_code: "",
+      runtime: 0,
+      season_number: 0,
+      show_id: 0,
+      still_path: "",
+      vote_average: 0,
+      vote_count: 0,
+    },
+    name: "",
+    next_episode_to_air: {
+      air_date: "",
+      episode_number: 0,
+      id: 0,
+      name: "",
+      overview: "",
+      production_code: "",
+      runtime: 0,
+      season_number: 0,
+      show_id: 0,
+      still_path: "",
+      vote_average: 0,
+      vote_count: 0,
+    },
+    networks: [],
+    number_of_episodes: 0,
+    number_of_seasons: 0,
+    origin_country: [],
+    original_language: "",
+    original_name: "",
+    overview: "",
+    popularity: 0,
+    poster_path: "",
+    production_companies: [],
+    production_countries: [],
+    seasons: [],
+    spoken_languages: [],
+    status: "",
+    tagline: "",
+    type: "",
+    vote_average: 0,
+    vote_count: 0,
+  },
   loading: true,
 };
 
@@ -179,18 +248,19 @@ const MainReducer = (
       return state;
   }
 };
-const TvsReducer = (
-  state: IState = InitialState,
+
+const TvDetailsReducer = (
+  state: IStateDetails = InitialStateTvDetail,
   action: ActionType<typeof actions>
 ) => {
   switch (action.type) {
-    case getType(actions.CallTvs.request):
+    case getType(actions.CallTvDetails.request):
       return {
         ...state,
         loading: true,
       };
 
-    case getType(actions.CallTvs.success):
+    case getType(actions.CallTvDetails.success):
       return {
         ...state,
         loading: true,
@@ -203,18 +273,22 @@ const TvsReducer = (
 };
 
 export const movieReducer = combineReducers({
+  CrouselSlider: CrouselSliderReducer,
   UpcomingMovie: UpcomingMovieReducer,
   PopularMovies: PopularMovieReducer,
   Movies: MainReducer,
-  CrouselSlider: CrouselSliderReducer,
 });
 
 export const TrendingReducer = combineReducers({
   TvTrending: TvTrendingReducer,
-  // MovieTrending: MovieTrendingReducer
+});
+
+export const DetailsReducer = combineReducers({
+  TvDetails: TvDetailsReducer,
 });
 
 export const tvReducer = combineReducers({
+  CrouselSlider: CrouselSliderReducer,
   PopularShows: PopularShowsReducer,
   TvRecommend: RecommendShowsReducer,
   Tvs: MainReducer,

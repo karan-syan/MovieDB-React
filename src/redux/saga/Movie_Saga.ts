@@ -1,16 +1,17 @@
 import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
-import { IMovie } from "../../utils/type";
+import { IMovie, ITvDetails } from "../../utils/type";
 import {
   CallCrouselSlider,
   CallMoviePopular,
   CallMovies,
   CallMovieUpcoming,
+  CallTvDetails,
   CallTvPopular,
   CallTvRecommend,
   CallTvTrending,
 } from "../action/ActionCallApi";
 import { getType, ActionType } from "typesafe-actions";
-import { FetchApi } from "./fetching/FetchApi";
+import { FetchApi, FetchApiDetails } from "./fetching/FetchApi";
 
 function* CrouselSlider(params: ActionType<typeof CallCrouselSlider.request>) {
   try {
@@ -91,6 +92,17 @@ function* Movies(params: ActionType<typeof CallMovies.request>) {
     yield put({ type: CallMovies.failure, error });
   }
 }
+function* TvDetails(params: ActionType<typeof CallTvDetails.request>) {
+  try {
+    yield console.log("saga ", params.payload.url);
+    const payload: ITvDetails = yield call(FetchApiDetails, params.payload);
+    yield console.log("saga ", payload);
+    yield put(CallTvDetails.success(payload));
+  } catch (error) {
+    yield console.log("saga ", error);
+    yield put({ type: CallTvDetails.failure, error });
+  }
+}
 
 export function* Movie_Saga() {
   yield all([
@@ -101,5 +113,6 @@ export function* Movie_Saga() {
     takeEvery(getType(CallTvTrending.request), TvTrending),
     takeEvery(getType(CallTvRecommend.request), TvRecommend),
     takeEvery(getType(CallMovies.request), Movies),
+    takeEvery(getType(CallTvDetails.request), TvDetails),
   ]);
 }

@@ -4,7 +4,6 @@ import {
   CallMoviePopular,
   CallCrouselSlider,
   CallMovieUpcoming,
-  CallTvLatest,
   CallTvPopular,
   CallTvRecommend,
   CallTvTrending,

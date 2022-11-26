@@ -26,7 +26,7 @@ export default function Shows() {
   const dispatch = useDispatch();
   const [query, setQuery] = useSearchParams();
   const MoviesSlider = useSelector(
-    (state: ApplicationState) => state.movie.CrouselSlider
+    (state: ApplicationState) => state.tv.CrouselSlider
   );
   const MoviesData = useSelector((state: ApplicationState) => state.tv.Tvs);
   const myparams = window.location.search;
