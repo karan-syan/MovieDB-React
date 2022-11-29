@@ -1,25 +1,21 @@
-import React, { useEffect, useState } from "react";
-import Header from "../components/Header";
+import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { useDispatch, useSelector } from "react-redux";
+import { useSearchParams } from "react-router-dom";
+import { PropagateLoader } from "react-spinners";
+import ButtonGroup from "../components/ButtonGroup";
+import Crousel from "../components/Crousel";
+import Header from "../components/Header";
+import MovieBox from "../components/MovieBox";
 import { CallCrouselSlider, CallMovies } from "../redux/action/ActionCallApi";
+import { ApplicationState } from "../redux/root/rootReducer";
+import { Now_playing, Popular, Top_rated, Trending } from "../utils/constants";
 import {
-  upcoming_movie_url,
-  popular_movie_url,
-  now_playing_movie_url,
-  top_rated_movie_url,
+  now_playing_tv_url,
   popular_tv_url,
   top_rated_tv_url,
-  now_playing_tv_url,
   trending_tv_url,
 } from "../utils/url";
-import { useDispatch, useSelector } from "react-redux";
-import Crousel from "../components/Crousel";
-import { ApplicationState } from "../redux/root/rootReducer";
-import ButtonGroup from "../components/ButtonGroup";
-import { useParams, useSearchParams } from "react-router-dom";
-import { Now_playing, Popular, Top_rated, Trending } from "../utils/constants";
-import MovieBox from "../components/MovieBox";
-import { delay } from "redux-saga/effects";
 
 let pg = 1;
 export default function Shows() {
@@ -104,41 +100,64 @@ export default function Shows() {
   });
 
   return (
-    <div className="w-full">
-      <div className={`${visible ? "sticky top-0 z-10" : ""}`}>
-        <Header />
-      </div>
-      <Crousel item={MoviesSlider.Data} />
-      <div
-        className="flex justify-center py-2 mb-3 sticky z-20"
-        style={{
-          top: visible ? "7.5vh" : "0vh",
-          // background: "#08101c",
-          backgroundImage: "linear-gradient(to right, #00040a,#08101c)",
-        }}
-      >
-        <ButtonGroup varient="tv" />
-      </div>
-      <div className="flex flex-wrap justify-evenly">
-        <InfiniteScroll
-          dataLength={MoviesData.Data.length}
-          next={() => {
-            pg = pg + 1;
-            FetchData(false, pg);
+    <div
+      className="flex justify-center items-center"
+      style={{
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      {MoviesData.loading && MoviesSlider.loading ? (
+        <PropagateLoader color="#36d7b7" />
+      ) : (
+        <div
+          style={{
+            width: "100vw",
+            height: "100vh",
           }}
-          hasMore={true}
-          loader={<h4>Loading...</h4>}
-          endMessage={
-            <p style={{ textAlign: "center" }}>
-              <b>Yay! You have seen it all</b>
-            </p>
-          }
         >
-          {MoviesData.Data.map((item, index) => {
-            return <MovieBox item={item} key={index} />;
-          })}
-        </InfiniteScroll>
-      </div>
+          <div className={`${visible ? "sticky top-0 z-10" : ""}`}>
+            <Header />
+          </div>
+          <div
+            style={{
+              width: "100vw",
+            }}
+          >
+            <Crousel item={MoviesSlider.Data} />
+          </div>
+          <div
+            className="flex justify-center py-2 mb-3 sticky z-20"
+            style={{
+              top: visible ? "7.5vh" : "0vh",
+              // background: "#08101c",
+              backgroundImage: "linear-gradient(to right, #00040a,#08101c)",
+            }}
+          >
+            <ButtonGroup varient="tv" />
+          </div>
+          <div className="flex flex-wrap justify-evenly">
+            <InfiniteScroll
+              dataLength={MoviesData.Data.length}
+              next={() => {
+                pg = pg + 1;
+                FetchData(false, pg);
+              }}
+              hasMore={true}
+              loader={<h4>Loading...</h4>}
+              endMessage={
+                <p style={{ textAlign: "center" }}>
+                  <b>Yay! You have seen it all</b>
+                </p>
+              }
+            >
+              {MoviesData.Data.map((item, index) => {
+                return <MovieBox item={item} key={index} />;
+              })}
+            </InfiniteScroll>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

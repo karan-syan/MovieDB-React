@@ -1,28 +1,26 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { PropagateLoader } from "react-spinners";
+import Crousel from "../components/Crousel";
+import Footer from "../components/Footer";
 import Header from "../components/Header";
+import ListRow from "../components/ListRow";
 import {
-  CallMoviePopular,
   CallCrouselSlider,
+  CallMoviePopular,
   CallMovieUpcoming,
   CallTvPopular,
   CallTvRecommend,
   CallTvTrending,
 } from "../redux/action/ActionCallApi";
+import { ApplicationState } from "../redux/root/rootReducer";
 import {
-  latest_movie_url,
   popular_movie_url,
   popular_tv_url,
-  trending_movie_url,
   trending_tv_url,
   trending_url,
   upcoming_movie_url,
 } from "../utils/url";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import Crousel from "../components/Crousel";
-import { ApplicationState } from "../redux/root/rootReducer";
-import Footer from "../components/Footer";
-import ListRow from "../components/ListRow";
-import InfiniteScroll from "react-infinite-scroll-component";
 
 export default function Home() {
   const dispatch = useDispatch();
@@ -98,20 +96,32 @@ export default function Home() {
   }, [dispatch]);
 
   return (
-    <div>
-      <Header />
-      <div
-        className="flex overflow-auto w-full flex-col"
-        style={{ height: "92.5vh" }}
-      >
-        <Crousel item={MoviesSlider.Data} />
-        <ListRow item={PopularMovies.Data} title={"Popular Movies"} />
-        <ListRow item={TrendingShows.Data} title={"Trending Tv Shows"} />
-        <ListRow item={PopularShows.Data} title={"Popular Tv Shows"} />
-        <ListRow item={UpcomingMovies.Data} title={"Upcoming Movies"} />
-        <ListRow item={RecommendShows.Data} title={"Animated Series"} />
-        <Footer />
-      </div>
+    <div
+      className="flex justify-center items-center"
+      style={{
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      {RecommendShows.loading && MoviesSlider.loading ? (
+        <PropagateLoader color="#36d7b7" />
+      ) : (
+        <div>
+          <Header />
+          <div
+            className="flex overflow-auto w-full flex-col"
+            style={{ height: "92.5vh" }}
+          >
+            <Crousel item={MoviesSlider.Data} />
+            <ListRow item={PopularMovies.Data} title={"Popular Movies"} />
+            <ListRow item={TrendingShows.Data} title={"Trending Tv Shows"} />
+            <ListRow item={PopularShows.Data} title={"Popular Tv Shows"} />
+            <ListRow item={UpcomingMovies.Data} title={"Upcoming Movies"} />
+            <ListRow item={RecommendShows.Data} title={"Animated Series"} />
+            <Footer />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

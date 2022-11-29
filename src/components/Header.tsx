@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
 import { BiMenu, BiSearch } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
-import { useNavigate, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import HeaderTab from "./HeaderTab";
 import Name from "./Name";
 
