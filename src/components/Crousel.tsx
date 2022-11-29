@@ -1,7 +1,6 @@
-import React from "react";
-import { MOVIE_DB_IMG_URL } from "../utils/url";
-import { IMovie } from "../utils/type";
 import { useNavigate } from "react-router-dom";
+import { IMovie } from "../utils/type";
+import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function Crousel({ item }: { item: IMovie[] }) {
   const navigate = useNavigate();

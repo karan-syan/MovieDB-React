@@ -1,4 +1,5 @@
-import { all, call, put, takeEvery, takeLatest } from "redux-saga/effects";
+import { all, call, put, takeEvery } from "redux-saga/effects";
+import { ActionType, getType } from "typesafe-actions";
 import { ICast, IMovie, ITvDetails } from "../../utils/type";
 import {
   CallCast,
@@ -11,7 +12,6 @@ import {
   CallTvRecommend,
   CallTvTrending,
 } from "../action/ActionCallApi";
-import { getType, ActionType } from "typesafe-actions";
 import { FetchApi, FetchApiCast, FetchApiDetails } from "./fetching/FetchApi";
 
 function* CrouselSlider(params: ActionType<typeof CallCrouselSlider.request>) {

@@ -1,7 +1,5 @@
-import React from "react";
-import { MOVIE_DB_IMG_URL } from "../utils/url";
-import { IMovie } from "../utils/type";
 import { MdOutlineDoubleArrow } from "react-icons/md";
+import { IMovie } from "../utils/type";
 import MovieBox from "./MovieBox";
 
 export default function ListRow({

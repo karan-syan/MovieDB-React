@@ -1,11 +1,10 @@
 import axios from "axios";
+import { MOVIE_DB_BASE_URL } from "../../../utils/url";
 import {
   FetchCastPayload,
   FetchDetailsPayload,
   FetchMoviePayload,
 } from "../../action/ActionCallApi";
-import { ActionType } from "typesafe-actions";
-import { MOVIE_DB_BASE_URL } from "../../../utils/url";
 
 export const FetchApi = async (
   params: FetchMoviePayload

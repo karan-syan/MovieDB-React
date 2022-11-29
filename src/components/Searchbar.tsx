@@ -1,7 +1,6 @@
-import React from "react";
+import { BiSearch } from "react-icons/bi";
 import { useNavigate } from "react-router-dom";
 import Name from "./Name";
-import { BiSearch } from "react-icons/bi";
 
 export default function Searchbar() {
   const navigate = useNavigate();

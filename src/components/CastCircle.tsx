@@ -1,4 +1,3 @@
-import React from "react";
 import Avatar from "react-avatar";
 import { useNavigate } from "react-router-dom";
 import { ICast } from "../utils/type";

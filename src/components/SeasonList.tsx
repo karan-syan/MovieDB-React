@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import { ITvDetails } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";

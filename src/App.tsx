@@ -1,6 +1,5 @@
-import React from "react";
 import { SkeletonTheme } from "react-loading-skeleton";
-import { Route, Router, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Genres from "./pages/Genres";
 import Home from "./pages/Home";
 import Movies from "./pages/Movies";
