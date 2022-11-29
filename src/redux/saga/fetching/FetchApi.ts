@@ -1,5 +1,6 @@
 import axios from "axios";
 import {
+  FetchCastPayload,
   FetchDetailsPayload,
   FetchMoviePayload,
 } from "../../action/ActionCallApi";
@@ -10,7 +11,10 @@ export const FetchApi = async (
   params: FetchMoviePayload
   // | ActionType<typeof CallMoviePopular.request>
 ) => {
-  const url = `${MOVIE_DB_BASE_URL}${params.url}?api_key=${process.env.REACT_APP_API_KEY}&page=${params.page}`;
+  console.log(params.id);
+  const url = `${MOVIE_DB_BASE_URL}${params.url}${
+    params.id !== undefined ? "/" + params.id + "/recommendations" : ""
+  }?api_key=${process.env.REACT_APP_API_KEY}&page=${params.page}`;
   console.log(url);
   let data = await axios.get(url);
   console.log(data.data);
@@ -27,5 +31,17 @@ export const FetchApiDetails = async (
     let data = await axios.get(url);
     console.log(data.data);
     return data.data;
+  }
+};
+export const FetchApiCast = async (
+  params: FetchCastPayload
+  // | ActionType<typeof CallMoviePopular.request>
+) => {
+  if (params.id) {
+    const url = `${MOVIE_DB_BASE_URL}${params.url}/${params.id}/${params.afterIdurl}?api_key=${process.env.REACT_APP_API_KEY}`;
+    console.log(url);
+    let data = await axios.get(url);
+    console.log(data.data.cast);
+    return data.data.cast;
   }
 };

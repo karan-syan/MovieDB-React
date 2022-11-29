@@ -1,15 +1,21 @@
 import { createAsyncAction } from "typesafe-actions";
-import { IMovie, ITvDetails } from "../../utils/type";
+import { IMovie, ITvDetails, ICast } from "../../utils/type";
 
 export interface FetchMoviePayload {
   page?: number;
-  id?: number;
+  id?: string | undefined;
   url: string;
   NewData: boolean;
 }
 export interface FetchDetailsPayload {
   url: string;
   id: string | undefined;
+}
+
+export interface FetchCastPayload {
+  url: string;
+  id: string | undefined;
+  afterIdurl: string;
 }
 
 // Slider
@@ -90,3 +96,9 @@ export const CallTvDetails = createAsyncAction(
   "FETCH_TV_DETAILS_SUCCESS",
   "FETCH_TV_DETAILS_FAILURE"
 )<FetchDetailsPayload, ITvDetails, Error>();
+
+export const CallCast = createAsyncAction(
+  "FETCH_TV_CAST_REQUEST",
+  "FETCH_TV_CAST_SUCCESS",
+  "FETCH_TV_CAST_FAILURE"
+)<FetchCastPayload, ICast[], Error>();

@@ -1,22 +1,33 @@
-import { url } from "inspector";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { IoTime } from "react-icons/io5";
+import Skeleton from "react-loading-skeleton";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { useNavigate, useParams } from "react-router-dom";
 import Name from "../components/Name";
-import { CallTvDetails } from "../redux/action/ActionCallApi";
+import {
+  CallCast,
+  CallMovies,
+  CallTvDetails,
+  CallTvs,
+} from "../redux/action/ActionCallApi";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
-import { BiSearch } from "react-icons/bi";
-import { iteratorSymbol } from "immer/dist/internal";
+import { BiBox, BiSearch } from "react-icons/bi";
+import CastCircle from "../components/CastCircle";
+import ListRow from "../components/ListRow";
+import SeasonList from "../components/SeasonList";
 
 export default function TvDetails() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const elementForScroll = useRef<HTMLDivElement>(null);
+
   const tvshows = useSelector(
     (state: ApplicationState) => state.details.TvDetails
   );
+  const Recommended = useSelector((state: ApplicationState) => state.tv.Tvs);
+  const tvCast = useSelector((state: ApplicationState) => state.details.TvCast);
   const { id } = useParams();
   useEffect(() => {
     dispatch(
@@ -25,6 +36,26 @@ export default function TvDetails() {
         id: id,
       })
     );
+    dispatch(
+      CallMovies.request({
+        url: "tv",
+        id: id,
+        NewData: true,
+        page: 1,
+      })
+    );
+    dispatch(
+      CallCast.request({
+        url: "/tv",
+        id: id,
+        afterIdurl: "/credits",
+      })
+    );
+    elementForScroll.current?.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: "smooth",
+    });
   }, [id]);
 
   return (
@@ -59,23 +90,34 @@ export default function TvDetails() {
           style={{ height: "92.5vh" }}
         >
           <div className="md:w-1/4">
-            <img
-              className="w-6/12 mx-auto my-auto rounded-xl md:w-full md:ml-7 md:rounded-3xl drop-shadow-2xl shadow-2xl"
-              src={MOVIE_DB_IMG_URL + tvshows.Data.poster_path}
-            />
+            {tvshows.loading ? (
+              <PropagateLoader color="#36d7b7" />
+            ) : (
+              <img
+                className="w-6/12 mx-auto my-auto rounded-xl md:w-full md:ml-7 md:rounded-3xl drop-shadow-2xl shadow-2xl"
+                src={MOVIE_DB_IMG_URL + tvshows.Data.poster_path}
+              />
+            )}
           </div>
-          <div className="flex mt-5 justify-center md:w-2/6 flex-col items-center md:overflow-y-auto md:justify-start md:items-start">
-            <h1 className="text-xl md:text-3xl font-extrabold">
+          <div
+            className="flex mt-5 justify-center md:w-2/3 flex-col items-center md:h-full md:overflow-auto md:justify-start md:items-start"
+            ref={elementForScroll}
+          >
+            <h1 className="text-xl md:text-3xl font-extrabold text-center">
               {tvshows.Data.name}
+            </h1>
+            <h1 className="text-sm italic w-4/5 text-center md:w-full md:text-start opacity-60">
+              {tvshows.Data.tagline}
             </h1>
             <h1 className="text-sm md:text-base opacity-70">
               {tvshows.Data.original_language} | {tvshows.Data.status} |{" "}
               {tvshows.Data.first_air_date}
             </h1>
             <h1 className="text-sm md:text-base opacity-70 flex items-center">
-              Ep {tvshows.Data.last_episode_to_air.episode_number} |
+              Ep {tvshows.Data.number_of_episodes} |
               <IoTime className="mx-1" />
-              {tvshows.Data.episode_run_time} min
+              {tvshows.Data.episode_run_time} min | {tvshows.Data.vote_average}{" "}
+              | {tvshows.Data.type}
             </h1>
             <button className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base">
               WatchList
@@ -108,10 +150,10 @@ export default function TvDetails() {
               </div>
               <div className="w-full  mt-2 ">
                 <h1 className="text-lg mx-2">Networks:</h1>
-                <div className="mx-2 opacity-70 text-sm flex items-end overflow-x-auto">
+                <div className="mx-2 opacity-70 text-sm whitespace-nowrap items-end overflow-x-auto">
                   {tvshows.Data.networks.map((item) => {
                     return (
-                      <div className="rounded-full mx-2 w-1/5 h-1/5 bottom-0">
+                      <div className="rounded-full inline-block mx-2 w-1/5 h-1/5 bottom-0">
                         <img src={MOVIE_DB_IMG_URL + item.logo_path} />
                         <h1 className="text-center">{item.name}</h1>
                       </div>
@@ -119,9 +161,21 @@ export default function TvDetails() {
                   })}
                 </div>
               </div>
+              <div className="w-full mt-2">
+                <h1 className="text-lg mx-2">Casts:</h1>
+                <div className="overflow-auto whitespace-nowrap">
+                  {tvCast.Data.map((item, index) => {
+                    return <CastCircle item={item} key={index} />;
+                  })}
+                </div>
+              </div>
+              <SeasonList tvshows={tvshows.Data} />
+              <div className="w-full mt-2">
+                <h1 className="text-lg mx-2">Recommended:</h1>
+                <ListRow item={Recommended.Data} />
+              </div>
             </div>
           </div>
-          <div className="flex md:overflow-y-auto"></div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { ActionType, getType } from "typesafe-actions";
 import * as actions from "../action/ActionCallApi";
-import { IMovie, ITvDetails } from "../../utils/type";
+import { ICast, IMovie, ITvDetails } from "../../utils/type";
 import { CallCrouselSlider } from "../action/ActionCallApi";
 
 interface IState {
@@ -9,10 +9,18 @@ interface IState {
   Data: IMovie[];
 }
 
-interface IStateDetails {
+export interface IStateDetails {
   loading: boolean;
   Data: ITvDetails;
 }
+interface IStateCast {
+  loading: boolean;
+  Data: ICast[];
+}
+const InitialStateCast: IStateCast = {
+  Data: [],
+  loading: true,
+};
 
 const InitialState: IState = {
   Data: [],
@@ -186,7 +194,7 @@ const TvTrendingReducer = (
     case getType(actions.CallTvTrending.success):
       return {
         ...state,
-        loading: true,
+        loading: false,
         Data: action.payload,
       };
 
@@ -209,7 +217,7 @@ const RecommendShowsReducer = (
     case getType(actions.CallTvRecommend.success):
       return {
         ...state,
-        loading: true,
+        loading: false,
         Data: action.payload,
       };
 
@@ -240,7 +248,7 @@ const MainReducer = (
     case getType(actions.CallMovies.success):
       return {
         ...state,
-        loading: true,
+        loading: false,
         Data: [...state.Data, ...action.payload],
       };
 
@@ -257,13 +265,36 @@ const TvDetailsReducer = (
     case getType(actions.CallTvDetails.request):
       return {
         ...state,
+        Data: InitialStateTvDetail.Data,
         loading: true,
       };
 
     case getType(actions.CallTvDetails.success):
       return {
         ...state,
+        loading: false,
+        Data: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+const TvCastReducer = (
+  state: IStateCast = InitialStateCast,
+  action: ActionType<typeof actions>
+) => {
+  switch (action.type) {
+    case getType(actions.CallCast.request):
+      return {
+        ...state,
         loading: true,
+      };
+
+    case getType(actions.CallCast.success):
+      return {
+        ...state,
+        loading: false,
         Data: action.payload,
       };
 
@@ -285,6 +316,7 @@ export const TrendingReducer = combineReducers({
 
 export const DetailsReducer = combineReducers({
   TvDetails: TvDetailsReducer,
+  TvCast: TvCastReducer,
 });
 
 export const tvReducer = combineReducers({
