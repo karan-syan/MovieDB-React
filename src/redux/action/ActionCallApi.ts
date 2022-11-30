@@ -1,5 +1,5 @@
 import { createAsyncAction } from "typesafe-actions";
-import { ICast, IMovie, ITvDetails } from "../../utils/type";
+import { ICast, IMovie, IMovieDetails, ITvDetails } from "../../utils/type";
 
 export interface FetchMoviePayload {
   page?: number;
@@ -10,6 +10,13 @@ export interface FetchMoviePayload {
 export interface FetchDetailsPayload {
   url: string;
   id: string | undefined;
+}
+
+export interface FetchSearchPayload {
+  url: string;
+  page: number;
+  query: string;
+  NewData: boolean;
 }
 
 export interface FetchCastPayload {
@@ -56,10 +63,10 @@ export const CallMovieSimilar = createAsyncAction(
   "FETCH_MOVIE_NOW_PLAYING_FAILURE"
 )<FetchMoviePayload, IMovie[], Error>();
 
-export const CallTvRecommend = createAsyncAction(
-  "FETCH_TV_RECOMMEND_REQUEST",
-  "FETCH_TV_RECOMMEND_SUCCESS",
-  "FETCH_TV_RECOMMEND_FAILURE"
+export const CallRecommend = createAsyncAction(
+  "FETCH_RECOMMEND_REQUEST",
+  "FETCH_RECOMMEND_SUCCESS",
+  "FETCH_RECOMMEND_FAILURE"
 )<FetchMoviePayload, IMovie[], Error>();
 
 // Trending
@@ -84,6 +91,12 @@ export const CallMovies = createAsyncAction(
   "FETCH_MOVIES_FAILURE"
 )<FetchMoviePayload, IMovie[], Error>();
 
+export const CallSearch = createAsyncAction(
+  "FETCH_SEARCH_REQUEST",
+  "FETCH_SEARCH_SUCCESS",
+  "FETCH_SEARCH_FAILURE"
+)<FetchSearchPayload, IMovie[], Error>();
+
 export const CallTvs = createAsyncAction(
   "FETCH_TVS_REQUEST",
   "FETCH_TVS_SUCCESS",
@@ -96,6 +109,12 @@ export const CallTvDetails = createAsyncAction(
   "FETCH_TV_DETAILS_SUCCESS",
   "FETCH_TV_DETAILS_FAILURE"
 )<FetchDetailsPayload, ITvDetails, Error>();
+
+export const CallMovieDetails = createAsyncAction(
+  "FETCH_MOVIE_DETAILS_REQUEST",
+  "FETCH_MOVIE_DETAILS_SUCCESS",
+  "FETCH_MOVIE_DETAILS_FAILURE"
+)<FetchDetailsPayload, IMovieDetails, Error>();
 
 export const CallCast = createAsyncAction(
   "FETCH_TV_CAST_REQUEST",

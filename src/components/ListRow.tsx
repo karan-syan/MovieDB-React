@@ -25,9 +25,11 @@ export default function ListRow({
           </button>
         </div>
       ) : null}
-      <div className="overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide">
+      <div className="overflow-x-auto whitespace-nowrap scroll-smooth scrollbar-hide snap-mandatory snap-x">
         {item.map((val, index) => {
-          return <MovieBox key={index} item={val} />;
+          if (val.poster_path !== null && val.poster_path !== "") {
+            return <MovieBox key={index} item={val} />;
+          }
         })}
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { IMovie_distructing } from "../utils/ApiDistruct";
 import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
@@ -36,14 +37,24 @@ export default function Crousel({ item }: { item: IMovie[] }) {
         </div>
         <div className="carousel-inner relative w-full overflow-hidden">
           {item.map((val, index) => {
+            const {
+              I_name,
+              backdrop_path,
+              first_air_date,
+              id,
+              overview,
+              title,
+              release_date,
+            } = IMovie_distructing(val);
+
             if (index === 1) {
               return (
                 <div
                   className="carousel-item active relative float-left w-full"
                   onClick={() => {
-                    val.name
-                      ? navigate(`/tv/details/${val.id}`)
-                      : navigate(`/movie/details/${val.id}`);
+                    I_name
+                      ? navigate(`/tv/details/${id}`)
+                      : navigate(`/movie/details/${id}`);
                   }}
                   key={index}
                 >
@@ -53,16 +64,12 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                       style={{ background: "#00040a" }}
                     >
                       <h1 className="mb-1 text-base xl:text-xl font-extrabold">
-                        {val.title ? val.title : val.name}
+                        {title ? title : I_name}
                       </h1>
                       <h1 className="mb-2 opacity-50 text-xm xl:text-base">
-                        {val.release_date
-                          ? val.release_date
-                          : val.first_air_date}
+                        {release_date ? release_date : first_air_date}
                       </h1>
-                      <h1 className="mb-1 line-clamp-3 w-11/12">
-                        {val.overview}
-                      </h1>
+                      <h1 className="mb-1 line-clamp-3 w-11/12">{overview}</h1>
                     </div>
                     <div
                       className="w-1/5 z-10 absolute hidden h-full md:inline-block"
@@ -73,7 +80,7 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                       }}
                     ></div>
                     <img
-                      src={`${MOVIE_DB_IMG_URL}${val.backdrop_path}`}
+                      src={`${MOVIE_DB_IMG_URL}${backdrop_path}`}
                       className="block w-full md:w-3/5 z-0"
                       alt="..."
                     />
@@ -87,9 +94,9 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                   className="carousel-item relative float-left w-full"
                   key={index}
                   onClick={() => {
-                    val.name
-                      ? navigate(`/tv/details/${val.id}`)
-                      : navigate(`/movie/details/${val.id}`);
+                    I_name
+                      ? navigate(`/tv/details/${id}`)
+                      : navigate(`/movie/details/${id}`);
                   }}
                 >
                   <div className="flex w-full cursor-pointer">
@@ -98,16 +105,12 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                       style={{ background: "#00040a" }}
                     >
                       <h1 className="mb-1 text-base xl:text-xl font-extrabold">
-                        {val.title ? val.title : val.name}
+                        {title ? title : I_name}
                       </h1>
                       <h1 className="mb-2 opacity-50 text-xm xl:text-base">
-                        {val.release_date
-                          ? val.release_date
-                          : val.first_air_date}
+                        {release_date ? release_date : first_air_date}
                       </h1>
-                      <h1 className="mb-1 line-clamp-3 w-11/12">
-                        {val.overview}
-                      </h1>
+                      <h1 className="mb-1 line-clamp-3 w-11/12">{overview}</h1>
                     </div>
                     <div
                       className="w-1/5 z-10 absolute hidden h-full md:inline-block"
@@ -118,7 +121,7 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                       }}
                     ></div>
                     <img
-                      src={`${MOVIE_DB_IMG_URL}${val.backdrop_path}`}
+                      src={`${MOVIE_DB_IMG_URL}${backdrop_path}`}
                       className="block w-full md:w-3/5 z-0"
                       alt="..."
                     />

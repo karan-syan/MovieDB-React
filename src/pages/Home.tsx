@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { PropagateLoader } from "react-spinners";
+import { BarLoader, PropagateLoader } from "react-spinners";
 import Crousel from "../components/Crousel";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -10,7 +10,7 @@ import {
   CallMoviePopular,
   CallMovieUpcoming,
   CallTvPopular,
-  CallTvRecommend,
+  CallRecommend,
   CallTvTrending,
 } from "../redux/action/ActionCallApi";
 import { ApplicationState } from "../redux/root/rootReducer";
@@ -87,8 +87,9 @@ export default function Home() {
       })
     );
     dispatch(
-      CallTvRecommend.request({
-        url: "tv/46261/recommendations",
+      CallRecommend.request({
+        url: "tv",
+        id: "46261",
         page: 1,
         NewData: true,
       })
@@ -104,7 +105,7 @@ export default function Home() {
       }}
     >
       {RecommendShows.loading && MoviesSlider.loading ? (
-        <PropagateLoader color="#36d7b7" />
+        <BarLoader color="#36d7b7" />
       ) : (
         <div>
           <Header />

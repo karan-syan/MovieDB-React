@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { PropagateLoader } from "react-spinners";
+import { BarLoader, PropagateLoader } from "react-spinners";
 import ButtonGroup from "../components/ButtonGroup";
 import Crousel from "../components/Crousel";
 import Header from "../components/Header";
@@ -18,7 +18,7 @@ import {
 } from "../utils/url";
 
 let pg = 1;
-export default function Shows() {
+export default function TvShows() {
   const dispatch = useDispatch();
   const [query, setQuery] = useSearchParams();
   const MoviesSlider = useSelector(
@@ -108,7 +108,7 @@ export default function Shows() {
       }}
     >
       {MoviesData.loading && MoviesSlider.loading ? (
-        <PropagateLoader color="#36d7b7" />
+        <BarLoader color="#36d7b7" />
       ) : (
         <div
           style={{

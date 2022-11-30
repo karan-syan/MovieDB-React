@@ -1,5 +1,6 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import {
+  AllSearchReducer,
   DetailsReducer,
   movieReducer,
   TrendingReducer,
@@ -10,6 +11,7 @@ const rootReducer = combineReducers({
   tv: tvReducer,
   trend: TrendingReducer,
   details: DetailsReducer,
+  Search: AllSearchReducer,
 });
 export default rootReducer;
 export type ApplicationState = ReturnType<typeof rootReducer>;

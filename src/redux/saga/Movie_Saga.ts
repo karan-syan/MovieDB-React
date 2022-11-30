@@ -1,18 +1,26 @@
 import { all, call, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { ICast, IMovie, ITvDetails } from "../../utils/type";
+import { ICast, IMovie, IMovieDetails, ITvDetails } from "../../utils/type";
 import {
   CallCast,
   CallCrouselSlider,
+  CallMovieDetails,
   CallMoviePopular,
   CallMovies,
   CallMovieUpcoming,
+  CallRecommend,
+  CallSearch,
   CallTvDetails,
   CallTvPopular,
-  CallTvRecommend,
   CallTvTrending,
 } from "../action/ActionCallApi";
-import { FetchApi, FetchApiCast, FetchApiDetails } from "./fetching/FetchApi";
+import {
+  FetchApi,
+  FetchApiCast,
+  FetchApiDetails,
+  FetchApiRecommend,
+  FetchSearchApi,
+} from "./fetching/FetchApi";
 
 function* CrouselSlider(params: ActionType<typeof CallCrouselSlider.request>) {
   try {
@@ -71,15 +79,15 @@ function* TvTrending(params: ActionType<typeof CallTvTrending.request>) {
   }
 }
 
-function* TvRecommend(params: ActionType<typeof CallTvRecommend.request>) {
+function* Recommend(params: ActionType<typeof CallRecommend.request>) {
   try {
     yield console.log("saga ", params.payload.url);
-    const payload: IMovie[] = yield call(FetchApi, params.payload);
+    const payload: IMovie[] = yield call(FetchApiRecommend, params.payload);
     yield console.log("saga ", payload);
-    yield put(CallTvRecommend.success(payload));
+    yield put(CallRecommend.success(payload));
   } catch (error) {
     yield console.log("saga ", error);
-    yield put({ type: CallTvRecommend.failure, error });
+    yield put({ type: CallRecommend.failure, error });
   }
 }
 function* Movies(params: ActionType<typeof CallMovies.request>) {
@@ -104,6 +112,17 @@ function* TvDetails(params: ActionType<typeof CallTvDetails.request>) {
     yield put({ type: CallTvDetails.failure, error });
   }
 }
+function* MovieDetails(params: ActionType<typeof CallMovieDetails.request>) {
+  try {
+    yield console.log("saga ", params.payload.url);
+    const payload: IMovieDetails = yield call(FetchApiDetails, params.payload);
+    yield console.log("saga ", payload);
+    yield put(CallMovieDetails.success(payload));
+  } catch (error) {
+    yield console.log("saga ", error);
+    yield put({ type: CallMovieDetails.failure, error });
+  }
+}
 
 function* TvCast(params: ActionType<typeof CallCast.request>) {
   try {
@@ -116,6 +135,16 @@ function* TvCast(params: ActionType<typeof CallCast.request>) {
     yield put({ type: CallCast.failure, error });
   }
 }
+function* Search(params: ActionType<typeof CallSearch.request>) {
+  try {
+    const payload: IMovie[] = yield call(FetchSearchApi, params.payload);
+    yield console.log("saga ", payload);
+    yield put(CallSearch.success(payload));
+  } catch (error) {
+    yield console.log("saga ", error);
+    yield put({ type: CallSearch.failure, error });
+  }
+}
 
 export function* Movie_Saga() {
   yield all([
@@ -124,9 +153,11 @@ export function* Movie_Saga() {
     takeEvery(getType(CallMovieUpcoming.request), MovieUpcoming),
     takeEvery(getType(CallTvPopular.request), TvPopular),
     takeEvery(getType(CallTvTrending.request), TvTrending),
-    takeEvery(getType(CallTvRecommend.request), TvRecommend),
+    takeEvery(getType(CallRecommend.request), Recommend),
     takeEvery(getType(CallMovies.request), Movies),
     takeEvery(getType(CallTvDetails.request), TvDetails),
+    takeEvery(getType(CallMovieDetails.request), MovieDetails),
     takeEvery(getType(CallCast.request), TvCast),
+    takeEvery(getType(CallSearch.request), Search),
   ]);
 }

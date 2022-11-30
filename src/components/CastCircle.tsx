@@ -1,13 +1,13 @@
 import Avatar from "react-avatar";
 import { useNavigate } from "react-router-dom";
-import { Movies_Distructing } from "../utils/ApiDistruct";
+import { Cast_Distructing } from "../utils/ApiDistruct";
 import { ICast } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function CastCircle({ item }: { item: ICast }) {
   const navigate = useNavigate();
   const { C_original_name, C_character, C_Profile_Path } =
-    Movies_Distructing(item);
+    Cast_Distructing(item);
   return (
     <div
       className="inline-block mx-2 text-center "
