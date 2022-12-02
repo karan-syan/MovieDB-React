@@ -25,28 +25,15 @@ import {
 export default function Home() {
   const dispatch = useDispatch();
 
-  const MoviesSlider = useSelector(
-    (state: ApplicationState) => state.movie.CrouselSlider
-  );
-  const PopularMovies = useSelector(
-    (state: ApplicationState) => state.movie.PopularMovies
+  const { CrouselSlider, PopularMovies, UpcomingMovie } = useSelector(
+    (state: ApplicationState) => state.movie
   );
 
-  const PopularShows = useSelector(
-    (state: ApplicationState) => state.tv.PopularShows
+  const { PopularShows, TvRecommend } = useSelector(
+    (state: ApplicationState) => state.tv
   );
 
-  const UpcomingMovies = useSelector(
-    (state: ApplicationState) => state.movie.UpcomingMovie
-  );
-
-  const TrendingShows = useSelector(
-    (state: ApplicationState) => state.trend.TvTrending
-  );
-
-  const RecommendShows = useSelector(
-    (state: ApplicationState) => state.tv.TvRecommend
-  );
+  const { TvTrending } = useSelector((state: ApplicationState) => state.trend);
 
   useEffect(() => {
     dispatch(
@@ -101,7 +88,7 @@ export default function Home() {
         height: "100vh",
       }}
     >
-      {RecommendShows.loading && MoviesSlider.loading ? (
+      {TvRecommend.loading && CrouselSlider.loading ? (
         <BarLoader color="#36d7b7" />
       ) : (
         <div>
@@ -110,12 +97,12 @@ export default function Home() {
             className="flex overflow-auto w-full flex-col"
             style={{ height: "92.5vh" }}
           >
-            <Crousel item={MoviesSlider.Data} />
+            <Crousel item={CrouselSlider.Data} />
             <ListRow item={PopularMovies.Data} title={"Popular Movies"} />
-            <ListRow item={TrendingShows.Data} title={"Trending Tv Shows"} />
+            <ListRow item={TvTrending.Data} title={"Trending Tv Shows"} />
             <ListRow item={PopularShows.Data} title={"Popular Tv Shows"} />
-            <ListRow item={UpcomingMovies.Data} title={"Upcoming Movies"} />
-            <ListRow item={RecommendShows.Data} title={"Animated Series"} />
+            <ListRow item={UpcomingMovie.Data} title={"Upcoming Movies"} />
+            <ListRow item={TvRecommend.Data} title={"Animated Series"} />
             <Footer />
           </div>
         </div>
