@@ -2,20 +2,15 @@ import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { BarLoader, PropagateLoader } from "react-spinners";
+import { BarLoader } from "react-spinners";
 import ButtonGroup from "../components/ButtonGroup";
 import Crousel from "../components/Crousel";
 import Header from "../components/Header";
 import MovieBox from "../components/MovieBox";
 import { CallCrouselSlider, CallMovies } from "../redux/action/ActionCallApi";
 import { ApplicationState } from "../redux/root/rootReducer";
-import { Now_playing, Popular, Top_rated, Trending } from "../utils/constants";
-import {
-  now_playing_tv_url,
-  popular_tv_url,
-  top_rated_tv_url,
-  trending_tv_url,
-} from "../utils/url";
+import { Popular } from "../utils/constants";
+import { popular_tv_url } from "../utils/url";
 
 let pg = 1;
 export default function TvShows() {
@@ -46,37 +41,14 @@ export default function TvShows() {
     }
   }, [dispatch, urlparams.get("type")]);
 
-  function dispatchFun(url: string, newdata: boolean, page: number) {
+  function FetchData(newdata: boolean, page: number) {
     dispatch(
       CallMovies.request({
-        url: url,
+        url: `tv/${urlparams.get("type")}`,
         page: page,
         NewData: newdata,
       })
     );
-  }
-
-  function FetchData(newdata: boolean, page: number) {
-    switch (urlparams.get("type")) {
-      case Popular:
-        dispatchFun(popular_tv_url, newdata, page);
-        break;
-
-      case Top_rated:
-        dispatchFun(top_rated_tv_url, newdata, page);
-        break;
-
-      case Now_playing:
-        dispatchFun(now_playing_tv_url, newdata, page);
-        break;
-
-      case Trending:
-        dispatchFun(trending_tv_url, newdata, page);
-        break;
-      default:
-        console.error("Wrong param type");
-        break;
-    }
   }
 
   const [prevScrollPos, setPrevScrollPos] = useState(0);

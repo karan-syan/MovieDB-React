@@ -15,15 +15,10 @@ export default function Header() {
         backgroundImage: "linear-gradient(to right, #08101c, #00040a)",
       }}
     >
-      {/* visible in only mobile or tabled */}
       <div className="flex items-center ml-2 mr-10 sm:hidden">
         <BiMenu className="text-3xl" />
       </div>
-
-      {/* visible in every size */}
       <Name />
-
-      {/* visible in bigger devices */}
       <div className="items-center flex">
         <div className=" items-center hidden hover:cursor-pointer sm:flex">
           <HeaderTab text="Home" path="/" />
@@ -32,7 +27,6 @@ export default function Header() {
           <HeaderTab text="Trending" path="/trending" />
           <HeaderTab text="Genres" path="/genres" />
         </div>
-        {/* visible in only mobile or tabled */}
         <div className="flex items-center justify-between mx-2 ml-10 px-2 py-2 sm:mx-0 md:mx-3">
           <BiSearch
             className="text-xl sm:text-xl"

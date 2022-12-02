@@ -11,7 +11,6 @@ import {
   CallCast,
   CallCastDetails,
   CallCrouselSlider,
-  CallHomePage,
   CallMovieDetails,
   CallMoviePopular,
   CallMovies,

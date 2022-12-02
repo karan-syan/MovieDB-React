@@ -15,7 +15,6 @@ import {
   CallRecommend,
 } from "../redux/action/ActionCallApi";
 import { ApplicationState } from "../redux/root/rootReducer";
-import { MovieDetails_Distructing } from "../utils/ApiDistruct";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function MoviesDetails() {
   const dispatch = useDispatch();
