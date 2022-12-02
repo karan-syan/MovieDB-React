@@ -25,7 +25,7 @@ function TabButton({ Name }: { Name: string }) {
         });
       }}
     >
-      {Name.charAt(0).toUpperCase() + Name.slice(1)}
+      {Name.charAt(0).toUpperCase() + Name.slice(1).replace("_", " ")}
     </button>
   );
 }
@@ -41,7 +41,6 @@ export default function ButtonGroup({ varient }: { varient: "tv" | "movie" }) {
       <TabButton Name={Top_rated} />
       <TabButton Name={Now_playing} />
       {varient === "tv" ? null : <TabButton Name={Upcoming} />}
-      <TabButton Name={Trending} />
     </div>
   );
 }

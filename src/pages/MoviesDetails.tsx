@@ -4,15 +4,14 @@ import { IoTime } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
-import CastInfo from "../components/CastInfo";
 import CastList from "../components/CastList";
 import Context from "../components/Context";
 import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
+import PosterCard from "../components/PosterCard";
 import {
   CallCast,
   CallMovieDetails,
-  CallMovies,
   CallRecommend,
 } from "../redux/action/ActionCallApi";
 import { ApplicationState } from "../redux/root/rootReducer";
@@ -69,9 +68,9 @@ export default function MoviesDetails() {
     production_companies,
     tagline,
     spoken_languages,
-    voteAvg,
     title,
-  } = MovieDetails_Distructing(MovieDetails.Data);
+    vote_average,
+  } = MovieDetails.Data;
   return (
     <div
       className="flex justify-center items-center"
@@ -102,13 +101,7 @@ export default function MoviesDetails() {
               className="flex flex-col md:flex-row md:justify-between md:items-center overflow-y-auto md:overflow-y-hidden"
               style={{ height: "92.5vh" }}
             >
-              <div className="md:w-1/4">
-                <img
-                  alt=""
-                  className="w-6/12 mx-auto my-auto rounded-xl md:w-full md:ml-7 md:rounded-3xl drop-shadow-2xl shadow-2xl"
-                  src={MOVIE_DB_IMG_URL + poster_path}
-                />
-              </div>
+              <PosterCard Poster_Path={poster_path} />
               <div
                 className="flex mt-5 justify-center pb-3 md:w-2/3 flex-col items-center md:h-full md:overflow-auto md:justify-start md:items-start"
                 ref={elementForScroll}
@@ -124,7 +117,7 @@ export default function MoviesDetails() {
                 </h1>
                 <h1 className="text-sm md:text-base opacity-70 flex items-center">
                   <IoTime className="mx-1" />
-                  {runtime} min | {voteAvg} | {}
+                  {runtime} min | {vote_average} | {}
                 </h1>
                 <button className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base">
                   WatchList

@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import Context from "../components/Context";
 import DetailsHeader from "../components/DetailsHeader";
+import PosterCard from "../components/PosterCard";
 import { CallCastDetails } from "../redux/action/ActionCallApi";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
@@ -64,13 +65,7 @@ export default function PeopleDetails() {
               className="flex flex-col md:flex-row md:justify-between md:items-center overflow-y-auto md:overflow-y-hidden"
               style={{ height: "92.5vh" }}
             >
-              <div className="md:w-1/4">
-                <img
-                  alt=""
-                  className="w-6/12 mx-auto my-auto rounded-xl md:w-full md:ml-7 md:rounded-3xl drop-shadow-2xl shadow-2xl"
-                  src={MOVIE_DB_IMG_URL + profile_path}
-                />
-              </div>
+              <PosterCard Poster_Path={profile_path} />
               <div className="flex mt-5 justify-center pb-3 md:w-2/3 flex-col items-center md:h-full md:overflow-auto md:justify-start md:items-start">
                 <h1 className="text-xl md:text-3xl font-extrabold text-center">
                   {name}

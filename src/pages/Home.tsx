@@ -1,30 +1,13 @@
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { BarLoader, PropagateLoader } from "react-spinners";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { BarLoader } from "react-spinners";
 import Crousel from "../components/Crousel";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ListRow from "../components/ListRow";
-import {
-  CallCrouselSlider,
-  CallMoviePopular,
-  CallMovieUpcoming,
-  CallTvPopular,
-  CallRecommend,
-  CallTvTrending,
-} from "../redux/action/ActionCallApi";
 import { ApplicationState } from "../redux/root/rootReducer";
-import {
-  popular_movie_url,
-  popular_tv_url,
-  trending_tv_url,
-  trending_url,
-  upcoming_movie_url,
-} from "../utils/url";
-
+import { HomePageDispatch } from "../utils/CallDispatch";
 export default function Home() {
-  const dispatch = useDispatch();
-
   const { CrouselSlider, PopularMovies, UpcomingMovie } = useSelector(
     (state: ApplicationState) => state.movie
   );
@@ -36,49 +19,8 @@ export default function Home() {
   const { TvTrending } = useSelector((state: ApplicationState) => state.trend);
 
   useEffect(() => {
-    dispatch(
-      CallCrouselSlider.request({
-        url: trending_url,
-        page: 1,
-        NewData: true,
-      })
-    );
-    dispatch(
-      CallMoviePopular.request({
-        url: popular_movie_url,
-        page: 1,
-        NewData: true,
-      })
-    );
-    dispatch(
-      CallTvPopular.request({
-        url: popular_tv_url,
-        page: 1,
-        NewData: true,
-      })
-    );
-    dispatch(
-      CallMovieUpcoming.request({
-        url: upcoming_movie_url,
-        page: 1,
-        NewData: true,
-      })
-    );
-    dispatch(
-      CallTvTrending.request({
-        url: trending_tv_url,
-        page: 1,
-        NewData: true,
-      })
-    );
-    dispatch(
-      CallRecommend.request({
-        url: "tv/46261/recommendations",
-        page: 1,
-        NewData: true,
-      })
-    );
-  }, [dispatch]);
+    HomePageDispatch();
+  }, []);
 
   return (
     <div
