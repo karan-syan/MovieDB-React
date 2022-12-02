@@ -25,8 +25,6 @@ import {
 export default function Home() {
   const dispatch = useDispatch();
 
-  const [val, setval] = useState<number>(1);
-
   const MoviesSlider = useSelector(
     (state: ApplicationState) => state.movie.CrouselSlider
   );
@@ -61,7 +59,7 @@ export default function Home() {
     dispatch(
       CallMoviePopular.request({
         url: popular_movie_url,
-        page: val,
+        page: 1,
         NewData: true,
       })
     );
@@ -88,8 +86,7 @@ export default function Home() {
     );
     dispatch(
       CallRecommend.request({
-        url: "tv",
-        id: "46261",
+        url: "tv/46261/recommendations",
         page: 1,
         NewData: true,
       })

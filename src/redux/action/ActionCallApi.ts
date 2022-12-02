@@ -1,15 +1,20 @@
 import { createAsyncAction } from "typesafe-actions";
-import { ICast, IMovie, IMovieDetails, ITvDetails } from "../../utils/type";
+import {
+  ICast,
+  IMovie,
+  IMovieDetails,
+  Iperson,
+  ITvDetails,
+} from "../../utils/type";
 
 export interface FetchMoviePayload {
   page?: number;
-  id?: string | undefined;
   url: string;
   NewData: boolean;
 }
+
 export interface FetchDetailsPayload {
   url: string;
-  id: string | undefined;
 }
 
 export interface FetchSearchPayload {
@@ -21,8 +26,10 @@ export interface FetchSearchPayload {
 
 export interface FetchCastPayload {
   url: string;
-  id: string | undefined;
-  afterIdurl: string;
+}
+
+export interface FetchCastDetailsPayload {
+  url: string;
 }
 
 // Slider
@@ -34,6 +41,12 @@ export const CallCrouselSlider = createAsyncAction(
 )<FetchMoviePayload, IMovie[], Error>();
 
 // Movie
+
+export const CallHomePage = createAsyncAction(
+  "FETCH_HOME_PAGE_REQUEST",
+  "FETCH_HOME_PAGE_SUCCESS",
+  "FETCH_HOME_PAGE_FAILURE"
+)<FetchMoviePayload, IMovie[], Error>();
 
 export const CallMoviePopular = createAsyncAction(
   "FETCH_MOVIE_POPULAR_REQUEST",
@@ -121,3 +134,9 @@ export const CallCast = createAsyncAction(
   "FETCH_TV_CAST_SUCCESS",
   "FETCH_TV_CAST_FAILURE"
 )<FetchCastPayload, ICast[], Error>();
+
+export const CallCastDetails = createAsyncAction(
+  "FETCH_TV_CAST_DETAILS_REQUEST",
+  "FETCH_TV_CAST_DETAILS_SUCCESS",
+  "FETCH_TV_CAST_DETAILS_FAILURE"
+)<FetchCastDetailsPayload, Iperson, Error>();

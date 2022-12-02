@@ -1,26 +1,22 @@
 import { useEffect, useRef } from "react";
-import { BiSearch } from "react-icons/bi";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { IoTime } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
-import { BarLoader, PropagateLoader } from "react-spinners";
-import CastCircle from "../components/CastCircle";
+import { useParams } from "react-router-dom";
+import { BarLoader } from "react-spinners";
+import CastInfo from "../components/CastInfo";
+import CastList from "../components/CastList";
+import Context from "../components/Context";
 import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
-import Name from "../components/Name";
 import {
   CallCast,
   CallMovieDetails,
   CallMovies,
   CallRecommend,
-  CallTvDetails,
 } from "../redux/action/ActionCallApi";
 import { ApplicationState } from "../redux/root/rootReducer";
-import {
-  MovieDetails_Distructing,
-  TvDetails_Distructing,
-} from "../utils/ApiDistruct";
+import { MovieDetails_Distructing } from "../utils/ApiDistruct";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function MoviesDetails() {
   const dispatch = useDispatch();
@@ -37,31 +33,19 @@ export default function MoviesDetails() {
   useEffect(() => {
     dispatch(
       CallMovieDetails.request({
-        url: "/movie",
-        id: id,
-      })
-    );
-    dispatch(
-      CallMovies.request({
-        url: "movie",
-        id: id,
-        NewData: true,
-        page: 1,
+        url: `movie/${id}`,
       })
     );
     dispatch(
       CallRecommend.request({
-        url: "movie",
-        id: id,
+        url: `movie/${id}/recommendations`,
         NewData: true,
         page: 1,
       })
     );
     dispatch(
       CallCast.request({
-        url: "/movie",
-        id: id,
-        afterIdurl: "/credits",
+        url: `movie/${id}/credits`,
       })
     );
     elementForScroll.current?.scrollTo({
@@ -146,54 +130,42 @@ export default function MoviesDetails() {
                   WatchList
                   <BsBookmarkHeartFill className="ml-2" />
                 </button>
-                <div className="mx-2 mt-2">
-                  <h1 className="text-lg">Synopsis:</h1>
-                  <h1 className="opacity-70 text-sm">{overview}</h1>
-                </div>
-                <div className="w-full  mt-2 ">
-                  <h1 className="text-lg mx-2">Production Companies:</h1>
-                  <h1 className="mx-2 opacity-70 text-sm">
-                    {production_companies.map((item) => item.name + " ")}
-                  </h1>
-                  <div className="w-full  mt-2 ">
-                    <h1 className="text-lg mx-2">Genres:</h1>
-                    <h1 className="mx-2 opacity-70 text-sm">
-                      {genres.map((item) => item.name + ", ")}
-                    </h1>
-                  </div>
-                  <div className="w-full  mt-2 ">
-                    <h1 className="text-lg mx-2">Spoken Language:</h1>
-                    <h1 className="mx-2 opacity-70 text-sm">
-                      {spoken_languages.map((item) => item.english_name)}
-                    </h1>
-                  </div>
-                  <div className="w-full  mt-2 ">
-                    <h1 className="text-lg mx-2">Budget:</h1>
-                    <h1 className="mx-2 opacity-70 text-sm">
-                      {budget === 0 ? "N/A" : "$ " + budget.toLocaleString()}
-                    </h1>
-                  </div>
-                  <div className="w-full  mt-2 ">
-                    <h1 className="text-lg mx-2">Revenue:</h1>
-                    <h1 className="mx-2 opacity-70 text-sm">
-                      {revenue === 0 ? "N/A" : "$ " + revenue.toLocaleString()}
-                    </h1>
-                  </div>
+                <Context title="Synopsis" subtitle={overview} />
+                <Context
+                  title="Production Companies"
+                  subtitle={production_companies
+                    .map((item) => " " + item.name)
+                    .toString()}
+                />
+                <Context
+                  title="Genres"
+                  subtitle={genres.map((item) => " " + item.name).toString()}
+                />
+                <Context
+                  title="Spoken Language"
+                  subtitle={spoken_languages
+                    .map((item) => " " + item.english_name)
+                    .toString()}
+                />
+                <Context
+                  title="Budget"
+                  subtitle={
+                    budget === 0 ? "N/A" : "$ " + budget.toLocaleString()
+                  }
+                />
+                <Context
+                  title="Revenue"
+                  subtitle={
+                    revenue === 0 ? "N/A" : "$ " + revenue.toLocaleString()
+                  }
+                />
+                <CastList data={tvCast.Data} />
+                {Recommended.Data.length === 0 ? null : (
                   <div className="w-full mt-2">
-                    <h1 className="text-lg mx-2">Casts:</h1>
-                    <div className="overflow-auto whitespace-nowrap">
-                      {tvCast.Data.map((item, index) => {
-                        return <CastCircle item={item} key={index} />;
-                      })}
-                    </div>
+                    <h1 className="text-lg mx-2">Recommended:</h1>
+                    <ListRow item={Recommended.Data} />
                   </div>
-                  {Recommended.Data.length === 0 ? null : (
-                    <div className="w-full mt-2">
-                      <h1 className="text-lg mx-2">Recommended:</h1>
-                      <ListRow item={Recommended.Data} />
-                    </div>
-                  )}
-                </div>
+                )}
               </div>
             </div>
           </div>

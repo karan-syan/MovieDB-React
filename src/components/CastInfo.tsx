@@ -4,7 +4,7 @@ import { Cast_Distructing } from "../utils/ApiDistruct";
 import { ICast } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
-export default function CastCircle({ item }: { item: ICast }) {
+export default function CastInfo({ item }: { item: ICast }) {
   const navigate = useNavigate();
   const { C_original_name, C_character, C_Profile_Path } =
     Cast_Distructing(item);

@@ -20,7 +20,7 @@ export default function Crousel({ item }: { item: IMovie[] }) {
             className="active"
             aria-current="true"
             aria-label="Slide 1"
-          ></button>
+          />
           {item.map((val, index) => {
             if (index > 0 && index <= 10) {
               return (
@@ -47,51 +47,12 @@ export default function Crousel({ item }: { item: IMovie[] }) {
               release_date,
             } = IMovie_distructing(val);
 
-            if (index === 1) {
+            if (index <= 11) {
               return (
                 <div
-                  className="carousel-item active relative float-left w-full"
-                  onClick={() => {
-                    I_name
-                      ? navigate(`/tv/details/${id}`)
-                      : navigate(`/movie/details/${id}`);
-                  }}
-                  key={index}
-                >
-                  <div className="flex w-full cursor-pointer">
-                    <div
-                      className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight hidden md:flex md:px-2 xl:text-lg"
-                      style={{ background: "#00040a" }}
-                    >
-                      <h1 className="mb-1 text-base xl:text-xl font-extrabold">
-                        {title ? title : I_name}
-                      </h1>
-                      <h1 className="mb-2 opacity-50 text-xm xl:text-base">
-                        {release_date ? release_date : first_air_date}
-                      </h1>
-                      <h1 className="mb-1 line-clamp-3 w-11/12">{overview}</h1>
-                    </div>
-                    <div
-                      className="w-1/5 z-10 absolute hidden h-full md:inline-block"
-                      style={{
-                        left: "39.85%",
-                        backgroundImage:
-                          "linear-gradient(to right, #00040a, rgba(255,0,0,0))",
-                      }}
-                    ></div>
-                    <img
-                      src={`${MOVIE_DB_IMG_URL}${backdrop_path}`}
-                      className="block w-full md:w-3/5 z-0"
-                      alt="..."
-                    />
-                  </div>
-                </div>
-              );
-            }
-            if (index > 1 && index <= 11) {
-              return (
-                <div
-                  className="carousel-item relative float-left w-full"
+                  className={`carousel-item relative float-left w-full ${
+                    index === 0 ? "active" : ""
+                  }`}
                   key={index}
                   onClick={() => {
                     I_name

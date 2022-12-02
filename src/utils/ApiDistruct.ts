@@ -1,4 +1,4 @@
-import { ICast, IMovie, IMovieDetails, ITvDetails } from "./type";
+import { ICast, IMovie, IMovieDetails, Iperson, ITvDetails } from "./type";
 
 export const IMovie_distructing = (item: IMovie) => {
   return {
@@ -24,6 +24,23 @@ export const Cast_Distructing = (item: ICast) => {
     C_original_name: item.original_name,
     C_popularity: item.popularity,
     C_known_for_department: item.known_for_department,
+  };
+};
+
+export const Person_Distructing = (item: Iperson) => {
+  return {
+    adult: item.adult,
+    P_name: item.also_known_as,
+    ID: item.id,
+    gender: item.gender,
+    name: item.name,
+    Profile_Path: item.profile_path,
+    biography: item.biography,
+    C_popularity: item.popularity,
+    C_known_for_department: item.known_for_department,
+    birthday: item.birthday,
+    deathday: item.deathday,
+    place_of_birth: item.place_of_birth,
   };
 };
 
@@ -61,6 +78,7 @@ export const TvDetails_Distructing = (item: ITvDetails) => {
     episode_run_time: item.episode_run_time,
   };
 };
+
 export const MovieDetails_Distructing = (item: IMovieDetails) => {
   return {
     adult: item.adult,

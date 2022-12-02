@@ -1,9 +1,17 @@
 import { all, call, put, takeEvery } from "redux-saga/effects";
 import { ActionType, getType } from "typesafe-actions";
-import { ICast, IMovie, IMovieDetails, ITvDetails } from "../../utils/type";
+import {
+  ICast,
+  IMovie,
+  IMovieDetails,
+  Iperson,
+  ITvDetails,
+} from "../../utils/type";
 import {
   CallCast,
+  CallCastDetails,
   CallCrouselSlider,
+  CallHomePage,
   CallMovieDetails,
   CallMoviePopular,
   CallMovies,
@@ -145,6 +153,16 @@ function* Search(params: ActionType<typeof CallSearch.request>) {
     yield put({ type: CallSearch.failure, error });
   }
 }
+function* CastDetails(params: ActionType<typeof CallCastDetails.request>) {
+  try {
+    const payload: Iperson = yield call(FetchApiDetails, params.payload);
+    yield console.log("saga ", payload);
+    yield put(CallCastDetails.success(payload));
+  } catch (error) {
+    yield console.log("saga ", error);
+    yield put({ type: CallSearch.failure, error });
+  }
+}
 
 export function* Movie_Saga() {
   yield all([
@@ -159,5 +177,6 @@ export function* Movie_Saga() {
     takeEvery(getType(CallMovieDetails.request), MovieDetails),
     takeEvery(getType(CallCast.request), TvCast),
     takeEvery(getType(CallSearch.request), Search),
+    takeEvery(getType(CallCastDetails.request), CastDetails),
   ]);
 }

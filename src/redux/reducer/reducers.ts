@@ -1,6 +1,12 @@
 import { combineReducers } from "redux";
 import { ActionType, getType } from "typesafe-actions";
-import { ICast, IMovie, IMovieDetails, ITvDetails } from "../../utils/type";
+import {
+  ICast,
+  IMovie,
+  IMovieDetails,
+  Iperson,
+  ITvDetails,
+} from "../../utils/type";
 import * as actions from "../action/ActionCallApi";
 import { CallCrouselSlider } from "../action/ActionCallApi";
 
@@ -20,6 +26,10 @@ export interface IMovieStateDetails {
 interface IStateCast {
   loading: boolean;
   Data: ICast[];
+}
+interface IStateperson {
+  loading: boolean;
+  Data: Iperson;
 }
 const InitialStateCast: IStateCast = {
   Data: [],
@@ -130,6 +140,26 @@ const InitialStateMovieDetail: IMovieStateDetails = {
   loading: true,
 };
 
+const InitialStatePerson: IStateperson = {
+  Data: {
+    adult: false,
+    also_known_as: [],
+    biography: "",
+    birthday: "",
+    deathday: "",
+    gender: 0,
+    homepage: "",
+    id: 0,
+    imdb_id: "",
+    known_for_department: "",
+    name: "",
+    place_of_birth: "",
+    popularity: 0,
+    profile_path: "",
+  },
+  loading: true,
+};
+
 const CrouselSliderReducer = (
   state: IState = InitialState,
   action: ActionType<typeof actions>
@@ -165,6 +195,7 @@ const PopularMovieReducer = (
       };
 
     case getType(actions.CallMoviePopular.success):
+      console.log("popular 12345678");
       return {
         ...state,
         loading: true,
@@ -400,6 +431,28 @@ const TvCastReducer = (
       return state;
   }
 };
+const TvPersonReducer = (
+  state: IStateperson = InitialStatePerson,
+  action: ActionType<typeof actions>
+) => {
+  switch (action.type) {
+    case getType(actions.CallCastDetails.request):
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case getType(actions.CallCastDetails.success):
+      return {
+        ...state,
+        loading: false,
+        Data: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
 
 export const movieReducer = combineReducers({
   CrouselSlider: CrouselSliderReducer,
@@ -420,6 +473,7 @@ export const DetailsReducer = combineReducers({
   TvDetails: TvDetailsReducer,
   MovieDetails: MovieDetailsReducer,
   TvCast: TvCastReducer,
+  PersonDetails: TvPersonReducer,
 });
 
 export const tvReducer = combineReducers({
