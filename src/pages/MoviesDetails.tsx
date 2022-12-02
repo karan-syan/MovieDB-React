@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { BarLoader, PropagateLoader } from "react-spinners";
 import CastCircle from "../components/CastCircle";
+import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
 import Name from "../components/Name";
 import {
@@ -23,7 +24,6 @@ import {
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function MoviesDetails() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const elementForScroll = useRef<HTMLDivElement>(null);
 
   const MovieDetails = useSelector(
@@ -113,17 +113,7 @@ export default function MoviesDetails() {
             className=" w-full h-full"
             style={{ backdropFilter: "blur(10px) brightness(60%)" }}
           >
-            <div className="flex justify-between" style={{ height: "7.5vh" }}>
-              <Name />
-              <div className="flex items-center justify-between mx-2 ml-10 px-2 py-2 sm:mx-0 md:mx-3">
-                <BiSearch
-                  className="text-xl sm:text-xl"
-                  onClick={() => {
-                    navigate("/search");
-                  }}
-                />
-              </div>
-            </div>
+            <DetailsHeader />
             <div
               className="flex flex-col md:flex-row md:justify-between md:items-center overflow-y-auto md:overflow-y-hidden"
               style={{ height: "92.5vh" }}

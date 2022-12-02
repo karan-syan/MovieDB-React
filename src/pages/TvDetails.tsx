@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import CastCircle from "../components/CastCircle";
+import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
 import Name from "../components/Name";
 import {
@@ -20,7 +21,6 @@ import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function TvDetails() {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const elementForScroll = useRef<HTMLDivElement>(null);
 
   const tvshows = useSelector(
@@ -113,17 +113,7 @@ export default function TvDetails() {
             className=" w-full h-full"
             style={{ backdropFilter: "blur(10px) brightness(60%)" }}
           >
-            <div className="flex justify-between" style={{ height: "7.5vh" }}>
-              <Name />
-              <div className="flex items-center justify-between mx-2 ml-10 px-2 py-2 sm:mx-0 md:mx-3">
-                <BiSearch
-                  className="text-xl sm:text-xl"
-                  onClick={() => {
-                    navigate("/search");
-                  }}
-                />
-              </div>
-            </div>
+            <DetailsHeader />
             <div
               className="flex flex-col md:flex-row md:justify-between md:items-center overflow-y-auto md:overflow-y-hidden"
               style={{ height: "92.5vh" }}
@@ -136,7 +126,7 @@ export default function TvDetails() {
                 />
               </div>
               <div
-                className="flex mt-5 justify-center pb-1 md:w-2/3 flex-col items-center md:h-full md:overflow-auto md:justify-start md:items-start"
+                className="flex mt-5 justify-center pb-6 md:w-2/3 flex-col items-center md:h-full md:overflow-auto md:justify-start md:items-start"
                 ref={elementForScroll}
               >
                 <h1 className="text-xl md:text-3xl font-extrabold text-center">
