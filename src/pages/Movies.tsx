@@ -9,20 +9,8 @@ import Header from "../components/Header";
 import MovieBox from "../components/MovieBox";
 import { CallCrouselSlider, CallMovies } from "../redux/action/ActionCallApi";
 import { ApplicationState } from "../redux/root/rootReducer";
-import {
-  Now_playing,
-  Popular,
-  Top_rated,
-  Trending,
-  Upcoming,
-} from "../utils/constants";
-import {
-  now_playing_movie_url,
-  popular_movie_url,
-  top_rated_movie_url,
-  trending_movie_url,
-  upcoming_movie_url,
-} from "../utils/url";
+import { Popular } from "../utils/constants";
+import { popular_movie_url } from "../utils/url";
 
 let pg = 1;
 export default function Movies() {
@@ -61,7 +49,6 @@ export default function Movies() {
       })
     );
   }
-
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
 
