@@ -3,6 +3,7 @@ import { BiSearch } from "react-icons/bi";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import Filter from "../components/Filter";
 import MovieBox from "../components/MovieBox";
 import Name from "../components/Name";
 import { CallSearch } from "../redux/action/ActionCallApi";
@@ -16,33 +17,36 @@ export default function Search() {
     (state: ApplicationState) => state.Search.Searched
   );
   const [query, setQuery] = useSearchParams();
-  const myparams = window.location.search;
-  const urlparams = new URLSearchParams(myparams);
+
   function FetchData() {
     console.log("1234");
     dispatch(
       CallSearch.request({
         NewData: false,
         page: pg,
-        query: urlparams.get("query"),
+        query: query.get("query"),
         url: "multi",
       })
     );
   }
   useEffect(() => {
-    if (urlparams.has("query")) {
+    if (!query.has("filter")) {
+      query.set("filter", "multi");
+      setQuery(query);
+    }
+    if (query.has("query") && query.has("filter")) {
       pg = 1;
       console.log("123");
       dispatch(
         CallSearch.request({
           NewData: true,
           page: pg,
-          query: urlparams.get("query"),
-          url: "multi",
+          query: query.get("query"),
+          url: query.get("filter"),
         })
       );
     }
-  }, [dispatch, urlparams.get("query")]);
+  }, [dispatch, query.get("query"), query.get("filter")]);
   return (
     <div>
       <div
@@ -52,28 +56,36 @@ export default function Search() {
         <div className="hidden sm:block">
           <Name />
         </div>
-        <div className="flex h-full w-full pl-2 sm:w-3/4">
+        <div className="flex h-full w-full pl-2 sm:w-5/6">
           <input
             className="h-full bg-transparent w-11/12 focus:outline-none"
             placeholder="Search"
             value={val}
+            onKeyUp={(e) => {
+              if (val !== null && val !== "" && e.keyCode === 13) {
+                query.set("query", encodeURIComponent(val.trim()));
+                setQuery(query);
+              }
+            }}
             onChange={(e) => {
               setval(e.target.value);
             }}
           />
           <div className="flex items-center justify-between ml-1 pl-3">
             <BiSearch
-              className="text-xl sm:text-xl"
+              className="text-xl sm:text-xl mr-2 md:mr-5"
               onClick={() => {
                 if (val !== null && val !== "") {
-                  setQuery({ query: encodeURIComponent(val.trim()) });
+                  query.set("query", encodeURIComponent(val.trim()));
+                  setQuery(query);
                 }
               }}
             />
+            <Filter />
           </div>
         </div>
       </div>
-      {urlparams.has("query") ? (
+      {query.has("query") ? (
         MoviesData.Data.length === 0 ? (
           <div
             className="flex justify-center items-center"

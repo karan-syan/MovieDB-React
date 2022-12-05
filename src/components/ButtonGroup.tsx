@@ -8,14 +8,12 @@ import {
 } from "../utils/constants";
 
 function TabButton({ Name }: { Name: string }) {
-  const myparams = window.location.search;
-  const urlparams = new URLSearchParams(myparams);
   const [query, setQuery] = useSearchParams();
   return (
     <button
       type="button"
       className={`px-1 py-2 text-xs sm:px-2 sm:text-sm md:text-base md:px-4 font-medium ${
-        urlparams.get("type") === Name
+        query.get("type") === Name
           ? "bg-white text-gray-900"
           : "bg-transparent text-white"
       }  border hover:bg-gray-900 hover:text-white`}

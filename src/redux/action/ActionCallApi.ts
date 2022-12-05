@@ -18,7 +18,7 @@ export interface FetchDetailsPayload {
 }
 
 export interface FetchSearchPayload {
-  url: string;
+  url: string | null;
   page: number;
   query: string | null;
   NewData: boolean;

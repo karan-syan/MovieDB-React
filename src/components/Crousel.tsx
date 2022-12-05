@@ -47,7 +47,7 @@ export default function Crousel({ item }: { item: IMovie[] }) {
               release_date,
             } = IMovie_distructing(val);
 
-            if (index <= 11) {
+            if (index <= 10) {
               return (
                 <div
                   className={`carousel-item relative float-left w-full ${

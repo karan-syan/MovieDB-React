@@ -20,11 +20,9 @@ export default function TvShows() {
     (state: ApplicationState) => state.tv.CrouselSlider
   );
   const MoviesData = useSelector((state: ApplicationState) => state.tv.Tvs);
-  const myparams = window.location.search;
-  const urlparams = new URLSearchParams(myparams);
 
   useEffect(() => {
-    if (!urlparams.has("type")) {
+    if (!query.has("type")) {
       setQuery({ type: Popular });
     }
     dispatch(
@@ -35,16 +33,16 @@ export default function TvShows() {
       })
     );
 
-    if (urlparams.has("type")) {
-      console.log("i am being ", urlparams.get("type"));
+    if (query.has("type")) {
+      console.log("i am being ", query.get("type"));
       FetchData(true, 1);
     }
-  }, [dispatch, urlparams.get("type")]);
+  }, [dispatch, query.get("type")]);
 
   function FetchData(newdata: boolean, page: number) {
     dispatch(
       CallMovies.request({
-        url: `tv/${urlparams.get("type")}`,
+        url: `tv/${query.get("type")}`,
         page: page,
         NewData: newdata,
       })
@@ -88,27 +86,26 @@ export default function TvShows() {
             height: "100vh",
           }}
         >
-          <div className={`${visible ? "sticky top-0 z-10" : ""}`}>
-            <Header />
-          </div>
-          <div
-            style={{
-              width: "100vw",
-            }}
-          >
-            <Crousel item={MoviesSlider.Data} />
-          </div>
-          <div
-            className="flex justify-center py-2 mb-3 sticky z-20"
-            style={{
-              top: visible ? "7.5vh" : "0vh",
-              // background: "#08101c",
-              backgroundImage: "linear-gradient(to right, #00040a,#08101c)",
-            }}
-          >
-            <ButtonGroup varient="tv" />
-          </div>
-          <div className="flex flex-wrap justify-evenly">
+          <div>
+            <div className={`${visible ? "sticky top-0 z-10" : ""}`}>
+              <Header />
+            </div>
+            <div
+              style={{
+                width: "100vw",
+              }}
+            >
+              <Crousel item={MoviesSlider.Data} />
+            </div>
+            <div
+              className="flex justify-center py-2 mb-3 sticky z-20"
+              style={{
+                top: visible ? "7.4vh" : "0vh",
+                backgroundImage: "linear-gradient(to right, #00040a,#08101c)",
+              }}
+            >
+              <ButtonGroup varient="tv" />
+            </div>
             <InfiniteScroll
               dataLength={MoviesData.Data.length}
               next={() => {

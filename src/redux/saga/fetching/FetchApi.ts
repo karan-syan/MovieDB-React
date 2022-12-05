@@ -15,7 +15,11 @@ export const FetchApi = async (params: FetchMoviePayload) => {
   return data.data.results;
 };
 export const FetchSearchApi = async (params: FetchSearchPayload) => {
-  const url = `${MOVIE_DB_BASE_URL}search/${params.url}?api_key=${process.env.REACT_APP_API_KEY}&query=${params.query}&page=${params.page}`;
+  const url = `${MOVIE_DB_BASE_URL}search/${
+    params.url ? params.url : "multi"
+  }?api_key=${process.env.REACT_APP_API_KEY}&query=${params.query}&page=${
+    params.page
+  }`;
   console.log(url);
   let data = await axios.get(url);
   console.log(data.data);
