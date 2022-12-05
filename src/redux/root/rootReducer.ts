@@ -5,7 +5,7 @@ import {
   movieReducer,
   TrendingReducer,
   tvReducer,
-} from "../reducer/reducers";
+} from "../reducer/CombineReducers";
 const rootReducer = combineReducers({
   movie: movieReducer,
   tv: tvReducer,
