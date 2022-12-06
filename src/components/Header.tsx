@@ -24,8 +24,6 @@ export default function Header() {
           <HeaderTab text="Home" path="/" />
           <HeaderTab text="Movies" path="/movies" />
           <HeaderTab text="Tv Shows" path="/shows" />
-          <HeaderTab text="Trending" path="/trending" />
-          {/* <HeaderTab text="Genres" path="/genres" /> */}
         </div>
         <div className="flex items-center justify-between mx-2 ml-10 px-2 py-2 sm:mx-0 md:mx-3">
           <BiSearch
