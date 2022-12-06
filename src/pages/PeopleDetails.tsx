@@ -5,7 +5,7 @@ import { BarLoader } from "react-spinners";
 import Context from "../components/Context";
 import DetailsHeader from "../components/DetailsHeader";
 import PosterCard from "../components/PosterCard";
-import { CallCastDetails } from "../redux/action/ActionCallApi";
+import { CallCastDetails } from "../redux/People/action";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 

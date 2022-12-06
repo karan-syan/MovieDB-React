@@ -1,7 +1,7 @@
 import { configureStore } from "@reduxjs/toolkit";
 import createSagaMiddleware from "redux-saga";
-import rootReducer from "../root/rootReducer";
-import { Movie_Saga } from "../saga/Movie_Saga";
+import rootReducer from "./root/rootReducer";
+import { RootSaga } from "./root/rootSaga";
 
 const MiddlewareSaga = createSagaMiddleware();
 
@@ -10,6 +10,6 @@ const store = configureStore({
   middleware: () => [MiddlewareSaga],
 });
 
-MiddlewareSaga.run(Movie_Saga);
+MiddlewareSaga.run(RootSaga);
 
 export default store;

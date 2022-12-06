@@ -6,8 +6,8 @@ import { useSearchParams } from "react-router-dom";
 import Filter from "../components/Filter";
 import MovieBox from "../components/MovieBox";
 import Name from "../components/Name";
-import { CallSearch } from "../redux/action/ActionCallApi";
 import { ApplicationState } from "../redux/root/rootReducer";
+import { CallSearch } from "../redux/Search/action";
 
 let pg = 1;
 export default function Search() {

@@ -11,12 +11,10 @@ import ListRow from "../components/ListRow";
 import PosterCard from "../components/PosterCard";
 import NetworkList from "../components/TvDetail/NetworkList";
 import SeasonList from "../components/TvDetail/SeasonList";
-import {
-  CallCast,
-  CallRecommend,
-  CallTvDetails,
-} from "../redux/action/ActionCallApi";
+import { CallCast } from "../redux/People/action";
+import { CallRecommend } from "../redux/Recommend/action";
 import { ApplicationState } from "../redux/root/rootReducer";
+import { CallTvDetails } from "../redux/Tv/action";
 import { TvDetails_Distructing } from "../utils/ApiDistruct";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 

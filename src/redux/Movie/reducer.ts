@@ -1,47 +1,25 @@
 import { ActionType, getType } from "typesafe-actions";
 import {
+  IMovieStateDetails,
   InitialState,
-  InitialStateTvDetail,
+  InitialStateMovieDetail,
   IState,
-  IStateDetails,
 } from "../../utils/InitialState";
-import * as actions from "../action/ActionCallApi";
+import * as actions from "./action";
 
-export const TvDetailsReducer = (
-  state: IStateDetails = InitialStateTvDetail,
-  action: ActionType<typeof actions>
-) => {
-  switch (action.type) {
-    case getType(actions.CallTvDetails.request):
-      return {
-        ...state,
-        loading: true,
-      };
-
-    case getType(actions.CallTvDetails.success):
-      return {
-        ...state,
-        loading: false,
-        Data: action.payload,
-      };
-
-    default:
-      return state;
-  }
-};
-
-export const PopularShowsReducer = (
+export const PopularMovieReducer = (
   state: IState = InitialState,
   action: ActionType<typeof actions>
 ) => {
   switch (action.type) {
-    case getType(actions.CallTvPopular.request):
+    case getType(actions.CallMoviePopular.request):
       return {
         ...state,
         loading: true,
       };
 
-    case getType(actions.CallTvPopular.success):
+    case getType(actions.CallMoviePopular.success):
+      console.log("popular 12345678");
       return {
         ...state,
         loading: true,
@@ -52,18 +30,42 @@ export const PopularShowsReducer = (
       return state;
   }
 };
-export const TvTrendingReducer = (
+
+export const UpcomingMovieReducer = (
   state: IState = InitialState,
   action: ActionType<typeof actions>
 ) => {
   switch (action.type) {
-    case getType(actions.CallTvTrending.request):
+    case getType(actions.CallMovieUpcoming.request):
       return {
         ...state,
         loading: true,
       };
 
-    case getType(actions.CallTvTrending.success):
+    case getType(actions.CallMovieUpcoming.success):
+      return {
+        ...state,
+        loading: true,
+        Data: action.payload,
+      };
+
+    default:
+      return state;
+  }
+};
+
+export const MovieDetailsReducer = (
+  state: IMovieStateDetails = InitialStateMovieDetail,
+  action: ActionType<typeof actions>
+) => {
+  switch (action.type) {
+    case getType(actions.CallMovieDetails.request):
+      return {
+        ...state,
+        loading: true,
+      };
+
+    case getType(actions.CallMovieDetails.success):
       return {
         ...state,
         loading: false,

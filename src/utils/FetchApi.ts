@@ -1,11 +1,11 @@
 import axios from "axios";
-import { MOVIE_DB_BASE_URL } from "../../../utils/url";
 import {
   FetchCastPayload,
   FetchDetailsPayload,
   FetchMoviePayload,
   FetchSearchPayload,
-} from "../../action/ActionCallApi";
+} from "./type";
+import { MOVIE_DB_BASE_URL } from "./url";
 
 export const FetchApi = async (params: FetchMoviePayload) => {
   const url = `${MOVIE_DB_BASE_URL}${params.url}?api_key=${process.env.REACT_APP_API_KEY}&page=${params.page}`;

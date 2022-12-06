@@ -9,11 +9,9 @@ import Context from "../components/Context";
 import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
 import PosterCard from "../components/PosterCard";
-import {
-  CallCast,
-  CallMovieDetails,
-  CallRecommend,
-} from "../redux/action/ActionCallApi";
+import { CallMovieDetails } from "../redux/Movie/action";
+import { CallCast } from "../redux/People/action";
+import { CallRecommend } from "../redux/Recommend/action";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function MoviesDetails() {

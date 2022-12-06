@@ -175,3 +175,28 @@ export interface Iperson {
   popularity: number;
   profile_path: string;
 }
+
+export interface FetchMoviePayload {
+  page?: number;
+  url: string;
+  NewData: boolean;
+}
+
+export interface FetchDetailsPayload {
+  url: string;
+}
+
+export interface FetchSearchPayload {
+  url: string | null;
+  page: number;
+  query: string | null;
+  NewData: boolean;
+}
+
+export interface FetchCastPayload {
+  url: string;
+}
+
+export interface FetchCastDetailsPayload {
+  url: string;
+}

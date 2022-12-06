@@ -5,7 +5,7 @@ import {
   IStateCast,
   IStateperson,
 } from "../../utils/InitialState";
-import * as actions from "../action/ActionCallApi";
+import * as actions from "./action";
 
 export const TvCastReducer = (
   state: IStateCast = InitialStateCast,

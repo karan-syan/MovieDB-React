@@ -1,11 +1,12 @@
 import { combineReducers } from "@reduxjs/toolkit";
 import {
+  movieReducer,
   AllSearchReducer,
   DetailsReducer,
-  movieReducer,
   TrendingReducer,
   tvReducer,
-} from "../reducer/CombineReducers";
+} from "../CombineReducer";
+
 const rootReducer = combineReducers({
   movie: movieReducer,
   tv: tvReducer,

@@ -1,6 +1,6 @@
 import { ActionType, getType } from "typesafe-actions";
 import { InitialState, IState } from "../../utils/InitialState";
-import * as actions from "../action/ActionCallApi";
+import * as actions from "./action";
 
 export const SearchReducer = (
   state: IState = InitialState,

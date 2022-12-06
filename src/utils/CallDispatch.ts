@@ -1,12 +1,8 @@
-import {
-  CallCrouselSlider,
-  CallMoviePopular,
-  CallMovieUpcoming,
-  CallRecommend,
-  CallTvPopular,
-  CallTvTrending,
-} from "../redux/action/ActionCallApi";
-import store from "../redux/store/store";
+import { CallCrouselSlider } from "../redux/Crousel/action";
+import { CallMoviePopular, CallMovieUpcoming } from "../redux/Movie/action";
+import { CallRecommend } from "../redux/Recommend/action";
+import store from "../redux/store";
+import { CallTvPopular, CallTvTrending } from "../redux/Tv/action";
 import {
   popular_movie_url,
   popular_tv_url,

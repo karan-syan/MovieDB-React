@@ -1,13 +1,13 @@
 import { ActionType, getType } from "typesafe-actions";
+import * as actions from "./action";
 import { InitialState, IState } from "../../utils/InitialState";
-import * as actions from "../action/ActionCallApi";
 
-export const RecommendReducer = (
+export const MainReducer = (
   state: IState = InitialState,
   action: ActionType<typeof actions>
 ) => {
   switch (action.type) {
-    case getType(actions.CallRecommend.request):
+    case getType(actions.CallMovies.request):
       if (action.payload.NewData) {
         return {
           ...state,
@@ -21,11 +21,11 @@ export const RecommendReducer = (
         };
       }
 
-    case getType(actions.CallRecommend.success):
+    case getType(actions.CallMovies.success):
       return {
         ...state,
         loading: false,
-        Data: action.payload,
+        Data: [...state.Data, ...action.payload],
       };
 
     default:
