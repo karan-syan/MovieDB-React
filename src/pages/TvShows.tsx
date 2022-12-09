@@ -17,7 +17,7 @@ let pg = 1;
 export default function TvShows() {
   const dispatch = useDispatch();
   const [query, setQuery] = useSearchParams();
-  const MoviesSlider = useSelector(
+  const CrouselSlider = useSelector(
     (state: ApplicationState) => state.tv.CrouselSlider
   );
   const MoviesData = useSelector((state: ApplicationState) => state.tv.Tvs);
@@ -35,7 +35,6 @@ export default function TvShows() {
     );
 
     if (query.has("type")) {
-      console.log("i am being ", query.get("type"));
       FetchData(true, 1);
     }
   }, [dispatch, query.get("type")]);
@@ -74,17 +73,20 @@ export default function TvShows() {
     <div
       className="flex justify-center items-center"
       style={{
-        width: "100vw",
-        height: "100vh",
+        width: "100%",
+        maxWidth: "1600px",
+        margin: "0px auto",
+        float: "none",
       }}
     >
-      {MoviesData.loading && MoviesSlider.loading ? (
+      {MoviesData.loading && CrouselSlider.loading ? (
         <BarLoader color="#36d7b7" />
       ) : (
         <div
           style={{
-            width: "100vw",
-            height: "100vh",
+            width: "100%",
+            maxWidth: "1600px",
+            margin: "0px auto",
           }}
         >
           <div>
@@ -93,10 +95,13 @@ export default function TvShows() {
             </div>
             <div
               style={{
-                width: "100vw",
+                width: "100%",
+                maxWidth: "1600px",
+                margin: "0px auto",
+                float: "none",
               }}
             >
-              <Crousel item={MoviesSlider.Data} />
+              <Crousel item={CrouselSlider.Data} />
             </div>
             <div
               className="flex justify-center py-2 mb-3 sticky z-20"

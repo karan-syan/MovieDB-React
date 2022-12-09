@@ -3,9 +3,15 @@ import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
 import HeaderTab from "./HeaderTab";
 import Name from "./Name";
+import { getAuth, signOut } from "firebase/auth";
+import { initializeApp } from "firebase/app";
+import { firebaseConfig } from "../firebaseConfig";
 
 export default function Header() {
   const navigate = useNavigate();
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const user = auth.currentUser;
 
   return (
     <div
@@ -32,10 +38,27 @@ export default function Header() {
               navigate("/search");
             }}
           />
-          <CgProfile
-            className="hidden ml-3 sm:flex sm:text-xl"
-            onClick={() => {}}
-          />
+          <div
+            className="flex cursor-pointer"
+            onClick={() => {
+              if (!user) {
+                navigate("/signin");
+              } else {
+                if (window.confirm("Do you want to log out")) {
+                  signOut(auth)
+                    .then(() => {
+                      navigate("/");
+                    })
+                    .catch((error) => {
+                      console.warn(error);
+                    });
+                }
+              }
+            }}
+          >
+            <CgProfile className="hidden ml-3 mr-1 sm:flex sm:text-xl" />
+            <h1>{user?.displayName}</h1>
+          </div>
         </div>
       </div>
     </div>

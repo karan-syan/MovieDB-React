@@ -39,8 +39,11 @@ export default function PeopleDetails() {
     <div
       className="flex justify-center items-center"
       style={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
+        maxWidth: "1600px",
+        margin: "0px auto",
+        float: "none",
       }}
     >
       {personDetails.loading ? (
@@ -48,8 +51,11 @@ export default function PeopleDetails() {
       ) : (
         <div
           style={{
-            width: "100vw",
+            width: "100%",
             height: "100vh",
+            maxWidth: "1600px",
+            margin: "0px auto",
+            float: "none",
             backgroundImage: "url(" + MOVIE_DB_IMG_URL + profile_path + ")",
             backgroundPosition: "center",
             backgroundSize: "cover",
@@ -62,11 +68,11 @@ export default function PeopleDetails() {
           >
             <DetailsHeader />
             <div
-              className="flex flex-col md:flex-row md:justify-between md:items-center overflow-y-auto md:overflow-y-hidden"
+              className="flex flex-col md:flex-row md:justify-between overflow-y-auto md:overflow-y-hidden"
               style={{ height: "92.5vh" }}
             >
               <PosterCard Poster_Path={profile_path} />
-              <div className="flex mt-5 justify-center pb-3 md:w-2/3 flex-col items-center md:h-full md:overflow-auto md:justify-start md:items-start">
+              <div className="flex mt-5 pb-3 md:w-2/3 flex-col md:h-full md:overflow-auto md:justify-start md:items-start">
                 <h1 className="text-xl md:text-3xl font-extrabold text-center">
                   {name}
                 </h1>

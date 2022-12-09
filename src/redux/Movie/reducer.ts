@@ -19,7 +19,6 @@ export const PopularMovieReducer = (
       };
 
     case getType(actions.CallMoviePopular.success):
-      console.log("popular 12345678");
       return {
         ...state,
         loading: true,

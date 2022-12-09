@@ -79,8 +79,11 @@ export default function TvDetails() {
     <div
       className="flex justify-center items-center"
       style={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
+        maxWidth: "1600px",
+        margin: "0px auto",
+        float: "none",
       }}
     >
       {tvshows.loading ? (
@@ -102,7 +105,7 @@ export default function TvDetails() {
           >
             <DetailsHeader />
             <div
-              className="flex flex-col md:flex-row md:justify-between md:items-center overflow-y-auto md:overflow-y-hidden"
+              className="flex flex-col md:flex-row md:justify-between overflow-y-auto md:overflow-y-hidden"
               style={{ height: "92.5vh" }}
             >
               <PosterCard Poster_Path={Poster_Path} />
@@ -128,25 +131,27 @@ export default function TvDetails() {
                   WatchList
                   <BsBookmarkHeartFill className="ml-2" />
                 </button>
-                <Context title="Synopsis" subtitle={overview} />
-                <Context
-                  title="Production Companies"
-                  subtitle={production_companies
-                    .map((item) => " " + item.name)
-                    .toString()}
-                />
-                <Context
-                  title="Genres"
-                  subtitle={genres.map((item) => " " + item.name).toString()}
-                />
-                <Context
-                  title="Spoken Language"
-                  subtitle={spoken_languages
-                    .map((item) => " " + item.english_name)
-                    .toString()}
-                />
-                <NetworkList item={networks} />
-                <CastList data={tvCast.Data} />
+                <div className="w-full">
+                  <Context title="Synopsis" subtitle={overview} />
+                  <Context
+                    title="Production Companies"
+                    subtitle={production_companies
+                      .map((item) => " " + item.name)
+                      .toString()}
+                  />
+                  <Context
+                    title="Genres"
+                    subtitle={genres.map((item) => " " + item.name).toString()}
+                  />
+                  <Context
+                    title="Spoken Language"
+                    subtitle={spoken_languages
+                      .map((item) => " " + item.english_name)
+                      .toString()}
+                  />
+                  <NetworkList item={networks} />
+                  <CastList data={tvCast.Data} />
+                </div>
                 <SeasonList item={seasons} TvName={TvName} />
                 {Recommended.Data.length === 0 ? null : (
                   <div className="w-full mt-2">

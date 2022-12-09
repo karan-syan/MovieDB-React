@@ -34,7 +34,6 @@ export default function Movies() {
     );
 
     if (query.has("type")) {
-      console.log("i am being ", query.get("type"));
       FetchData(true, 1);
     }
   }, [dispatch, query.get("type")]);
@@ -66,29 +65,28 @@ export default function Movies() {
   });
 
   return (
-    <div
-      className="flex justify-center items-center"
-      style={{
-        width: "100vw",
-        height: "100vh",
-      }}
-    >
+    <div className="flex justify-center items-center">
       {Movies.loading && CrouselSlider.loading ? (
         <BarLoader color="#36d7b7" />
       ) : (
         <div
           style={{
-            width: "100vw",
-            height: "100vh",
+            width: "100%",
+            maxWidth: "1600px",
+            margin: "0px auto",
+            float: "none",
           }}
         >
-          <div>
+          <div className="overflow-auto">
             <div className={`${visible ? "sticky top-0 z-10" : ""}`}>
               <Header />
             </div>
             <div
               style={{
-                width: "100vw",
+                width: "100%",
+                maxWidth: "1600px",
+                margin: "0px auto",
+                float: "none",
               }}
             >
               <Crousel item={CrouselSlider.Data} />
@@ -96,6 +94,9 @@ export default function Movies() {
             <div
               className="flex justify-center py-2 mb-3 sticky z-20"
               style={{
+                maxWidth: "1600px",
+                margin: "0px auto",
+                float: "none",
                 top: visible ? "7.5vh" : "0vh",
                 width: "100vw",
                 backgroundImage: "linear-gradient(to right, #00040a,#08101c)",

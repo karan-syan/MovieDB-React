@@ -19,7 +19,6 @@ export default function Search() {
   const [query, setQuery] = useSearchParams();
 
   function FetchData() {
-    console.log("1234");
     dispatch(
       CallSearch.request({
         NewData: false,
@@ -36,7 +35,6 @@ export default function Search() {
     }
     if (query.has("query") && query.has("filter")) {
       pg = 1;
-      console.log("123");
       dispatch(
         CallSearch.request({
           NewData: true,
@@ -48,7 +46,15 @@ export default function Search() {
     }
   }, [dispatch, query.get("query"), query.get("filter")]);
   return (
-    <div>
+    <div
+      style={{
+        width: "100%",
+        height: "100vh",
+        maxWidth: "1600px",
+        margin: "0px auto",
+        float: "none",
+      }}
+    >
       <div
         className="flex items-center justify-between px-3 font-bold"
         style={{ height: "7.5vh", backgroundColor: "#000814" }}

@@ -11,7 +11,7 @@ export default function Name() {
           navigate("/");
         }}
       >
-        MovieDB
+        KTV
       </h1>
     </div>
   );

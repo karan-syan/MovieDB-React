@@ -72,8 +72,11 @@ export default function MoviesDetails() {
     <div
       className="flex justify-center items-center"
       style={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
+        maxWidth: "1600px",
+        margin: "0px auto",
+        float: "none",
       }}
     >
       {MovieDetails.loading ? (
@@ -81,6 +84,9 @@ export default function MoviesDetails() {
       ) : (
         <div
           style={{
+            maxWidth: "1600px",
+            margin: "0px auto",
+            float: "none",
             width: "100vw",
             height: "100vh",
             backgroundImage: "url(" + MOVIE_DB_IMG_URL + backdrop_path + ")",
@@ -95,7 +101,7 @@ export default function MoviesDetails() {
           >
             <DetailsHeader />
             <div
-              className="flex flex-col md:flex-row md:justify-between md:items-center overflow-y-auto md:overflow-y-hidden"
+              className="flex flex-col md:flex-row md:justify-between overflow-y-auto md:overflow-y-hidden"
               style={{ height: "92.5vh" }}
             >
               <PosterCard Poster_Path={poster_path} />
@@ -120,35 +126,37 @@ export default function MoviesDetails() {
                   WatchList
                   <BsBookmarkHeartFill className="ml-2" />
                 </button>
-                <Context title="Synopsis" subtitle={overview} />
-                <Context
-                  title="Production Companies"
-                  subtitle={production_companies
-                    .map((item) => " " + item.name)
-                    .toString()}
-                />
-                <Context
-                  title="Genres"
-                  subtitle={genres.map((item) => " " + item.name).toString()}
-                />
-                <Context
-                  title="Spoken Language"
-                  subtitle={spoken_languages
-                    .map((item) => " " + item.english_name)
-                    .toString()}
-                />
-                <Context
-                  title="Budget"
-                  subtitle={
-                    budget === 0 ? "N/A" : "$ " + budget.toLocaleString()
-                  }
-                />
-                <Context
-                  title="Revenue"
-                  subtitle={
-                    revenue === 0 ? "N/A" : "$ " + revenue.toLocaleString()
-                  }
-                />
+                <div className="w-full">
+                  <Context title="Synopsis" subtitle={overview} />
+                  <Context
+                    title="Production Companies"
+                    subtitle={production_companies
+                      .map((item) => " " + item.name)
+                      .toString()}
+                  />
+                  <Context
+                    title="Genres"
+                    subtitle={genres.map((item) => " " + item.name).toString()}
+                  />
+                  <Context
+                    title="Spoken Language"
+                    subtitle={spoken_languages
+                      .map((item) => " " + item.english_name)
+                      .toString()}
+                  />
+                  <Context
+                    title="Budget"
+                    subtitle={
+                      budget === 0 ? "N/A" : "$ " + budget.toLocaleString()
+                    }
+                  />
+                  <Context
+                    title="Revenue"
+                    subtitle={
+                      revenue === 0 ? "N/A" : "$ " + revenue.toLocaleString()
+                    }
+                  />
+                </div>
                 <CastList data={tvCast.Data} />
                 {Recommended.Data.length === 0 ? null : (
                   <div className="w-full mt-2">

@@ -26,8 +26,11 @@ export default function Home() {
     <div
       className="flex justify-center items-center"
       style={{
-        width: "100vw",
+        width: "100%",
         height: "100vh",
+        maxWidth: "1600px",
+        margin: "0px auto",
+        float: "none",
       }}
     >
       {TvRecommend.loading && CrouselSlider.loading ? (

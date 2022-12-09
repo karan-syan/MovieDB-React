@@ -1,10 +1,15 @@
+import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { firebaseConfig } from "../firebaseConfig";
 import { IMovie_distructing } from "../utils/ApiDistruct";
 import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function Crousel({ item }: { item: IMovie[] }) {
   const navigate = useNavigate();
+  const app = initializeApp(firebaseConfig);
+  const user = getAuth(app).currentUser;
   return (
     <div className="flex justify-center xl:mt-3 mb-8 drop-shadow-2xl">
       <div
@@ -50,20 +55,24 @@ export default function Crousel({ item }: { item: IMovie[] }) {
             if (index <= 10) {
               return (
                 <div
-                  className={`carousel-item relative float-left w-full ${
+                  className={`carousel-item relative float-left w-full  ${
                     index === 0 ? "active" : ""
                   }`}
                   key={index}
                   onClick={() => {
-                    I_name
-                      ? navigate(`/tv/details/${id}`)
-                      : navigate(`/movie/details/${id}`);
+                    if (user) {
+                      I_name
+                        ? navigate(`/tv/details/${id}`)
+                        : navigate(`/movie/details/${id}`);
+                    } else {
+                      navigate("/signin");
+                    }
                   }}
                 >
                   <div className="flex w-full cursor-pointer">
                     <div
                       className="flex-col z-0 justify-center w-1/2 text-sm relative font-extralight hidden md:flex md:px-2 xl:text-lg"
-                      style={{ background: "#00040a" }}
+                      style={{ background: "#00040a", paddingLeft: "40px" }}
                     >
                       <h1 className="mb-1 text-base xl:text-xl font-extrabold">
                         {title ? title : I_name}
