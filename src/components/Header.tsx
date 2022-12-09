@@ -1,11 +1,11 @@
+import { initializeApp } from "firebase/app";
+import { getAuth, signOut } from "firebase/auth";
 import { BiMenu, BiSearch } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
+import { firebaseConfig } from "../firebaseConfig";
 import HeaderTab from "./HeaderTab";
 import Name from "./Name";
-import { getAuth, signOut } from "firebase/auth";
-import { initializeApp } from "firebase/app";
-import { firebaseConfig } from "../firebaseConfig";
 
 export default function Header() {
   const navigate = useNavigate();

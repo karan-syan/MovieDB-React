@@ -16,9 +16,9 @@ import {
 } from "firebase/auth";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
+import * as Yup from "yup";
 import Copyright from "../components/Copyright";
 import { firebaseConfig } from "../firebaseConfig";
-import * as Yup from "yup";
 
 const theme = createTheme();
 const SignUpSchema = Yup.object().shape({
