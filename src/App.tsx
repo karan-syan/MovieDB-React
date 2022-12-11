@@ -7,7 +7,6 @@ import PeopleDetails from "./pages/PeopleDetails";
 import Search from "./pages/Search";
 import TvShows from "./pages/TvShows";
 import TvDetails from "./pages/TvDetails";
-import Login from "./pages/SignUp";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import UserDetails from "./pages/UserDetails";
