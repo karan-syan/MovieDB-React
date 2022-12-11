@@ -14,7 +14,6 @@ import * as Yup from "yup";
 import Copyright from "../components/Copyright";
 import { SignUpUser } from "../firebase/Authentication";
 
-const theme = createTheme();
 const SignUpSchema = Yup.object().shape({
   username: Yup.string().min(2, "Too short!!").required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
@@ -37,83 +36,81 @@ export default function SignUp() {
   return (
     <div className="flex justify-center items-center">
       <div className="bg-white w-1/3 rounded-3xl mt-10">
-        <ThemeProvider theme={theme}>
-          <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Box
-              sx={{
-                marginTop: 8,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
-              <Typography component="h1" variant="h5">
-                Sign Up
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                <form onSubmit={formik.handleSubmit}>
-                  {formik.isValid ? null : (
-                    <h1 className="text-red-600">
-                      Please Enter all field Correctly
-                    </h1>
-                  )}
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    type={"text"}
-                    id="username"
-                    onChange={formik.handleChange}
-                    value={formik.values.username}
-                    label="username"
-                    name="username"
-                    autoComplete="username"
-                    autoFocus
-                  />
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    type={"email"}
-                    id="email"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                  />
-                  <TextField
-                    margin="normal"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                  />
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Sign In
-                  </Button>
-                </form>
-              </Box>
+        <Container component="main" maxWidth="xs">
+          <CssBaseline />
+          <Box
+            sx={{
+              marginTop: 8,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+            }}
+          >
+            <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
+            <Typography component="h1" variant="h5">
+              Sign Up
+            </Typography>
+            <Box sx={{ mt: 1 }}>
+              <form onSubmit={formik.handleSubmit}>
+                {formik.isValid ? null : (
+                  <h1 className="text-red-600">
+                    Please Enter all field Correctly
+                  </h1>
+                )}
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  type={"text"}
+                  id="username"
+                  onChange={formik.handleChange}
+                  value={formik.values.username}
+                  label="username"
+                  name="username"
+                  autoComplete="username"
+                  autoFocus
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  type={"email"}
+                  id="email"
+                  onChange={formik.handleChange}
+                  value={formik.values.email}
+                  label="Email Address"
+                  name="email"
+                  autoComplete="email"
+                />
+                <TextField
+                  margin="normal"
+                  onChange={formik.handleChange}
+                  value={formik.values.password}
+                  required
+                  fullWidth
+                  name="password"
+                  label="Password"
+                  type="password"
+                  id="password"
+                  autoComplete="current-password"
+                />
+                <FormControlLabel
+                  control={<Checkbox value="remember" color="primary" />}
+                  label="Remember me"
+                />
+                <Button
+                  type="submit"
+                  fullWidth
+                  variant="contained"
+                  sx={{ mt: 3, mb: 2 }}
+                >
+                  Sign In
+                </Button>
+              </form>
             </Box>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
-          </Container>
-        </ThemeProvider>
+          </Box>
+          <Copyright sx={{ mt: 8, mb: 4 }} />
+        </Container>
       </div>
     </div>
   );
