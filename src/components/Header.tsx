@@ -3,7 +3,7 @@ import { getAuth, signOut } from "firebase/auth";
 import { BiMenu, BiSearch } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
-import { firebaseConfig } from "../firebaseConfig";
+import { firebaseConfig } from "../firebase/firebaseConfig";
 import HeaderTab from "./HeaderTab";
 import Name from "./Name";
 
@@ -44,15 +44,7 @@ export default function Header() {
               if (!user) {
                 navigate("/signin");
               } else {
-                if (window.confirm("Do you want to log out")) {
-                  signOut(auth)
-                    .then(() => {
-                      navigate("/");
-                    })
-                    .catch((error) => {
-                      console.warn(error);
-                    });
-                }
+                navigate("/userdetails");
               }
             }}
           >

@@ -1,7 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { firebaseConfig } from "../firebaseConfig";
+import { firebaseConfig } from "../firebase/firebaseConfig";
 import { IMovie_distructing } from "../utils/ApiDistruct";
 import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";

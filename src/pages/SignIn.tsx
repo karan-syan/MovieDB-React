@@ -10,11 +10,12 @@ import Link from "@mui/material/Link";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import Copyright from "../components/Copyright";
+import { SignInUser } from "../firebase/Authentication";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -24,24 +25,13 @@ const SignInSchema = Yup.object().shape({
 });
 
 export default function SignIn() {
-  const auth = getAuth();
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: { email: "", password: "" },
     validationSchema: SignInSchema,
     onSubmit: (values) => {
-      signInWithEmailAndPassword(auth, values.email, values.password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          navigate("/");
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-        });
+      SignInUser(values.email, values.password);
+      navigate("/");
     },
   });
 
@@ -67,11 +57,7 @@ export default function SignIn() {
               </Typography>
               <Box sx={{ mt: 1 }}>
                 <form onSubmit={formik.handleSubmit}>
-                  {formik.isValid ? null : (
-                    <h1 className="text-red-600">
-                      Please Enter all field Correctly
-                    </h1>
-                  )}
+                  <h1 className="text-red-600">{formik.errors.email}</h1>
                   <TextField
                     margin="normal"
                     required
@@ -84,6 +70,7 @@ export default function SignIn() {
                     autoComplete="email"
                     autoFocus
                   />
+                  <h1 className="text-red-600">{formik.errors.password}</h1>
                   <TextField
                     margin="normal"
                     onChange={formik.handleChange}

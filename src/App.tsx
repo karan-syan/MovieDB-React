@@ -10,6 +10,7 @@ import TvDetails from "./pages/TvDetails";
 import Login from "./pages/SignUp";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import UserDetails from "./pages/UserDetails";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/people/:id" element={<PeopleDetails />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
+          <Route path="/userdetails" element={<UserDetails />} />
         </Routes>
       </SkeletonTheme>
     </>

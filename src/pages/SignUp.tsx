@@ -8,17 +8,11 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { initializeApp } from "firebase/app";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  updateProfile,
-} from "firebase/auth";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import Copyright from "../components/Copyright";
-import { firebaseConfig } from "../firebaseConfig";
+import { SignUpUser } from "../firebase/Authentication";
 
 const theme = createTheme();
 const SignUpSchema = Yup.object().shape({
@@ -30,29 +24,13 @@ const SignUpSchema = Yup.object().shape({
 });
 
 export default function SignUp() {
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: { username: "", email: "", password: "" },
     validationSchema: SignUpSchema,
     onSubmit: (values) => {
-      console.log("hello");
-      createUserWithEmailAndPassword(auth, values.email, values.password)
-        .then(async (userCredential: any) => {
-          const user = userCredential.user;
-          console.log(user);
-          await updateProfile(user, {
-            displayName: values.username,
-          });
-          navigate("/");
-        })
-        .catch((error: any) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          console.log(error);
-        });
+      SignUpUser(values.username, values.email, values.password);
+      navigate("/");
     },
   });
 
@@ -70,9 +48,7 @@ export default function SignUp() {
                 alignItems: "center",
               }}
             >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                {/* <LockOutlinedIcon /> */}
-              </Avatar>
+              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}></Avatar>
               <Typography component="h1" variant="h5">
                 Sign Up
               </Typography>
