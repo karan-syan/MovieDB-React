@@ -10,8 +10,11 @@ import { app } from "../firebase/firebaseConfig";
 
 export default function UserDetails() {
   return (
-    <div className="flex justify-center m-6">
-      <div className="flex flex-col justify-center bg-white rounded-xl p-6">
+    <div
+      className="flex justify-center items-center"
+      style={{ height: "75vh" }}
+    >
+      <div className=" flex flex-col justify-center h-fit bg-white rounded-xl p-6">
         <div className="flex flex-col justify-center items-center">
           <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} />
           <h1 className="text-black">
@@ -48,6 +51,10 @@ export default function UserDetails() {
                 />
               </div>
             </RadioGroup>
+          </div>
+          <div className="flex items-center justify-between">
+            <h1 className="text-black mr-2">Phone No: </h1>
+            <Input color="secondary" type="phone" />
           </div>
         </div>
       </div>
