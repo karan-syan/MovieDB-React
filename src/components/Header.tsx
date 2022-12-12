@@ -1,17 +1,12 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 import { BiMenu, BiSearch } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
-import { firebaseConfig } from "../firebase/firebaseConfig";
+import { auth } from "../firebase/firebaseConfig";
 import HeaderTab from "./HeaderTab";
 import Name from "./Name";
 
 export default function Header() {
   const navigate = useNavigate();
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-  const user = auth.currentUser;
 
   return (
     <div
@@ -41,7 +36,7 @@ export default function Header() {
           <div
             className="flex cursor-pointer"
             onClick={() => {
-              if (!user) {
+              if (!auth.currentUser) {
                 navigate("/signin");
               } else {
                 navigate("/userdetails");
@@ -49,7 +44,7 @@ export default function Header() {
             }}
           >
             <CgProfile className="hidden ml-3 mr-1 sm:flex sm:text-xl" />
-            <h1>{user?.displayName}</h1>
+            <h1>{auth.currentUser?.displayName}</h1>
           </div>
         </div>
       </div>

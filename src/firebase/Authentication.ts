@@ -1,10 +1,9 @@
 import {
   createUserWithEmailAndPassword,
-  getAuth,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { app } from "./firebaseConfig";
+import { auth } from "./firebaseConfig";
 
 export const SignUpUser = (
   username: string,
@@ -12,8 +11,8 @@ export const SignUpUser = (
   password: string
 ) => {
   try {
-    createUserWithEmailAndPassword(getAuth(app), email, password);
-    const user = getAuth(app).currentUser;
+    createUserWithEmailAndPassword(auth, email, password);
+    const user = auth.currentUser;
     if (user) {
       console.log(user);
       updateProfile(user, {
@@ -27,8 +26,8 @@ export const SignUpUser = (
 
 export const SignInUser = (email: string, password: string) => {
   try {
-    signInWithEmailAndPassword(getAuth(app), email, password);
-    const user = getAuth(app).currentUser;
+    signInWithEmailAndPassword(auth, email, password);
+    const user = auth.currentUser;
     if (user) {
       console.log(user);
     }
