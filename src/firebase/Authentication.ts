@@ -1,11 +1,11 @@
 import {
-  browserSessionPersistence,
   createUserWithEmailAndPassword,
   getAuth,
-  setPersistence,
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import store from "../redux/store";
+import { CallUserDetail } from "../redux/user/action";
 import { IUserData } from "../utils/type";
 import { auth } from "./firebaseConfig";
 import { createUserDoc } from "./firestore";
@@ -42,6 +42,7 @@ export const SignInUser = (email: string, password: string) => {
   try {
     signInWithEmailAndPassword(auth, email, password).then((res) => {
       auth.updateCurrentUser(res.user);
+      store.dispatch(CallUserDetail.request(res.user));
       console.log(res.user);
     });
   } catch (error: any) {

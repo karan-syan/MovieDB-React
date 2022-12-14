@@ -1,4 +1,12 @@
-import { ICast, IMovie, IMovieDetails, Iperson, ITvDetails } from "./type";
+import { boolean } from "yup";
+import {
+  ICast,
+  IMovie,
+  IMovieDetails,
+  Iperson,
+  ITvDetails,
+  IuserDetail,
+} from "./type";
 
 export interface IState {
   loading: boolean;
@@ -147,4 +155,16 @@ export const InitialStatePerson: IStateperson = {
     profile_path: "",
   },
   loading: true,
+};
+
+export const IStateUserDetails: IuserDetail = {
+  accessToken: "",
+  displayName: "",
+  email: "",
+  emailVerified: false,
+  isAnonymous: false,
+  phoneNumber: "",
+  photoURL: "",
+  providerId: "",
+  uid: "",
 };

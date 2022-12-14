@@ -6,6 +6,7 @@ import {
   TrendingReducer,
   tvReducer,
 } from "../CombineReducer";
+import { UserDetailReducer } from "../user/reducer";
 
 const rootReducer = combineReducers({
   movie: movieReducer,
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
   trend: TrendingReducer,
   details: DetailsReducer,
   Search: AllSearchReducer,
+  Userdetail: UserDetailReducer,
 });
 export default rootReducer;
 export type ApplicationState = ReturnType<typeof rootReducer>;

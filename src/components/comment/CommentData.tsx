@@ -1,15 +1,13 @@
-import { Avatar } from "@mui/material";
 import { doc, getDoc, onSnapshot } from "firebase/firestore";
-import { getDownloadURL, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { firestore_db, storage } from "../firebase/firebaseConfig";
-let namearr: string[] = [];
+import { firestore_db } from "../../firebase/firebaseConfig";
+import Avatar from "./Avatar";
+import Username from "./Username";
 export default function CommentData() {
   const { id } = useParams();
   const [dataexist, setdataexist] = useState<boolean>(false);
   const [commentdata, setcommentdata] = useState<any>([]);
-  const [userName, setuserName] = useState<any[]>([]);
   useEffect(() => {
     getdata();
     console.log("called");
@@ -23,16 +21,6 @@ export default function CommentData() {
         setcommentdata(docSnap.data().comment);
       }
     });
-    Promise.all(
-      commentdata.map(async (comment: { userId: string }) => {
-        const docRef = doc(firestore_db, "users", comment.userId || "");
-        const docSnap = await getDoc(docRef);
-        if (docSnap.exists()) {
-          namearr.push(docSnap.data().username);
-          setuserName(namearr);
-        }
-      })
-    );
   }
   return (
     <div>
@@ -46,11 +34,11 @@ export default function CommentData() {
               return (
                 <div className="text-white mb-3 flex" key={index}>
                   <div className="flex mr-2">
-                    <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} />
+                    <Avatar id={comment.userId} />
                   </div>
                   <div className="flex flex-col">
                     <div className="flex items-center">
-                      <h1 className="font-bold">{userName[index] || ""}</h1>
+                      <Username id={comment.userId} />
                       <h1 className="opacity-50 ml-2 text-sm">
                         {comment.time}
                       </h1>

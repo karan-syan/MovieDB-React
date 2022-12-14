@@ -1,3 +1,5 @@
+import { string } from "yup";
+
 export interface IMovie {
   backdrop_path: string;
   id: number;
@@ -208,4 +210,16 @@ export interface IUserData {
   age: string;
   gender: string;
   phoneNo: string;
+}
+
+export interface IuserDetail {
+  accessToken: string;
+  displayName: string;
+  email: string;
+  emailVerified: boolean;
+  isAnonymous: boolean;
+  phoneNumber: null | string;
+  photoURL: string;
+  providerId: string;
+  uid: string;
 }

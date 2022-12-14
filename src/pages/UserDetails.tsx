@@ -62,7 +62,7 @@ export default function UserDetails() {
       <div className=" flex flex-col justify-center h-fit bg-white rounded-xl p-6">
         <div className="flex">
           <BiArrowBack
-            className="text-blue-500 text-3xl"
+            className="text-blue-500 text-3xl cursor-pointer"
             onClick={() => {
               navigate("/");
             }}

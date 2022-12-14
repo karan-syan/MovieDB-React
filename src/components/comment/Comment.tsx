@@ -1,8 +1,8 @@
 import { Avatar, Button, Input } from "@mui/material";
 import { useState } from "react";
 import { useParams } from "react-router-dom";
-import { auth } from "../firebase/firebaseConfig";
-import { AddComment } from "../firebase/firestore";
+import { auth } from "../../firebase/firebaseConfig";
+import { AddComment } from "../../firebase/firestore";
 
 export default function Comment() {
   const { id } = useParams();
@@ -10,9 +10,10 @@ export default function Comment() {
   return (
     <div className="flex mt-2">
       <Avatar src={auth.currentUser?.photoURL || ""} />
-      <div className={"flex items-center flex-col  w-full mx-3  "}>
+      <div className={"flex items-center flex-col  w-full mx-3"}>
         <Input
           type={"text"}
+          color={"primary"}
           placeholder={"Add a comment..."}
           value={commentText}
           onChange={(e) => {
