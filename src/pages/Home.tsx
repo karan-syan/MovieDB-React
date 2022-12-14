@@ -1,3 +1,4 @@
+import { getAuth } from "firebase/auth";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { BarLoader } from "react-spinners";
@@ -5,6 +6,7 @@ import Crousel from "../components/Crousel";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ListRow from "../components/ListRow";
+import { auth } from "../firebase/firebaseConfig";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { HomePageDispatch } from "../utils/CallDispatch";
 export default function Home() {
@@ -20,6 +22,7 @@ export default function Home() {
 
   useEffect(() => {
     HomePageDispatch();
+    console.log(auth.currentUser);
   }, []);
 
   return (

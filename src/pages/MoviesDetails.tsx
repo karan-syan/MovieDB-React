@@ -5,6 +5,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import CastList from "../components/CastList";
+import Comment from "../components/Comment";
+import CommentData from "../components/CommentData";
 import Context from "../components/Context";
 import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
@@ -164,6 +166,12 @@ export default function MoviesDetails() {
                     <ListRow item={Recommended.Data} />
                   </div>
                 )}
+                <div className="flex flex-col w-full">
+                  <Comment />
+                </div>
+                <div className="flex flex-col w-full">
+                  <CommentData />
+                </div>
               </div>
             </div>
           </div>

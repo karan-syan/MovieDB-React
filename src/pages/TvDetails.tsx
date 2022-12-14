@@ -1,16 +1,20 @@
-import { useEffect, useRef } from "react";
+import { doc, getDoc } from "firebase/firestore";
+import { useEffect, useRef, useState } from "react";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { IoTime } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import CastList from "../components/CastList";
+import Comment from "../components/Comment";
+import CommentData from "../components/CommentData";
 import Context from "../components/Context";
 import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
 import PosterCard from "../components/PosterCard";
 import NetworkList from "../components/TvDetail/NetworkList";
 import SeasonList from "../components/TvDetail/SeasonList";
+import { firestore_db } from "../firebase/firebaseConfig";
 import { CallCast } from "../redux/People/action";
 import { CallRecommend } from "../redux/Recommend/action";
 import { ApplicationState } from "../redux/root/rootReducer";
@@ -19,9 +23,10 @@ import { TvDetails_Distructing } from "../utils/ApiDistruct";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function TvDetails() {
+  const { id } = useParams();
   const dispatch = useDispatch();
-  const elementForScroll = useRef<HTMLDivElement>(null);
 
+  const elementForScroll = useRef<HTMLDivElement>(null);
   const tvshows = useSelector(
     (state: ApplicationState) => state.details.TvDetails
   );
@@ -29,7 +34,6 @@ export default function TvDetails() {
     (state: ApplicationState) => state.tv.TvRecommend
   );
   const tvCast = useSelector((state: ApplicationState) => state.details.TvCast);
-  const { id } = useParams();
   useEffect(() => {
     dispatch(
       CallTvDetails.request({
@@ -159,6 +163,12 @@ export default function TvDetails() {
                     <ListRow item={Recommended.Data} />
                   </div>
                 )}
+                <div className="flex flex-col w-full">
+                  <Comment />
+                </div>
+                <div className="flex flex-col w-full">
+                  <CommentData />
+                </div>
               </div>
             </div>
           </div>

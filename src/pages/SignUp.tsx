@@ -1,3 +1,4 @@
+import { Radio, RadioGroup } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -5,7 +6,6 @@ import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
@@ -17,18 +17,34 @@ import { SignUpUser } from "../firebase/Authentication";
 const SignUpSchema = Yup.object().shape({
   username: Yup.string().min(2, "Too short!!").required("Required"),
   email: Yup.string().email("Invalid email").required("Required"),
+  age: Yup.string().required("Required"),
+  gender: Yup.string().required("Required"),
+  phoneNo: Yup.number().min(10, "Invalid").required("Required"),
   password: Yup.string()
     .min(8, "Password must be 8 character long")
     .required("Required"),
 });
-
 export default function SignUp() {
   const navigate = useNavigate();
   const formik = useFormik({
-    initialValues: { username: "", email: "", password: "" },
-    validationSchema: SignUpSchema,
+    initialValues: {
+      username: "",
+      email: "",
+      age: "",
+      gender: "male",
+      phoneNo: "",
+      password: "",
+    },
+    // validationSchema: SignUpSchema,
     onSubmit: (values) => {
-      SignUpUser(values.username, values.email, values.password);
+      SignUpUser({
+        username: values.username,
+        email: values.email,
+        password: values.password,
+        age: values.age,
+        gender: values.gender,
+        phoneNo: values.phoneNo,
+      });
       navigate("/");
     },
   });
@@ -67,7 +83,7 @@ export default function SignUp() {
                   value={formik.values.username}
                   label="username"
                   name="username"
-                  autoComplete="username"
+                  autoComplete="name"
                   autoFocus
                 />
                 <TextField
@@ -81,6 +97,53 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                />
+                <TextField
+                  margin="normal"
+                  required
+                  fullWidth
+                  type={"date"}
+                  id="age"
+                  onChange={formik.handleChange}
+                  value={formik.values.age}
+                  name="age"
+                  autoComplete="date"
+                />
+                <RadioGroup
+                  onChange={formik.handleChange}
+                  value={formik.values.gender}
+                  name="gender"
+                  id="gender"
+                >
+                  <div className="flex text-xm text-black">
+                    <FormControlLabel
+                      value="male"
+                      control={<Radio />}
+                      label="Male"
+                    />
+                    <FormControlLabel
+                      value="female"
+                      control={<Radio />}
+                      label="Female"
+                    />
+                    <FormControlLabel
+                      value="other"
+                      control={<Radio />}
+                      label="Other"
+                    />
+                  </div>
+                </RadioGroup>
+                <TextField
+                  margin="normal"
+                  value={formik.values.phoneNo}
+                  onChange={formik.handleChange}
+                  required
+                  fullWidth
+                  name="phoneNo"
+                  label="Phone-No"
+                  type="phone"
+                  id="phoneNo"
+                  autoComplete="phone"
                 />
                 <TextField
                   margin="normal"

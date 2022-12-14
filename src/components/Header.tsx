@@ -1,3 +1,4 @@
+import { Avatar } from "@mui/material";
 import { BiMenu, BiSearch } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { useNavigate } from "react-router-dom";
@@ -7,7 +8,6 @@ import Name from "./Name";
 
 export default function Header() {
   const navigate = useNavigate();
-
   return (
     <div
       className={`flex items-center w-full justify-between px-3 font-bold`}
@@ -26,7 +26,7 @@ export default function Header() {
           <HeaderTab text="Movies" path="/movies" />
           <HeaderTab text="Tv Shows" path="/shows" />
         </div>
-        <div className="flex items-center justify-between mx-2 ml-10 px-2 py-2 sm:mx-0 md:mx-3">
+        <div className="flex items-center justify-between mx-2 px-2 py-2 sm:mx-0 md:mx-1">
           <BiSearch
             className="text-xl sm:text-xl"
             onClick={() => {
@@ -34,7 +34,7 @@ export default function Header() {
             }}
           />
           <div
-            className="flex cursor-pointer"
+            className="flex cursor-pointer items-center ml-5"
             onClick={() => {
               if (!auth.currentUser) {
                 navigate("/signin");
@@ -43,8 +43,15 @@ export default function Header() {
               }
             }}
           >
-            <CgProfile className="hidden ml-3 mr-1 sm:flex sm:text-xl" />
-            <h1>{auth.currentUser?.displayName}</h1>
+            <h1 className="mr-2">{auth.currentUser?.displayName}</h1>
+            {auth.currentUser?.photoURL ? (
+              <Avatar
+                src={auth.currentUser?.photoURL || ""}
+                sx={{ width: 40, height: 40 }}
+              />
+            ) : (
+              <CgProfile className="hidden ml-3 mr-1 sm:flex sm:text-xl" />
+            )}
           </div>
         </div>
       </div>

@@ -200,3 +200,12 @@ export interface FetchCastPayload {
 export interface FetchCastDetailsPayload {
   url: string;
 }
+
+export interface IUserData {
+  username: string;
+  email: string;
+  password: string;
+  age: string;
+  gender: string;
+  phoneNo: string;
+}

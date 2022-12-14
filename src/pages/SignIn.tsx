@@ -9,11 +9,13 @@ import Grid from "@mui/material/Grid";
 import Link from "@mui/material/Link";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { onAuthStateChanged } from "firebase/auth";
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import Copyright from "../components/Copyright";
 import { SignInUser } from "../firebase/Authentication";
+import { auth } from "../firebase/firebaseConfig";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -29,7 +31,11 @@ export default function SignIn() {
     validationSchema: SignInSchema,
     onSubmit: (values) => {
       SignInUser(values.email, values.password);
-      navigate("/");
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          navigate("/");
+        }
+      });
     },
   });
 
