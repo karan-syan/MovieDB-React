@@ -1,5 +1,6 @@
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase/firebaseConfig";
+import { ApplicationState } from "../redux/root/rootReducer";
 import { IMovie_distructing } from "../utils/ApiDistruct";
 import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
@@ -7,13 +8,14 @@ import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function MovieBox({ item }: { item: IMovie }) {
   const navigate = useNavigate();
   const { I_name, poster_path, id } = IMovie_distructing(item);
-  const user = auth.currentUser;
-
+  const userdetails = useSelector(
+    (state: ApplicationState) => state.Userdetails
+  );
   return (
     <div
       className="text-bg_clr p-1 w-1/3 snap-center rounded-sm sm:rounded-xl inline-block overflow-hidden md:w-1/5 cursor-pointer h-auto text-xl lg:w-1/6"
       onClick={() => {
-        if (user) {
+        if (userdetails) {
           I_name
             ? navigate(`/tv/details/${id}`)
             : navigate(`/movie/details/${id}`);

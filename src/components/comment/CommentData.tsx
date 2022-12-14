@@ -1,8 +1,8 @@
-import { doc, getDoc, onSnapshot } from "firebase/firestore";
+import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { firestore_db } from "../../firebase/firebaseConfig";
-import Avatar from "./Avatar";
+import IAvatar from "./IAvatar";
 import Username from "./Username";
 export default function CommentData() {
   const { id } = useParams();
@@ -34,7 +34,7 @@ export default function CommentData() {
               return (
                 <div className="text-white mb-3 flex" key={index}>
                   <div className="flex mr-2">
-                    <Avatar id={comment.userId} />
+                    <IAvatar id={comment.userId} />
                   </div>
                   <div className="flex flex-col">
                     <div className="flex items-center">

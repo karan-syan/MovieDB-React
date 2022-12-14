@@ -1,20 +1,25 @@
 import { Avatar, Button, Input } from "@mui/material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { auth } from "../../firebase/firebaseConfig";
 import { AddComment } from "../../firebase/firestore";
+import { ApplicationState } from "../../redux/root/rootReducer";
 
 export default function Comment() {
   const { id } = useParams();
   const [commentText, setcommentText] = useState<string>("");
+  const userdetails = useSelector(
+    (state: ApplicationState) => state.Userdetails
+  );
   return (
     <div className="flex mt-2">
-      <Avatar src={auth.currentUser?.photoURL || ""} />
+      <Avatar src={userdetails?.photoURL || ""} />
       <div className={"flex items-center flex-col  w-full mx-3"}>
         <Input
           type={"text"}
           color={"primary"}
           placeholder={"Add a comment..."}
+          inputProps={{ style: { color: "white" } }}
           value={commentText}
           onChange={(e) => {
             setcommentText(e.target.value);

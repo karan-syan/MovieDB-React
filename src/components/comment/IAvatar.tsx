@@ -3,7 +3,7 @@ import { getDownloadURL, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
 import { storage } from "../../firebase/firebaseConfig";
 
-export default function Comment_Avatar({ id }: { id: string }) {
+export default function IAvatar({ id }: { id: string }) {
   const [url, seturl] = useState<string>("");
   useEffect(() => {
     getimg();
@@ -16,7 +16,7 @@ export default function Comment_Avatar({ id }: { id: string }) {
   return (
     <div>
       {url !== "" ? (
-        <img src={url} className={"w-11 h-11 rounded-full object-center"} />
+        <img src={url} className={"w-11 h-11 rounded-full object-cover"} />
       ) : (
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }} />
       )}

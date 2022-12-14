@@ -1,15 +1,15 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { firebaseConfig } from "../firebase/firebaseConfig";
+import { ApplicationState } from "../redux/root/rootReducer";
 import { IMovie_distructing } from "../utils/ApiDistruct";
 import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function Crousel({ item }: { item: IMovie[] }) {
   const navigate = useNavigate();
-  const app = initializeApp(firebaseConfig);
-  const user = getAuth(app).currentUser;
+  const userdetails = useSelector(
+    (state: ApplicationState) => state.Userdetails
+  );
   return (
     <div className="flex justify-center xl:mt-3 mb-8 drop-shadow-2xl">
       <div
@@ -60,7 +60,7 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                   }`}
                   key={index}
                   onClick={() => {
-                    if (user) {
+                    if (userdetails) {
                       I_name
                         ? navigate(`/tv/details/${id}`)
                         : navigate(`/movie/details/${id}`);

@@ -42,8 +42,7 @@ export const SignInUser = (email: string, password: string) => {
   try {
     signInWithEmailAndPassword(auth, email, password).then((res) => {
       auth.updateCurrentUser(res.user);
-      store.dispatch(CallUserDetail.request(res.user));
-      console.log(res.user);
+      store.dispatch(CallUserDetail(res.user));
     });
   } catch (error: any) {
     console.log(error);

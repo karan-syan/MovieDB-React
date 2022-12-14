@@ -1,24 +1,16 @@
+import { User } from "firebase/auth";
 import { ActionType, getType } from "typesafe-actions";
-import { IStateUserDetails } from "../../utils/InitialState";
-import { IuserDetail } from "../../utils/type";
 import * as actions from "./action";
 
 export const UserDetailReducer = (
-  state: IuserDetail = IStateUserDetails,
+  state: User | null = null,
   action: ActionType<typeof actions>
 ) => {
   switch (action.type) {
-    case getType(actions.CallUserDetail.request):
-      return {
-        ...state,
-        loading: true,
-      };
-    case getType(actions.CallUserDetail.success):
-      return {
-        ...state,
-        loading: false,
-        Data: action.payload,
-      };
+    case getType(actions.CallUserDetail):
+      state = action.payload;
+      //   console.log("hello", state);
+      return state;
     default:
       return state;
   }

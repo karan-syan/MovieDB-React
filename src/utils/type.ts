@@ -211,15 +211,3 @@ export interface IUserData {
   gender: string;
   phoneNo: string;
 }
-
-export interface IuserDetail {
-  accessToken: string;
-  displayName: string;
-  email: string;
-  emailVerified: boolean;
-  isAnonymous: boolean;
-  phoneNumber: null | string;
-  photoURL: string;
-  providerId: string;
-  uid: string;
-}

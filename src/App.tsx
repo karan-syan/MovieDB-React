@@ -1,17 +1,28 @@
+import { onAuthStateChanged } from "firebase/auth";
+import { useEffect } from "react";
 import { SkeletonTheme } from "react-loading-skeleton";
 import { Route, Routes } from "react-router-dom";
+import { auth } from "./firebase/firebaseConfig";
 import Home from "./pages/Home";
 import Movies from "./pages/Movies";
 import MoviesDetails from "./pages/MoviesDetails";
 import PeopleDetails from "./pages/PeopleDetails";
 import Search from "./pages/Search";
-import TvShows from "./pages/TvShows";
-import TvDetails from "./pages/TvDetails";
-import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import SignUp from "./pages/SignUp";
+import TvDetails from "./pages/TvDetails";
+import TvShows from "./pages/TvShows";
 import UserDetails from "./pages/UserDetails";
+import store from "./redux/store";
+import { CallUserDetail } from "./redux/user/action";
 
 function App() {
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) store.dispatch(CallUserDetail(user));
+    });
+  }, []);
+
   return (
     <>
       <SkeletonTheme baseColor="#f3f3f3" highlightColor="#ecebeb">

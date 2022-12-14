@@ -10,12 +10,17 @@ import { signOut, updateProfile } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { auth, firestore_db } from "../firebase/firebaseConfig";
 import { uploadImg } from "../firebase/firestore";
+import { ApplicationState } from "../redux/root/rootReducer";
 
 export default function UserDetails() {
-  const user = auth.currentUser;
+  const userdetails = useSelector(
+    (state: ApplicationState) => state.Userdetails
+  );
+
   const [U_age, setage] = useState<string>("");
   const [change, setchange] = useState<boolean>(false);
   const [U_gender, setgender] = useState<string>("");
@@ -25,11 +30,11 @@ export default function UserDetails() {
   const navigate = useNavigate();
   useEffect(() => {
     calldb();
-    console.log(user);
-  }, []);
+    console.log("vhjkl");
+  }, [userdetails]);
 
   async function calldb() {
-    const docRef = doc(firestore_db, "users", user?.uid || "");
+    const docRef = doc(firestore_db, "users", userdetails?.uid || "");
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       setage(docSnap.data().age);
@@ -40,8 +45,8 @@ export default function UserDetails() {
     }
   }
   async function updateUserDetails() {
-    if (user) {
-      const updRef = doc(firestore_db, "users", user?.uid || "");
+    if (userdetails) {
+      const updRef = doc(firestore_db, "users", userdetails?.uid || "");
 
       await updateDoc(updRef, {
         age: U_age,
@@ -49,7 +54,7 @@ export default function UserDetails() {
         username: U_username,
         phoneNo: U_phoneNo,
       });
-      updateProfile(user, {
+      updateProfile(userdetails, {
         displayName: U_username,
       });
     }
@@ -69,9 +74,9 @@ export default function UserDetails() {
           />
         </div>
         <div className="flex flex-col justify-center items-center">
-          {auth.currentUser?.photoURL ? (
+          {userdetails?.photoURL ? (
             <Avatar
-              src={auth.currentUser?.photoURL || ""}
+              src={userdetails?.photoURL || ""}
               sx={{ width: 56, height: 56 }}
             />
           ) : (

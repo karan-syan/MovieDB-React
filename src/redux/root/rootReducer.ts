@@ -14,7 +14,7 @@ const rootReducer = combineReducers({
   trend: TrendingReducer,
   details: DetailsReducer,
   Search: AllSearchReducer,
-  Userdetail: UserDetailReducer,
+  Userdetails: UserDetailReducer,
 });
 export default rootReducer;
 export type ApplicationState = ReturnType<typeof rootReducer>;

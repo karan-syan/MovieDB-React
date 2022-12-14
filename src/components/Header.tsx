@@ -1,13 +1,18 @@
 import { Avatar } from "@mui/material";
 import { BiMenu, BiSearch } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase/firebaseConfig";
+import { ApplicationState } from "../redux/root/rootReducer";
 import HeaderTab from "./HeaderTab";
 import Name from "./Name";
 
 export default function Header() {
   const navigate = useNavigate();
+  const userdetails = useSelector(
+    (state: ApplicationState) => state.Userdetails
+  );
+
   return (
     <div
       className={`flex items-center w-full justify-between px-3 font-bold`}
@@ -36,17 +41,16 @@ export default function Header() {
           <div
             className="flex cursor-pointer items-center ml-5"
             onClick={() => {
-              if (!auth.currentUser) {
-                navigate("/signin");
-              } else {
+              if (userdetails) {
                 navigate("/userdetails");
+              } else {
+                navigate("/signin");
               }
             }}
           >
-            <h1 className="mr-2">{auth.currentUser?.displayName}</h1>
-            {auth.currentUser?.photoURL ? (
+            {userdetails?.photoURL ? (
               <Avatar
-                src={auth.currentUser?.photoURL || ""}
+                src={userdetails?.photoURL || ""}
                 sx={{ width: 40, height: 40 }}
               />
             ) : (
