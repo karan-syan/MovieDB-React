@@ -19,7 +19,6 @@ const SignUpSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
   age: Yup.string().required("Required"),
   gender: Yup.string().required("Required"),
-  phoneNo: Yup.number().min(10, "Invalid").required("Required"),
   password: Yup.string()
     .min(8, "Password must be 8 character long")
     .required("Required"),
@@ -32,7 +31,6 @@ export default function SignUp() {
       email: "",
       age: "",
       gender: "male",
-      phoneNo: "",
       password: "",
     },
     // validationSchema: SignUpSchema,
@@ -43,7 +41,7 @@ export default function SignUp() {
         password: values.password,
         age: values.age,
         gender: values.gender,
-        phoneNo: values.phoneNo,
+        phoneNo: "",
       });
       navigate("/");
     },
@@ -133,18 +131,7 @@ export default function SignUp() {
                     />
                   </div>
                 </RadioGroup>
-                <TextField
-                  margin="normal"
-                  value={formik.values.phoneNo}
-                  onChange={formik.handleChange}
-                  required
-                  fullWidth
-                  name="phoneNo"
-                  label="Phone-No"
-                  type="phone"
-                  id="phoneNo"
-                  autoComplete="phone"
-                />
+
                 <TextField
                   margin="normal"
                   onChange={formik.handleChange}

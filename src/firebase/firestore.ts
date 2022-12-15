@@ -13,12 +13,12 @@ export const createUserDoc = (
 
   try {
     setDoc(docRef, {
-      username: username,
-      email: email,
-      age: age,
-      gender: gender,
-      phoneNo: phoneNo,
-      password: password,
+      username,
+      email,
+      age,
+      gender,
+      phoneNo,
+      password,
     });
   } catch (error) {
     console.warn(error);
