@@ -6,17 +6,21 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import "react-phone-number-input/style.css";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import { signOut, updateProfile } from "firebase/auth";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { auth, firestore_db } from "../firebase/firebaseConfig";
 import { uploadImg } from "../firebase/firestore";
 import { ApplicationState } from "../redux/root/rootReducer";
+import { CallUserDetail } from "../redux/user/action";
 
 export default function UserDetails() {
+  const dispatch = useDispatch();
   const userdetails = useSelector(
     (state: ApplicationState) => state.Userdetails
   );
@@ -26,12 +30,12 @@ export default function UserDetails() {
   const [U_gender, setgender] = useState<string>("");
   const [U_email, setemail] = useState<string>("");
   const [U_username, setusername] = useState<string>("");
-  const [U_phoneNo, setphoneNo] = useState<string>("");
+  const [U_phoneNo, setphoneNo] = useState<any>("");
   const navigate = useNavigate();
   useEffect(() => {
     calldb();
     console.log("vhjkl");
-  }, [userdetails]);
+  }, [userdetails, change]);
 
   async function calldb() {
     const docRef = doc(firestore_db, "users", userdetails?.uid || "");
@@ -91,12 +95,17 @@ export default function UserDetails() {
               if (e.target.files) {
                 console.log(e.target.files[0].arrayBuffer);
                 uploadImg(e.target.files[0]);
+                setchange(!change);
               }
             }}
           />
           <h1 className="text-black">{U_email}</h1>
         </div>
         <div className="flex flex-col">
+          <h1 className=" w-full text-center text-red-600"></h1>
+          {U_username.length < 2 ? (
+            <h1 className="text-red-600 mr-2 text-xs">Invalid Username</h1>
+          ) : null}
           <div className="flex items-center justify-between">
             <h1 className="text-black mr-2">Username: </h1>
             <Input
@@ -149,32 +158,35 @@ export default function UserDetails() {
               </div>
             </RadioGroup>
           </div>
+          {!isValidPhoneNumber(U_phoneNo) ? (
+            <h1 className="text-red-600 text-xs mr-2">Invalid Phone Number </h1>
+          ) : null}
           <div className="flex items-center justify-between">
             <h1 className="text-black mr-2">Phone No: </h1>
-            <Input
-              color="secondary"
-              type="phone"
+            <PhoneInput
+              className="text-black border-b-2 border-black"
+              type="text"
+              country={"IN"}
               value={U_phoneNo}
-              onChange={(e) => {
-                setchange(false);
-                setphoneNo(e.target.value);
-              }}
+              onChange={setphoneNo}
+              required
             />
           </div>
-          {change ? (
-            <div className="flex justify-center">
-              <h1 className="text-red-600 mt-2 text-sm">
-                Changed Successfully
-              </h1>
-            </div>
-          ) : null}
           <div className="flex justify-between mt-3">
             <Button
               variant="contained"
               className="w-full"
               onClick={() => {
-                updateUserDetails();
-                setchange(true);
+                if (
+                  U_username.length < 2 === false &&
+                  isValidPhoneNumber(U_phoneNo)
+                ) {
+                  updateUserDetails();
+                  alert("Saved Successfully");
+                  setchange(!change);
+                } else {
+                  alert("invalid details");
+                }
               }}
             >
               Save Changes
@@ -188,6 +200,7 @@ export default function UserDetails() {
           className="w-full"
           onClick={() => {
             signOut(auth);
+            dispatch(CallUserDetail(null));
             navigate("/");
           }}
         >
