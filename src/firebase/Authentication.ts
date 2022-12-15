@@ -46,5 +46,6 @@ export const SignInUser = (email: string, password: string) => {
     });
   } catch (error: any) {
     console.log(error);
+    alert("invalid username and password");
   }
 };

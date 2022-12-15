@@ -56,6 +56,22 @@ export const AddComment = async (id: string, commentText: string) => {
     });
   }
 };
+export const AddRecent = async (id: string, img: string) => {
+  if (auth.currentUser) {
+    const uid = auth.currentUser?.uid;
+    const docRef = doc(firestore_db, "recent", uid);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      try {
+        setDoc(docRef, {
+          comment: [{}],
+        });
+      } catch (error) {
+        console.warn(error);
+      }
+    }
+  }
+};
 export const uploadImg = async (file: any) => {
   const fileRef = ref(storage, "image/" + auth.currentUser?.uid + ".jpg");
   const metadata = {

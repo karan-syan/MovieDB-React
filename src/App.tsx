@@ -7,6 +7,7 @@ import Home from "./pages/Home";
 import Movies from "./pages/Movies";
 import MoviesDetails from "./pages/MoviesDetails";
 import PeopleDetails from "./pages/PeopleDetails";
+import Recent from "./pages/Recent";
 import Search from "./pages/Search";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -37,6 +38,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/userdetails" element={<UserDetails />} />
+          <Route path="/recent" element={<Recent />} />
         </Routes>
       </SkeletonTheme>
     </>
