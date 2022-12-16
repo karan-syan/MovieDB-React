@@ -17,7 +17,7 @@ export default function Recent() {
   const [Moviedata, setMoviedata] = useState<any>([]);
   useEffect(() => {
     getdata();
-  });
+  }, []);
   const getdata = async () => {
     try {
       const docRef = doc(firestore_db, "recent", userdetails?.uid || "");
