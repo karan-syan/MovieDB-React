@@ -2,6 +2,7 @@ import { format } from "date-fns";
 import { updateProfile } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
+import { string } from "prop-types";
 import { IUserData } from "../utils/type";
 import { auth, firestore_db, storage } from "./firebaseConfig";
 
@@ -56,7 +57,12 @@ export const AddComment = async (id: string, commentText: string) => {
     });
   }
 };
-export const AddRecent = async (id: string, img: string) => {
+
+export const AddRecent = async (
+  id: string,
+  img: string,
+  varient: "movies" | "shows"
+) => {
   if (auth.currentUser) {
     const uid = auth.currentUser?.uid;
     const docRef = doc(firestore_db, "recent", uid);
@@ -64,14 +70,25 @@ export const AddRecent = async (id: string, img: string) => {
     if (!docSnap.exists()) {
       try {
         setDoc(docRef, {
-          comment: [{}],
+          movies: [
+            { id, img, varient, time: format(new Date(), "dd/mm/yyyy") },
+          ],
         });
       } catch (error) {
         console.warn(error);
       }
+    } else {
+      console.log(varient);
+      updateDoc(docRef, {
+        movies: [
+          { id, img, varient, time: format(new Date(), "dd/mm/yyyy") },
+          ...docSnap.data().movies,
+        ],
+      });
     }
   }
 };
+
 export const uploadImg = async (file: any) => {
   const fileRef = ref(storage, "image/" + auth.currentUser?.uid + ".jpg");
   const metadata = {

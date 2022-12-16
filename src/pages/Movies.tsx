@@ -119,7 +119,14 @@ export default function Movies() {
               }
             >
               {Movies.Data.map((item, index) => {
-                return <MovieBox item={item} key={index} />;
+                return (
+                  <MovieBox
+                    id={item.id.toString()}
+                    img={item.poster_path}
+                    varient={"movies"}
+                    key={index}
+                  />
+                );
               })}
             </InfiniteScroll>
           </div>

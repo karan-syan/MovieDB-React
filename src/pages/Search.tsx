@@ -112,7 +112,14 @@ export default function Search() {
             >
               {MoviesData.Data.map((item, index) => {
                 if (item.poster_path) {
-                  return <MovieBox item={item} key={index} />;
+                  return (
+                    <MovieBox
+                      id={item.id.toString()}
+                      img={item.poster_path}
+                      varient={item.release_date ? "movies" : "shows"}
+                      key={index}
+                    />
+                  );
                 }
               })}
             </InfiniteScroll>

@@ -211,3 +211,8 @@ export interface IUserData {
   gender: string;
   phoneNo: string;
 }
+
+export interface Irecent {
+  movies: { id: string; img: string }[];
+  shows: { id: string; img: string }[];
+}

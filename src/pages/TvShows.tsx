@@ -127,7 +127,14 @@ export default function TvShows() {
               }
             >
               {MoviesData.Data.map((item, index) => {
-                return <MovieBox item={item} key={index} />;
+                return (
+                  <MovieBox
+                    id={item.id.toString()}
+                    img={item.poster_path}
+                    varient={"shows"}
+                    key={index}
+                  />
+                );
               })}
             </InfiniteScroll>
           </div>

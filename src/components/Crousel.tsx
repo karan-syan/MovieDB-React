@@ -1,5 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { AddRecent } from "../firebase/firestore";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { IMovie_distructing } from "../utils/ApiDistruct";
 import { IMovie } from "../utils/type";
@@ -48,6 +49,7 @@ export default function Crousel({ item }: { item: IMovie[] }) {
               first_air_date,
               id,
               overview,
+              poster_path,
               title,
               release_date,
             } = IMovie_distructing(val);
@@ -61,6 +63,11 @@ export default function Crousel({ item }: { item: IMovie[] }) {
                   key={index}
                   onClick={() => {
                     if (userdetails) {
+                      AddRecent(
+                        id.toString(),
+                        poster_path,
+                        release_date ? "movies" : "shows"
+                      );
                       I_name
                         ? navigate(`/tv/details/${id}`)
                         : navigate(`/movie/details/${id}`);
