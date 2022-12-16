@@ -12,7 +12,6 @@ export default function Recent() {
   const userdetails = useSelector(
     (state: ApplicationState) => state.Userdetails
   );
-  const navigate = useNavigate();
   const [dataexist, setdataexist] = useState<1 | 2 | 3>(1);
   const [Moviedata, setMoviedata] = useState<any>([]);
   useEffect(() => {
