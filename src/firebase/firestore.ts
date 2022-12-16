@@ -2,7 +2,6 @@ import { format } from "date-fns";
 import { updateProfile } from "firebase/auth";
 import { doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
-import { string } from "prop-types";
 import { IUserData } from "../utils/type";
 import { auth, firestore_db, storage } from "./firebaseConfig";
 
@@ -78,11 +77,20 @@ export const AddRecent = async (
         console.warn(error);
       }
     } else {
-      console.log(varient);
+      const recent = docSnap.data().movies.filter((item: any) => {
+        if (item.id !== id) {
+          return {
+            id: item.id,
+            img: item.img,
+            varient: item.varient,
+            time: item.time,
+          };
+        }
+      });
       updateDoc(docRef, {
         movies: [
           { id, img, varient, time: format(new Date(), "dd/mm/yyyy") },
-          ...docSnap.data().movies,
+          ...recent,
         ],
       });
     }

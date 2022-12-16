@@ -1,4 +1,4 @@
-import { doc, DocumentData, getDoc } from "firebase/firestore";
+import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -6,10 +6,7 @@ import { BarLoader } from "react-spinners";
 import Header from "../components/Header";
 import MovieBox from "../components/MovieBox";
 import { firestore_db } from "../firebase/firebaseConfig";
-import { AddRecent } from "../firebase/firestore";
 import { ApplicationState } from "../redux/root/rootReducer";
-import { Irecent } from "../utils/type";
-import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function Recent() {
   const userdetails = useSelector(
@@ -22,12 +19,14 @@ export default function Recent() {
     getdata();
   });
   const getdata = async () => {
-    const docRef = doc(firestore_db, "recent", userdetails?.uid || "");
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setMoviedata(docSnap.data().movies);
-      setdataexist(2);
-    } else {
+    try {
+      const docRef = doc(firestore_db, "recent", userdetails?.uid || "");
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        setMoviedata(docSnap.data().movies);
+        setdataexist(2);
+      }
+    } catch (error) {
       setdataexist(3);
     }
   };
@@ -60,7 +59,7 @@ export default function Recent() {
               <Header />
             </div>
           </div>
-          <div className="flex overflow-auto">
+          <div className="overflow-auto">
             {dataexist === 3 ? (
               <div
                 className="w-full flex justify-center items-center"
