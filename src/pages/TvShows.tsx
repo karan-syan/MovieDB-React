@@ -74,7 +74,7 @@ export default function TvShows() {
       className="flex justify-center items-center"
       style={{
         width: "100%",
-        maxWidth: "1600px",
+        maxWidth: "1920px",
         margin: "0px auto",
         float: "none",
       }}
@@ -85,7 +85,7 @@ export default function TvShows() {
         <div
           style={{
             width: "100%",
-            maxWidth: "1600px",
+            maxWidth: "1920px",
             margin: "0px auto",
           }}
         >
@@ -96,7 +96,7 @@ export default function TvShows() {
             <div
               style={{
                 width: "100%",
-                maxWidth: "1600px",
+                maxWidth: "1920px",
                 margin: "0px auto",
                 float: "none",
               }}

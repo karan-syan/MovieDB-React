@@ -50,7 +50,7 @@ export default function Search() {
       style={{
         width: "100%",
         height: "100vh",
-        maxWidth: "1600px",
+        maxWidth: "1920px",
         margin: "0px auto",
         float: "none",
       }}

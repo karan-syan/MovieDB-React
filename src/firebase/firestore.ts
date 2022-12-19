@@ -111,3 +111,87 @@ export const uploadImg = async (file: any) => {
   }
   alert("file uploaded");
 };
+
+export const uploadplaylist = async (
+  playlistname: string,
+  id: string,
+  img: string,
+  varient: string
+) => {
+  try {
+    if (auth.currentUser?.email) {
+      const uid = auth.currentUser?.uid;
+      const docRef = doc(firestore_db, "playlist", playlistname + "@" + uid);
+      const docSnap = await getDoc(docRef);
+      if (!docSnap.exists()) {
+        try {
+          setDoc(docRef, {
+            createdby: uid,
+            playlist_name: playlistname,
+            data: [{ id, img, varient }],
+          });
+          playlistaccess(playlistname, auth.currentUser.email?.toString());
+          alert("added");
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        console.log(docSnap.exists(), playlistname);
+        const list = docSnap.data().data.filter((item: any) => {
+          if (item.id !== id) {
+            return item;
+          }
+        });
+        await updateDoc(docRef, {
+          data: [{ id, img, varient }, ...list],
+        });
+        alert("added");
+      }
+    }
+  } catch (error) {}
+};
+export const playlistaccess = async (playlistname: string, mail: string) => {
+  alert("shared");
+  if (auth.currentUser) {
+    const uid = auth.currentUser?.uid;
+    const docRef = doc(firestore_db, "playlistaccess", mail);
+    const docSnap = await getDoc(docRef);
+    if (!docSnap.exists()) {
+      try {
+        mail === auth.currentUser.email
+          ? setDoc(docRef, {
+              own: [playlistname + "@" + uid],
+              shared: [],
+            })
+          : setDoc(docRef, {
+              own: [],
+              shared: [playlistname + "@" + uid],
+            });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      if (mail === auth.currentUser.email) {
+        const list = docSnap.data().own.filter((item: any) => {
+          if (item !== playlistname + "@" + uid) {
+            return item;
+          }
+        });
+        await updateDoc(docRef, {
+          own: [playlistname + "@" + uid, ...list],
+          shared: [...docSnap.data().shared],
+        });
+      } else {
+        const list = docSnap.data().shared.filter((item: any) => {
+          if (item !== playlistname + "@" + uid) {
+            return item;
+          }
+        });
+        await updateDoc(docRef, {
+          own: [...docSnap.data().own],
+          shared: [playlistname + "@" + uid, ...list],
+        });
+      }
+    }
+  }
+};

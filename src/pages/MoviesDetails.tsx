@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { Input } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { IoTime } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +12,7 @@ import Context from "../components/Context";
 import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
 import PosterCard from "../components/PosterCard";
+import { uploadplaylist } from "../firebase/firestore";
 import { CallMovieDetails } from "../redux/Movie/action";
 import { CallCast } from "../redux/People/action";
 import { CallRecommend } from "../redux/Recommend/action";
@@ -19,7 +21,7 @@ import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function MoviesDetails() {
   const dispatch = useDispatch();
   const elementForScroll = useRef<HTMLDivElement>(null);
-
+  const [playlistname, setplaylistname] = useState<string>("");
   const MovieDetails = useSelector(
     (state: ApplicationState) => state.details.MovieDetails
   );
@@ -76,7 +78,7 @@ export default function MoviesDetails() {
       style={{
         width: "100%",
         height: "100vh",
-        maxWidth: "1600px",
+        maxWidth: "1920px",
         margin: "0px auto",
         float: "none",
       }}
@@ -86,7 +88,7 @@ export default function MoviesDetails() {
       ) : (
         <div
           style={{
-            maxWidth: "1600px",
+            maxWidth: "1920px",
             margin: "0px auto",
             float: "none",
             width: "100vw",
@@ -124,10 +126,32 @@ export default function MoviesDetails() {
                   <IoTime className="mx-1" />
                   {runtime} min | {vote_average} | {}
                 </h1>
-                <button className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base">
-                  WatchList
-                  <BsBookmarkHeartFill className="ml-2" />
-                </button>
+                <div className="flex">
+                  <button
+                    className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base"
+                    onClick={() => {
+                      if (playlistname != "")
+                        uploadplaylist(
+                          playlistname,
+                          id || "",
+                          poster_path,
+                          "movies"
+                        );
+                    }}
+                  >
+                    Add
+                    <BsBookmarkHeartFill className="ml-2" />
+                  </button>
+                  <Input
+                    className="ml-2"
+                    inputProps={{ style: { color: "white" } }}
+                    type={"text"}
+                    value={playlistname}
+                    onChange={(e) => {
+                      setplaylistname(e.target.value);
+                    }}
+                  />
+                </div>
                 <div className="w-full">
                   <Context title="Synopsis" subtitle={overview} />
                   <Context

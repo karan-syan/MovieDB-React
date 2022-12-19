@@ -1,16 +1,16 @@
+import { Button, Input } from "@mui/material";
 import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
-import Header from "../components/Header";
 import MovieBox from "../components/MovieBox";
+import Name from "../components/Name";
 import { firestore_db } from "../firebase/firebaseConfig";
-import { ApplicationState } from "../redux/root/rootReducer";
+import { playlistaccess } from "../firebase/firestore";
 
-export default function Recent() {
-  const userdetails = useSelector(
-    (state: ApplicationState) => state.Userdetails
-  );
+export default function PlaylistDetails() {
+  const { id } = useParams();
+  const [email, setemail] = useState<string>("");
   const [dataexist, setdataexist] = useState<1 | 2 | 3>(1);
   const [Moviedata, setMoviedata] = useState<any>([]);
   useEffect(() => {
@@ -18,10 +18,10 @@ export default function Recent() {
   }, []);
   const getdata = async () => {
     try {
-      const docRef = doc(firestore_db, "recent", userdetails?.uid || "");
+      const docRef = doc(firestore_db, "playlist", atob(id || ""));
       const docSnap = await getDoc(docRef);
       if (docSnap.exists()) {
-        setMoviedata(docSnap.data().movies);
+        setMoviedata(docSnap.data());
         setdataexist(2);
       }
     } catch (error) {
@@ -52,9 +52,33 @@ export default function Recent() {
             float: "none",
           }}
         >
-          <div>
-            <div className={"sticky top-0 z-10"}>
-              <Header />
+          <div className="flex sticky top-0 z-10 justify-between">
+            <Name />
+            <h1 className={"text-xl mt-2"}>
+              Playlist: {Moviedata.playlist_name}
+            </h1>
+            <div className="flex ">
+              <Input
+                className="ml-2"
+                inputProps={{
+                  style: { color: "white" },
+                }}
+                type={"text"}
+                value={email}
+                onChange={(e) => {
+                  setemail(e.target.value);
+                  console.log(email);
+                }}
+              />
+              <Button
+                variant="contained"
+                onClick={() => {
+                  if (email !== "")
+                    playlistaccess(Moviedata.playlist_name, email);
+                }}
+              >
+                Share
+              </Button>
             </div>
           </div>
           <div className="overflow-auto">
@@ -66,13 +90,12 @@ export default function Recent() {
                 <h1>no data found</h1>
               </div>
             ) : (
-              Moviedata.map(
+              Moviedata.data.map(
                 (
                   item: {
                     id: string;
                     img: string;
                     varient: "shows" | "movies";
-                    time: string;
                   },
                   index: string
                 ) => {
@@ -81,7 +104,6 @@ export default function Recent() {
                       key={index}
                       id={item.id}
                       img={item.img}
-                      time={item.time}
                       varient={item.varient}
                     />
                   );

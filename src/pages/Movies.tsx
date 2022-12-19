@@ -72,7 +72,7 @@ export default function Movies() {
         <div
           style={{
             width: "100%",
-            maxWidth: "1600px",
+            maxWidth: "1920px",
             margin: "0px auto",
             float: "none",
           }}
@@ -84,7 +84,7 @@ export default function Movies() {
             <div
               style={{
                 width: "100%",
-                maxWidth: "1600px",
+                maxWidth: "1920px",
                 margin: "0px auto",
                 float: "none",
               }}
@@ -94,7 +94,7 @@ export default function Movies() {
             <div
               className="flex justify-center py-2 mb-3 sticky z-20"
               style={{
-                maxWidth: "1600px",
+                maxWidth: "1920px",
                 margin: "0px auto",
                 float: "none",
                 top: visible ? "7.5vh" : "0vh",

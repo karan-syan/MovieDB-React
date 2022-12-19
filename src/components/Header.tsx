@@ -31,6 +31,7 @@ export default function Header() {
           <HeaderTab text="Movies" path="/movies" />
           <HeaderTab text="Tv Shows" path="/shows" />
           {userdetails ? <HeaderTab text="Recent" path="/recent" /> : null}
+          {userdetails ? <HeaderTab text="Playlist" path="/playlist" /> : null}
         </div>
         <div className="flex items-center justify-between mx-2 px-2 py-2 sm:mx-0 md:mx-1">
           <BiSearch

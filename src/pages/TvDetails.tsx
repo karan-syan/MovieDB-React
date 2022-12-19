@@ -1,4 +1,4 @@
-import { doc, getDoc } from "firebase/firestore";
+import { Input } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { IoTime } from "react-icons/io5";
@@ -14,7 +14,7 @@ import ListRow from "../components/ListRow";
 import PosterCard from "../components/PosterCard";
 import NetworkList from "../components/TvDetail/NetworkList";
 import SeasonList from "../components/TvDetail/SeasonList";
-import { firestore_db } from "../firebase/firebaseConfig";
+import { uploadplaylist } from "../firebase/firestore";
 import { CallCast } from "../redux/People/action";
 import { CallRecommend } from "../redux/Recommend/action";
 import { ApplicationState } from "../redux/root/rootReducer";
@@ -25,7 +25,7 @@ import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function TvDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
-
+  const [playlistname, setplaylistname] = useState<string>("");
   const elementForScroll = useRef<HTMLDivElement>(null);
   const tvshows = useSelector(
     (state: ApplicationState) => state.details.TvDetails
@@ -85,7 +85,7 @@ export default function TvDetails() {
       style={{
         width: "100%",
         height: "100vh",
-        maxWidth: "1600px",
+        maxWidth: "1920px",
         margin: "0px auto",
         float: "none",
       }}
@@ -131,10 +131,32 @@ export default function TvDetails() {
                   <IoTime className="mx-1" />
                   {episode_run_time} min | {voteAvg} | {type}
                 </h1>
-                <button className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base">
-                  WatchList
-                  <BsBookmarkHeartFill className="ml-2" />
-                </button>
+                <div className="flex">
+                  <button
+                    className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base"
+                    onClick={() => {
+                      if (playlistname !== "")
+                        uploadplaylist(
+                          playlistname,
+                          id || "",
+                          Poster_Path,
+                          "shows"
+                        );
+                    }}
+                  >
+                    Add
+                    <BsBookmarkHeartFill className="ml-2" />
+                  </button>
+                  <Input
+                    className="ml-2"
+                    inputProps={{ style: { color: "white" } }}
+                    type={"text"}
+                    value={playlistname}
+                    onChange={(e) => {
+                      setplaylistname(e.target.value);
+                    }}
+                  />
+                </div>
                 <div className="w-full">
                   <Context title="Synopsis" subtitle={overview} />
                   <Context
