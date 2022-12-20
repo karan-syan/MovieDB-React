@@ -1,6 +1,5 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
-import { SkeletonTheme } from "react-loading-skeleton";
 import { Route, Routes } from "react-router-dom";
 import { auth } from "./firebase/firebaseConfig";
 import Home from "./pages/Home";
@@ -28,23 +27,21 @@ function App() {
 
   return (
     <>
-      <SkeletonTheme baseColor="#f3f3f3" highlightColor="#ecebeb">
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/Search" element={<Search />} />
-          <Route path="/shows" element={<TvShows />} />
-          <Route path="/movies" element={<Movies />} />
-          <Route path="/movie/details/:id" element={<MoviesDetails />} />
-          <Route path="/tv/details/:id" element={<TvDetails />} />
-          <Route path="/people/:id" element={<PeopleDetails />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/userdetails" element={<UserDetails />} />
-          <Route path="/recent" element={<Recent />} />
-          <Route path="/playlist" element={<Playlist />} />
-          <Route path="/playlist/detail/:id" element={<PlaylistDetails />} />
-        </Routes>
-      </SkeletonTheme>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/Search" element={<Search />} />
+        <Route path="/shows" element={<TvShows />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/movie/details/:id" element={<MoviesDetails />} />
+        <Route path="/tv/details/:id" element={<TvDetails />} />
+        <Route path="/people/:id" element={<PeopleDetails />} />
+        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/userdetails" element={<UserDetails />} />
+        <Route path="/recent" element={<Recent />} />
+        <Route path="/playlist" element={<Playlist />} />
+        <Route path="/playlist/detail/:id" element={<PlaylistDetails />} />
+      </Routes>
     </>
   );
 }
