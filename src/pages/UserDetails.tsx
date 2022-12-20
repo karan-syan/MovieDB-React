@@ -18,6 +18,8 @@ import { auth, firestore_db } from "../firebase/firebaseConfig";
 import { uploadImg } from "../firebase/firestore";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { CallUserDetail } from "../redux/user/action";
+import { GetUserdb, updateUserDetails } from "../firebase/Userfetch";
+import { IUserData } from "../utils/type";
 
 export default function UserDetails() {
   const dispatch = useDispatch();
@@ -33,36 +35,17 @@ export default function UserDetails() {
   const [U_phoneNo, setphoneNo] = useState<any>("");
   const navigate = useNavigate();
   useEffect(() => {
-    calldb();
-    console.log("vhjkl");
+    GetUserdb().then((res) => {
+      if (res) {
+        setage(res.age);
+        setgender(res.gender);
+        setusername(res.username);
+        setphoneNo(res.phoneNo);
+        setemail(res.email);
+      }
+    });
   }, [userdetails, change]);
 
-  async function calldb() {
-    const docRef = doc(firestore_db, "users", userdetails?.uid || "");
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      setage(docSnap.data().age);
-      setgender(docSnap.data().gender);
-      setusername(docSnap.data().username);
-      setphoneNo(docSnap.data().phoneNo);
-      setemail(docSnap.data().email);
-    }
-  }
-  async function updateUserDetails() {
-    if (userdetails) {
-      const updRef = doc(firestore_db, "users", userdetails?.uid || "");
-
-      await updateDoc(updRef, {
-        age: U_age,
-        gender: U_gender,
-        username: U_username,
-        phoneNo: U_phoneNo,
-      });
-      updateProfile(userdetails, {
-        displayName: U_username,
-      });
-    }
-  }
   return (
     <div
       className="flex flex-col justify-center items-center"
@@ -181,7 +164,12 @@ export default function UserDetails() {
                   U_username.length < 2 === false &&
                   isValidPhoneNumber(U_phoneNo)
                 ) {
-                  updateUserDetails();
+                  updateUserDetails({
+                    age: U_age,
+                    gender: U_gender,
+                    phoneNo: U_phoneNo,
+                    username: U_username,
+                  });
                   alert("Saved Successfully");
                   setchange(!change);
                 } else {
