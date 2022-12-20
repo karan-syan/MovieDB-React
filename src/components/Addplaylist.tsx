@@ -98,6 +98,7 @@ export default function Addplaylist({
               if (playlistname !== "") {
                 uploadplaylist(playlistname, id || "", posterpath, varient);
                 handleClose();
+                setplaylistname("");
               }
             }}
           >

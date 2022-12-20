@@ -8,6 +8,7 @@ import {
   playlistaccess,
   FetchPaylistdata,
 } from "../firebase_services/firestore/PlaylistFirestore";
+import { checkUserMail } from "../firebase_services/firestore/UserFirestore";
 
 export default function PlaylistDetails() {
   const { id } = useParams();
@@ -63,14 +64,21 @@ export default function PlaylistDetails() {
                 value={email}
                 onChange={(e) => {
                   setemail(e.target.value);
-                  console.log(email);
                 }}
               />
               <Button
                 variant="contained"
                 onClick={() => {
-                  if (email !== "")
-                    playlistaccess(Moviedata.playlist_name, email);
+                  if (email !== "") {
+                    const item = checkUserMail(email);
+                    if (item.length > 0) {
+                      playlistaccess(Moviedata.playlist_name, email);
+                      setemail("");
+                    } else {
+                      alert("User with " + email + " doesn't exist");
+                      setemail("");
+                    }
+                  }
                 }}
               >
                 Share

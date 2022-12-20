@@ -1,5 +1,14 @@
 import { updateProfile } from "firebase/auth";
-import { collection, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  getDoc,
+  onSnapshot,
+  query,
+  setDoc,
+  updateDoc,
+  where,
+} from "firebase/firestore";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { IUserData } from "../../utils/type";
 import { auth, firestore_db, storage } from "../firebaseConfig";
@@ -71,4 +80,19 @@ export const uploadImg = async (file: any) => {
     console.log(auth.currentUser.photoURL);
   }
   alert("file uploaded");
+};
+export const checkUserMail = (email: string) => {
+  let title: any[] = [];
+  const colRef = collection(firestore_db, "users");
+  const q = query(colRef, where("email", "==", email));
+  console.log("q==", q);
+  onSnapshot(q, (snapshot) => {
+    snapshot.docs.map((doc) => {
+      title.push({ ...doc.data() });
+    });
+
+    console.log(title);
+  });
+
+  return title;
 };
