@@ -1,10 +1,10 @@
 import { Input } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { BsBookmarkHeartFill } from "react-icons/bs";
 import { IoTime } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
+import Addplaylist from "../components/Addplaylist";
 import CastList from "../components/CastList";
 import Comment from "../components/comment/Comment";
 import CommentData from "../components/comment/CommentData";
@@ -12,7 +12,6 @@ import Context from "../components/Context";
 import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
 import PosterCard from "../components/PosterCard";
-import { uploadplaylist } from "../firebase/firestore";
 import { CallMovieDetails } from "../redux/Movie/action";
 import { CallCast } from "../redux/People/action";
 import { CallRecommend } from "../redux/Recommend/action";
@@ -21,7 +20,6 @@ import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function MoviesDetails() {
   const dispatch = useDispatch();
   const elementForScroll = useRef<HTMLDivElement>(null);
-  const [playlistname, setplaylistname] = useState<string>("");
   const MovieDetails = useSelector(
     (state: ApplicationState) => state.details.MovieDetails
   );
@@ -127,29 +125,10 @@ export default function MoviesDetails() {
                   {runtime} min | {vote_average} | {}
                 </h1>
                 <div className="flex">
-                  <button
-                    className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base"
-                    onClick={() => {
-                      if (playlistname != "")
-                        uploadplaylist(
-                          playlistname,
-                          id || "",
-                          poster_path,
-                          "movies"
-                        );
-                    }}
-                  >
-                    Add
-                    <BsBookmarkHeartFill className="ml-2" />
-                  </button>
-                  <Input
-                    className="ml-2"
-                    inputProps={{ style: { color: "white" } }}
-                    type={"text"}
-                    value={playlistname}
-                    onChange={(e) => {
-                      setplaylistname(e.target.value);
-                    }}
+                  <Addplaylist
+                    id={id || ""}
+                    posterpath={poster_path}
+                    varient={"movies"}
                   />
                 </div>
                 <div className="w-full">

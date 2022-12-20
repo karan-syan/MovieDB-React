@@ -33,7 +33,7 @@ export default function SignUp() {
       gender: "male",
       password: "",
     },
-    // validationSchema: SignUpSchema,
+    validationSchema: SignUpSchema,
     onSubmit: (values) => {
       SignUpUser({
         username: values.username,

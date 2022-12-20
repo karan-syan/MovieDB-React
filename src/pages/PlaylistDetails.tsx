@@ -1,4 +1,4 @@
-import { Button, Input } from "@mui/material";
+import { Button, Input, TextField } from "@mui/material";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
@@ -51,9 +51,9 @@ export default function PlaylistDetails() {
             <h1 className={"text-xl mt-2"}>
               Playlist: {Moviedata.playlist_name}
             </h1>
-            <div className="flex ">
-              <Input
-                className="ml-2"
+            <div className="flex border-solid border-b-2 border-white ">
+              <TextField
+                variant="filled"
                 inputProps={{
                   style: { color: "white" },
                 }}

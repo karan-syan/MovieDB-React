@@ -130,8 +130,8 @@ export const uploadplaylist = async (
             playlist_name: playlistname,
             data: [{ id, img, varient }],
           });
-          playlistaccess(playlistname, auth.currentUser.email?.toString());
-          alert("added");
+          playlistaccess(playlistname, auth.currentUser.email);
+          alert("created and added");
         } catch (error) {
           console.log(error);
         }
@@ -151,13 +151,13 @@ export const uploadplaylist = async (
   } catch (error) {}
 };
 export const playlistaccess = async (playlistname: string, mail: string) => {
-  alert("shared");
   if (auth.currentUser) {
     const uid = auth.currentUser?.uid;
     const docRef = doc(firestore_db, "playlistaccess", mail);
     const docSnap = await getDoc(docRef);
     if (!docSnap.exists()) {
       try {
+        alert(mail + auth?.currentUser?.email);
         mail === auth.currentUser.email
           ? setDoc(docRef, {
               own: [playlistname + "@" + uid],
@@ -177,9 +177,8 @@ export const playlistaccess = async (playlistname: string, mail: string) => {
             return item;
           }
         });
-        await updateDoc(docRef, {
+        updateDoc(docRef, {
           own: [playlistname + "@" + uid, ...list],
-          shared: [...docSnap.data().shared],
         });
       } else {
         const list = docSnap.data().shared.filter((item: any) => {
@@ -187,8 +186,7 @@ export const playlistaccess = async (playlistname: string, mail: string) => {
             return item;
           }
         });
-        await updateDoc(docRef, {
-          own: [...docSnap.data().own],
+        updateDoc(docRef, {
           shared: [playlistname + "@" + uid, ...list],
         });
       }

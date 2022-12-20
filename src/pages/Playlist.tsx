@@ -11,26 +11,29 @@ export default function Playlist() {
     (state: ApplicationState) => state.Userdetails
   );
   const navigate = useNavigate();
-  const [dataexist, setdataexist] = useState<1 | 2 | 3>(1);
+  const [dataexist, setdataexist] = useState<"load" | "avail" | "unavail">(
+    "load"
+  );
   const [ownlist, setownlist] = useState<any[]>([]);
   const [sharedlist, setsharedlist] = useState<any[]>([]);
   useEffect(() => {
-    fetchPlaylists()
+    fetchPlaylists(userdetails?.email || "")
       .then((res) => {
         if (res) {
-          setdataexist(2);
+          setdataexist("avail");
           setownlist(res.own);
           setsharedlist(res.shared);
+          console.log(res.shared.length);
         }
       })
       .catch((e) => {
-        setdataexist(3);
+        setdataexist("unavail");
       });
   }, [userdetails]);
 
   return (
     <div className="flex justify-center items-center">
-      {dataexist === 1 ? (
+      {dataexist === "load" ? (
         <div
           className="flex justify-center items-center"
           style={{
@@ -58,51 +61,59 @@ export default function Playlist() {
               <Header />
             </div>
           </div>
-          <div className="overflow-auto" style={{ height: "43vh" }}>
+          <div style={{ height: "43vh" }}>
             <h1 className="text-xl m-2 font-extrabold">Your Playlists</h1>
-            {dataexist === 3 ? (
-              <div className="w-full flex justify-center items-center">
-                <h1>no data found</h1>
-              </div>
-            ) : (
-              ownlist?.map((item: string) => {
-                return (
-                  <div
-                    className="w-1/6 h-1/6 text-3xl flex justify-center items-center cursor-pointer m-2 rounded-2xl bg-black"
-                    onClick={() => {
-                      navigate(`/playlist/detail/${btoa(item)}`);
-                    }}
-                    key={item}
-                  >
-                    {item.substring(0, item.indexOf("@"))}
-                  </div>
-                );
-              })
-            )}
-          </div>
-          <div className="overflow-auto" style={{ height: "43vh" }}>
-            <h1 className="text-xl font-extrabold m-2">Recieved Playlist</h1>
-            {dataexist === 3 ? (
-              <div className="w-full flex justify-center items-center">
-                <h1>no data found</h1>
-              </div>
-            ) : (
-              <div>
-                {sharedlist?.map((item: string) => {
+            <div className="overflow-auto">
+              {dataexist === "unavail" || ownlist.length < 1 ? (
+                <div className="w-full flex justify-center items-center">
+                  <h1>no data found</h1>
+                </div>
+              ) : (
+                ownlist?.map((item: string) => {
                   return (
                     <div
-                      className="w-1/6 h-1/6 text-3xl flex justify-center items-center cursor-pointer m-2 rounded-2xl bg-black"
+                      className="w-1/6 h-1/6 text-3xl inline-block cursor-pointer m-2 py-3 rounded-2xl bg-black"
                       onClick={() => {
                         navigate(`/playlist/detail/${btoa(item)}`);
                       }}
                       key={item}
                     >
-                      {item.substring(0, item.indexOf("@"))}
+                      <h1 style={{ marginLeft: "38%" }}>
+                        {item.substring(0, item.indexOf("@"))}
+                      </h1>
                     </div>
                   );
-                })}
-              </div>
-            )}
+                })
+              )}
+            </div>
+          </div>
+          <div style={{ height: "43vh" }}>
+            <h1 className="text-xl font-extrabold m-2">Recieved Playlist</h1>
+            <div className="overflow-auto">
+              {dataexist === "unavail" || sharedlist.length < 1 ? (
+                <div className="w-full flex justify-center items-center">
+                  <h1>no data found</h1>
+                </div>
+              ) : (
+                <div>
+                  {sharedlist?.map((item: string) => {
+                    return (
+                      <div
+                        className="w-1/6 h-1/6 text-3xl inline-block cursor-pointer m-2 py-3 rounded-2xl bg-black"
+                        onClick={() => {
+                          navigate(`/playlist/detail/${btoa(item)}`);
+                        }}
+                        key={item}
+                      >
+                        <h1 style={{ marginLeft: "38%" }}>
+                          {item.substring(0, item.indexOf("@"))}
+                        </h1>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}

@@ -1,10 +1,10 @@
 import { collection, doc, getDoc } from "firebase/firestore";
 import { auth, firestore_db } from "./firebaseConfig";
 
-export const fetchPlaylists = async () => {
+export const fetchPlaylists = async (mail: string) => {
   try {
     const col = collection(firestore_db, "playlistaccess");
-    const docRef = doc(col, auth?.currentUser?.email || "");
+    const docRef = doc(col, mail);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       return docSnap.data();

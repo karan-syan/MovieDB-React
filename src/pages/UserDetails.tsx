@@ -6,20 +6,18 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import "react-phone-number-input/style.css";
-import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
-import { signOut, updateProfile } from "firebase/auth";
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
+import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
+import "react-phone-number-input/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { auth, firestore_db } from "../firebase/firebaseConfig";
+import { auth } from "../firebase/firebaseConfig";
 import { uploadImg } from "../firebase/firestore";
+import { GetUserdb, updateUserDetails } from "../firebase/Userfetch";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { CallUserDetail } from "../redux/user/action";
-import { GetUserdb, updateUserDetails } from "../firebase/Userfetch";
-import { IUserData } from "../utils/type";
 
 export default function UserDetails() {
   const dispatch = useDispatch();

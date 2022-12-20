@@ -1,10 +1,9 @@
-import { Input } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
-import { BsBookmarkHeartFill } from "react-icons/bs";
+import { useEffect, useRef } from "react";
 import { IoTime } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
+import Addplaylist from "../components/Addplaylist";
 import CastList from "../components/CastList";
 import Comment from "../components/comment/Comment";
 import CommentData from "../components/comment/CommentData";
@@ -14,7 +13,6 @@ import ListRow from "../components/ListRow";
 import PosterCard from "../components/PosterCard";
 import NetworkList from "../components/TvDetail/NetworkList";
 import SeasonList from "../components/TvDetail/SeasonList";
-import { uploadplaylist } from "../firebase/firestore";
 import { CallCast } from "../redux/People/action";
 import { CallRecommend } from "../redux/Recommend/action";
 import { ApplicationState } from "../redux/root/rootReducer";
@@ -25,7 +23,6 @@ import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function TvDetails() {
   const { id } = useParams();
   const dispatch = useDispatch();
-  const [playlistname, setplaylistname] = useState<string>("");
   const elementForScroll = useRef<HTMLDivElement>(null);
   const tvshows = useSelector(
     (state: ApplicationState) => state.details.TvDetails
@@ -34,6 +31,7 @@ export default function TvDetails() {
     (state: ApplicationState) => state.tv.TvRecommend
   );
   const tvCast = useSelector((state: ApplicationState) => state.details.TvCast);
+
   useEffect(() => {
     dispatch(
       CallTvDetails.request({
@@ -132,29 +130,10 @@ export default function TvDetails() {
                   {episode_run_time} min | {voteAvg} | {type}
                 </h1>
                 <div className="flex">
-                  <button
-                    className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base"
-                    onClick={() => {
-                      if (playlistname !== "")
-                        uploadplaylist(
-                          playlistname,
-                          id || "",
-                          Poster_Path,
-                          "shows"
-                        );
-                    }}
-                  >
-                    Add
-                    <BsBookmarkHeartFill className="ml-2" />
-                  </button>
-                  <Input
-                    className="ml-2"
-                    inputProps={{ style: { color: "white" } }}
-                    type={"text"}
-                    value={playlistname}
-                    onChange={(e) => {
-                      setplaylistname(e.target.value);
-                    }}
+                  <Addplaylist
+                    id={id || ""}
+                    posterpath={Poster_Path}
+                    varient={"shows"}
                   />
                 </div>
                 <div className="w-full">
