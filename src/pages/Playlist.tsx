@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import Header from "../components/Header";
-import { fetchPlaylists } from "../firebase/playlistfetch";
+import { fetchPlaylists } from "../firebase_services/firestore/PlaylistFirestore";
 import { ApplicationState } from "../redux/root/rootReducer";
 
 export default function Playlist() {

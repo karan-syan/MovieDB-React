@@ -2,8 +2,10 @@ import { MouseEvent, useEffect, useState } from "react";
 import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import { fetchPlaylists } from "../firebase/playlistfetch";
-import { uploadplaylist } from "../firebase/firestore";
+import {
+  fetchPlaylists,
+  uploadplaylist,
+} from "../firebase_services/firestore/PlaylistFirestore";
 import { Input } from "@mui/material";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { useSelector } from "react-redux";

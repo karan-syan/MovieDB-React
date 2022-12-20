@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AddRecent } from "../firebase/firestore";
+import { AddRecent } from "../firebase_services/firestore/RecentFirestore";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 

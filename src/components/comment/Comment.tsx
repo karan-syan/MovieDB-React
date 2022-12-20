@@ -2,7 +2,7 @@ import { Avatar, Button, Input } from "@mui/material";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { AddComment } from "../../firebase/firestore";
+import { AddComment } from "../../firebase_services/firestore/CommentFirestore";
 import { ApplicationState } from "../../redux/root/rootReducer";
 
 export default function Comment() {

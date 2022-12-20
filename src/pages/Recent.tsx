@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { BarLoader } from "react-spinners";
 import Header from "../components/Header";
 import MovieBox from "../components/MovieBox";
-import { firestore_db } from "../firebase/firebaseConfig";
+import { firestore_db } from "../firebase_services/firebaseConfig";
 import { ApplicationState } from "../redux/root/rootReducer";
 
 export default function Recent() {

@@ -4,11 +4,11 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import store from "../redux/store";
-import { CallUserDetail } from "../redux/user/action";
-import { IUserData } from "../utils/type";
-import { auth } from "./firebaseConfig";
-import { createUserDoc } from "./firestore";
+import store from "../../redux/store";
+import { CallUserDetail } from "../../redux/user/action";
+import { IUserData } from "../../utils/type";
+import { auth } from "../firebaseConfig";
+import { createUserDoc } from "../firestore/UserFirestore";
 
 export const SignUpUser = ({
   age,

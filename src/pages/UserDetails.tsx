@@ -13,9 +13,12 @@ import PhoneInput, { isValidPhoneNumber } from "react-phone-number-input";
 import "react-phone-number-input/style.css";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase/firebaseConfig";
-import { uploadImg } from "../firebase/firestore";
-import { GetUserdb, updateUserDetails } from "../firebase/Userfetch";
+import { auth } from "../firebase_services/firebaseConfig";
+import {
+  uploadImg,
+  GetUserdb,
+  updateUserDetails,
+} from "../firebase_services/firestore/UserFirestore";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { CallUserDetail } from "../redux/user/action";
 

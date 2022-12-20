@@ -14,8 +14,8 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import Copyright from "../components/Copyright";
-import { SignInUser } from "../firebase/Authentication";
-import { auth } from "../firebase/firebaseConfig";
+import { SignInUser } from "../firebase_services/Auth/Authentication";
+import { auth } from "../firebase_services/firebaseConfig";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),

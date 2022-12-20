@@ -1,6 +1,6 @@
 import { doc, getDoc } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
-import { firestore_db } from "../../firebase/firebaseConfig";
+import { firestore_db } from "../../firebase_services/firebaseConfig";
 
 export default function Username({ id }: { id: string }) {
   const [userName, setuserName] = useState<string>("");

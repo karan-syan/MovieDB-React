@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
-import { auth } from "./firebase/firebaseConfig";
+import { auth } from "./firebase_services/firebaseConfig";
 import Home from "./pages/Home";
 import Movies from "./pages/Movies";
 import MoviesDetails from "./pages/MoviesDetails";

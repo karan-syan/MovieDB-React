@@ -1,7 +1,7 @@
 import { Avatar } from "@mui/material";
 import { getDownloadURL, ref } from "firebase/storage";
 import { useEffect, useState } from "react";
-import { storage } from "../../firebase/firebaseConfig";
+import { storage } from "../../firebase_services/firebaseConfig";
 
 export default function IAvatar({ id }: { id: string }) {
   const [url, seturl] = useState<string>("");

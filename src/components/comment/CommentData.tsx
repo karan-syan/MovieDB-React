@@ -1,7 +1,7 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { firestore_db } from "../../firebase/firebaseConfig";
+import { firestore_db } from "../../firebase_services/firebaseConfig";
 import IAvatar from "./IAvatar";
 import Username from "./Username";
 export default function CommentData() {

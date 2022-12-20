@@ -4,8 +4,10 @@ import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import MovieBox from "../components/MovieBox";
 import Name from "../components/Name";
-import { playlistaccess } from "../firebase/firestore";
-import { FetchPaylistdata } from "../firebase/playlistfetch";
+import {
+  playlistaccess,
+  FetchPaylistdata,
+} from "../firebase_services/firestore/PlaylistFirestore";
 
 export default function PlaylistDetails() {
   const { id } = useParams();

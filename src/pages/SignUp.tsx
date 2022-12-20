@@ -12,7 +12,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import Copyright from "../components/Copyright";
-import { SignUpUser } from "../firebase/Authentication";
+import { SignUpUser } from "../firebase_services/Auth/Authentication";
 
 const SignUpSchema = Yup.object().shape({
   username: Yup.string().min(2, "Too short!!").required("Required"),

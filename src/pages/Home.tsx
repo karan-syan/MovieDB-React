@@ -6,7 +6,7 @@ import Crousel from "../components/Crousel";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ListRow from "../components/ListRow";
-import { auth } from "../firebase/firebaseConfig";
+import { auth } from "../firebase_services/firebaseConfig";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { HomePageDispatch } from "../utils/CallDispatch";
 export default function Home() {
