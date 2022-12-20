@@ -1,10 +1,9 @@
-import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import Header from "../components/Header";
-import { firestore_db } from "../firebase/firebaseConfig";
+import { fetchPlaylists } from "../firebase/playlistfetch";
 import { ApplicationState } from "../redux/root/rootReducer";
 
 export default function Playlist() {
@@ -16,25 +15,19 @@ export default function Playlist() {
   const [ownlist, setownlist] = useState<any[]>([]);
   const [sharedlist, setsharedlist] = useState<any[]>([]);
   useEffect(() => {
-    getdata();
+    fetchPlaylists()
+      .then((res) => {
+        if (res) {
+          setdataexist(2);
+          setownlist(res.own);
+          setsharedlist(res.shared);
+        }
+      })
+      .catch((e) => {
+        setdataexist(3);
+      });
   }, [userdetails]);
-  const getdata = async () => {
-    try {
-      const docRef = doc(
-        firestore_db,
-        "playlistaccess",
-        userdetails?.email || ""
-      );
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setownlist(docSnap.data().own);
-        setsharedlist(docSnap.data().shared);
-        setdataexist(2);
-      }
-    } catch (error) {
-      setdataexist(3);
-    }
-  };
+
   return (
     <div className="flex justify-center items-center">
       {dataexist === 1 ? (

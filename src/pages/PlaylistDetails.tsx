@@ -1,12 +1,11 @@
 import { Button, Input } from "@mui/material";
-import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import MovieBox from "../components/MovieBox";
 import Name from "../components/Name";
-import { firestore_db } from "../firebase/firebaseConfig";
 import { playlistaccess } from "../firebase/firestore";
+import { FetchPaylistdata } from "../firebase/playlistfetch";
 
 export default function PlaylistDetails() {
   const { id } = useParams();
@@ -14,20 +13,15 @@ export default function PlaylistDetails() {
   const [dataexist, setdataexist] = useState<1 | 2 | 3>(1);
   const [Moviedata, setMoviedata] = useState<any>([]);
   useEffect(() => {
-    getdata();
-  }, []);
-  const getdata = async () => {
-    try {
-      const docRef = doc(firestore_db, "playlist", atob(id || ""));
-      const docSnap = await getDoc(docRef);
-      if (docSnap.exists()) {
-        setMoviedata(docSnap.data());
+    FetchPaylistdata(id || "")
+      .then((res) => {
+        setMoviedata(res);
         setdataexist(2);
-      }
-    } catch (error) {
-      setdataexist(3);
-    }
-  };
+      })
+      .catch(() => {
+        setdataexist(3);
+      });
+  }, []);
   return (
     <div className="flex justify-center items-center">
       {dataexist === 1 ? (
