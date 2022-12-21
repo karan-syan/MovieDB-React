@@ -99,7 +99,7 @@ export const fetchPlaylists = async (mail: string) => {
 export const FetchPaylistdata = async (id: string) => {
   try {
     const col = collection(firestore_db, "playlist");
-    const docRef = doc(col, atob(id || ""));
+    const docRef = doc(col, atob(id));
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
       return docSnap.data();
