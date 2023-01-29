@@ -10,7 +10,7 @@ import MovieBox from "../components/MovieBox";
 import { CallCrouselSlider } from "../redux/Crousel/action";
 import { CallMovies } from "../redux/Main/action";
 import { ApplicationState } from "../redux/root/rootReducer";
-import { Popular } from "../utils/constants";
+import { maxWidthScreen, Popular } from "../utils/constants";
 import { popular_tv_url } from "../utils/url";
 
 let pg = 1;
@@ -74,7 +74,7 @@ export default function TvShows() {
       className="flex justify-center items-center"
       style={{
         width: "100%",
-        maxWidth: "1600px",
+        maxWidth: maxWidthScreen,
         margin: "0px auto",
         float: "none",
       }}
@@ -85,7 +85,7 @@ export default function TvShows() {
         <div
           style={{
             width: "100%",
-            maxWidth: "1600px",
+            maxWidth: maxWidthScreen,
             margin: "0px auto",
           }}
         >
@@ -96,7 +96,7 @@ export default function TvShows() {
             <div
               style={{
                 width: "100%",
-                maxWidth: "1600px",
+                maxWidth: maxWidthScreen,
                 margin: "0px auto",
                 float: "none",
               }}
@@ -114,6 +114,7 @@ export default function TvShows() {
             </div>
             <InfiniteScroll
               dataLength={MoviesData.Data.length}
+              style={{ display: "flex", flexWrap: "wrap" }}
               next={() => {
                 pg = pg + 1;
                 FetchData(false, pg);

@@ -13,6 +13,7 @@ import { CallMovieDetails } from "../redux/Movie/action";
 import { CallCast } from "../redux/People/action";
 import { CallRecommend } from "../redux/Recommend/action";
 import { ApplicationState } from "../redux/root/rootReducer";
+import { maxWidthScreen } from "../utils/constants";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function MoviesDetails() {
   const dispatch = useDispatch();
@@ -74,7 +75,7 @@ export default function MoviesDetails() {
       style={{
         width: "100%",
         height: "100vh",
-        maxWidth: "1600px",
+        maxWidth: maxWidthScreen,
         margin: "0px auto",
         float: "none",
       }}
@@ -84,7 +85,7 @@ export default function MoviesDetails() {
       ) : (
         <div
           style={{
-            maxWidth: "1600px",
+            maxWidth: maxWidthScreen,
             margin: "0px auto",
             float: "none",
             width: "100vw",

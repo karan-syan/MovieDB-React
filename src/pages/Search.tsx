@@ -8,6 +8,7 @@ import MovieBox from "../components/MovieBox";
 import Name from "../components/Name";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { CallSearch } from "../redux/Search/action";
+import { maxWidthScreen } from "../utils/constants";
 
 let pg = 1;
 export default function Search() {
@@ -50,7 +51,7 @@ export default function Search() {
       style={{
         width: "100%",
         height: "100vh",
-        maxWidth: "1600px",
+        maxWidth: maxWidthScreen,
         margin: "0px auto",
         float: "none",
       }}
@@ -103,6 +104,7 @@ export default function Search() {
           <div className="flex flex-wrap justify-evenly pt-3">
             <InfiniteScroll
               dataLength={MoviesData.Data.length}
+              style={{ display: "flex", flexWrap: "wrap" }}
               next={() => {
                 pg = pg + 1;
                 FetchData();

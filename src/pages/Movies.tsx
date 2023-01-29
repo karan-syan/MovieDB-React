@@ -10,7 +10,7 @@ import MovieBox from "../components/MovieBox";
 import { CallCrouselSlider } from "../redux/Crousel/action";
 import { CallMovies } from "../redux/Main/action";
 import { ApplicationState } from "../redux/root/rootReducer";
-import { Popular } from "../utils/constants";
+import { maxWidthScreen, Popular } from "../utils/constants";
 import { popular_movie_url } from "../utils/url";
 
 let pg = 1;
@@ -72,7 +72,7 @@ export default function Movies() {
         <div
           style={{
             width: "100%",
-            maxWidth: "1600px",
+            maxWidth: maxWidthScreen,
             margin: "0px auto",
             float: "none",
           }}
@@ -84,7 +84,7 @@ export default function Movies() {
             <div
               style={{
                 width: "100%",
-                maxWidth: "1600px",
+                maxWidth: maxWidthScreen,
                 margin: "0px auto",
                 float: "none",
               }}
@@ -94,7 +94,7 @@ export default function Movies() {
             <div
               className="flex justify-center py-2 mb-3 sticky z-20"
               style={{
-                maxWidth: "1600px",
+                maxWidth: maxWidthScreen,
                 margin: "0px auto",
                 float: "none",
                 top: visible ? "7.5vh" : "0vh",
@@ -110,6 +110,7 @@ export default function Movies() {
                 pg = pg + 1;
                 FetchData(false, pg);
               }}
+              style={{ display: "flex", flexWrap: "wrap" }}
               hasMore={true}
               loader={<PropagateLoader color="#36d7b7" />}
               endMessage={

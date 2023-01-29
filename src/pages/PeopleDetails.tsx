@@ -7,6 +7,7 @@ import DetailsHeader from "../components/DetailsHeader";
 import PosterCard from "../components/PosterCard";
 import { CallCastDetails } from "../redux/People/action";
 import { ApplicationState } from "../redux/root/rootReducer";
+import { maxWidthScreen } from "../utils/constants";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function PeopleDetails() {
@@ -41,7 +42,7 @@ export default function PeopleDetails() {
       style={{
         width: "100%",
         height: "100vh",
-        maxWidth: "1600px",
+        maxWidth: maxWidthScreen,
         margin: "0px auto",
         float: "none",
       }}
@@ -53,7 +54,7 @@ export default function PeopleDetails() {
           style={{
             width: "100%",
             height: "100vh",
-            maxWidth: "1600px",
+            maxWidth: maxWidthScreen,
             margin: "0px auto",
             float: "none",
             backgroundImage: "url(" + MOVIE_DB_IMG_URL + profile_path + ")",

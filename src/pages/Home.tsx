@@ -7,6 +7,7 @@ import Header from "../components/Header";
 import ListRow from "../components/ListRow";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { HomePageDispatch } from "../utils/CallDispatch";
+import { maxWidthScreen } from "../utils/constants";
 export default function Home() {
   const { CrouselSlider, PopularMovies, UpcomingMovie } = useSelector(
     (state: ApplicationState) => state.movie
@@ -28,7 +29,7 @@ export default function Home() {
       style={{
         width: "100%",
         height: "100vh",
-        maxWidth: "1600px",
+        maxWidth: maxWidthScreen,
         margin: "0px auto",
         float: "none",
       }}

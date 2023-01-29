@@ -1,44 +1,56 @@
+import { Box, Button, styled } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
-import {
-  Now_playing,
-  Popular,
-  Top_rated,
-  Trending,
-  Upcoming,
-} from "../utils/constants";
-
-function TabButton({ Name }: { Name: string }) {
-  const [query, setQuery] = useSearchParams();
-  return (
-    <button
-      type="button"
-      className={`px-1 py-2 text-xs sm:px-2 sm:text-sm md:text-base md:px-4 font-medium ${
-        query.get("type") === Name
-          ? "bg-white text-gray-900"
-          : "bg-transparent text-white"
-      }  border hover:bg-gray-900 hover:text-white`}
-      onClick={() => {
-        setQuery({
-          type: Name,
-        });
-      }}
-    >
-      {Name.charAt(0).toUpperCase() + Name.slice(1).replace("_", " ")}
-    </button>
-  );
-}
+import { Now_playing, Popular, Top_rated, Upcoming } from "../utils/constants";
 
 export default function ButtonGroup({ varient }: { varient: "tv" | "movie" }) {
+  const [query, setQuery] = useSearchParams();
+  const buttonName = [Popular, Top_rated, Now_playing, Upcoming];
+
   return (
-    <div
-      className={`inline-flex shadow-sm justify-center w-full"
-      role="group`}
-    >
-      <TabButton Name={Popular} />
-      {/* <TabButton Name={Latest} /> */}
-      <TabButton Name={Top_rated} />
-      <TabButton Name={Now_playing} />
-      {varient === "tv" ? null : <TabButton Name={Upcoming} />}
-    </div>
+    <Root>
+      {buttonName.filter((item, index) => {
+        if (varient === "tv") {
+          return null;
+        }
+        return (
+          <TabButton
+            key={index}
+            buttonType={query.get("type") === item}
+            onClick={() => {
+              setQuery({
+                type: item,
+              });
+            }}
+          >
+            {item.charAt(0).toUpperCase() + item.slice(1).replace("_", " ")}
+          </TabButton>
+        );
+      })}
+    </Root>
   );
 }
+const Root = styled(Box)(() => ({
+  display: "inline-flex",
+  justifyContent: "center",
+  width: "100%",
+}));
+const TabButton = styled(Button)<{ buttonType: boolean }>(
+  ({ theme, buttonType }) => ({
+    paddingInline: "0.25rem",
+    fontWeight: "500",
+    borderWidth: "1px",
+    paddingBlock: "0.5rem",
+    backgroundColor: `${buttonType ? "#fff" : "transparent"}`,
+    [theme.breakpoints.up("sm")]: {
+      fontSize: "0.875rem",
+    },
+    [theme.breakpoints.up("md")]: {
+      fontSize: "1rem",
+      paddingInline: "1rem",
+    },
+    ":hover": {
+      backgroundColor: "#111827",
+      color: "#fff",
+    },
+  })
+);

@@ -1,3 +1,4 @@
+import { Box, styled, Typography } from "@mui/material";
 import React from "react";
 import { MOVIE_DB_IMG_URL } from "../../utils/url";
 
@@ -19,36 +20,76 @@ export default function SeasonList({
   TvName: string;
 }) {
   return (
-    <div className="w-full  mt-2 ">
-      <h1 className="text-lg mx-2">Seasons:</h1>
-      <div className="overflow-auto whitespace-nowrap snap-mandatory snap-x">
-        {item.map((item, index) => {
-          return (
-            <div
-              key={index}
-              className="inline-block mx-3 m-auto snap-center h-full"
-            >
-              <div className="flex items-center h-full">
-                <div className=" w-1/4 md:w-1/5 h-full ">
-                  <img
-                    className=" object-cover h-full"
-                    alt=""
-                    src={`${MOVIE_DB_IMG_URL}${item.poster_path}`}
-                  />
-                </div>
-                <div className="text-xs mx-2">
-                  <h1>Name: {item.name}</h1>
-                  <h1>Season: {item.season_number}</h1>
-                  <h1>Total Episodes: {item.episode_count}</h1>
-                  <h1 className="hidden md:flex">
-                    {item.name} of {TvName} premiered on {item.air_date}
-                  </h1>
-                </div>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </div>
+    <Root>
+      <Title>Seasons:</Title>
+      <Container>
+        {item.map((item, index) => (
+          <Wrapper key={index}>
+            <ImgWrapper>
+              <img
+                style={{
+                  objectFit: "fill",
+                  height: "100%",
+                }}
+                alt=""
+                src={`${MOVIE_DB_IMG_URL}${item.poster_path}`}
+              />
+            </ImgWrapper>
+            <TextWrapper>
+              <Typography>Name: {item.name}</Typography>
+              <Typography>Season: {item.season_number}</Typography>
+              <Typography>Total Episodes: {item.episode_count}</Typography>
+              <PremieredText className="hidden md:flex">
+                {item.name} of {TvName} premiered on {item.air_date}
+              </PremieredText>
+            </TextWrapper>
+          </Wrapper>
+        ))}
+      </Container>
+    </Root>
   );
 }
+
+const Root = styled(Box)(() => ({
+  marginTop: "0.5rem",
+  width: "100%",
+}));
+const Title = styled(Typography)(() => ({
+  marginInline: "0.5rem",
+  fontSize: "1.125rem",
+}));
+const Wrapper = styled(Box)(() => ({
+  marginInline: "0.5rem",
+  flexShrink: "0",
+  display: "flex",
+  width: "100%",
+  alignItems: "center",
+}));
+const Container = styled(Box)(() => ({
+  marginInline: "0.5rem",
+  display: "flex",
+  overflow: "auto",
+  flexWrap: "nowrap",
+}));
+
+const ImgWrapper = styled(Box)(({ theme }) => ({
+  width: "20%",
+  marginInline: "0.5rem",
+  flexShrink: "0",
+  [theme.breakpoints.up("md")]: {
+    width: "25%",
+  },
+  display: "flex",
+  alignItems: "center",
+  height: "100%",
+}));
+const TextWrapper = styled(Box)(({ theme }) => ({
+  fontSize: "0.75rem",
+  marginInline: "0.5rem",
+}));
+const PremieredText = styled(Box)(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.up("md")]: {
+    display: "block",
+  },
+}));

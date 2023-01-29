@@ -14,7 +14,7 @@ export default function MovieBox({ item }: { item: IMovie }) {
 
   return (
     <div
-      className="text-bg_clr p-1 w-1/3 snap-center rounded-sm sm:rounded-xl inline-block overflow-hidden md:w-1/5 cursor-pointer h-auto text-xl lg:w-1/6"
+      className="text-bg_clr w-1/3 shrink-0 inline-block rounded-sm sm:rounded-xl md:w-1/5 overflow-hidden cursor-pointer text-xl lg:w-1/6"
       onClick={() => {
         if (user) {
           I_name
