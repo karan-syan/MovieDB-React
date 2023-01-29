@@ -1,27 +1,42 @@
+import { Box, styled, Typography } from "@mui/material";
 import Avatar from "react-avatar";
 import { useNavigate } from "react-router-dom";
-import { Cast_Distructing } from "../utils/ApiDistruct";
 import { ICast } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function CastInfo({ item }: { item: ICast }) {
   const navigate = useNavigate();
-  const { C_original_name, C_character, C_Profile_Path } =
-    Cast_Distructing(item);
+  const { original_name, character, profile_path } = item;
   return (
-    <div
-      className="inline-block mx-2 text-center "
-      onClick={() => {
-        navigate(`/people/${item.id}`);
-      }}
-    >
+    <Root onClick={() => navigate(`/people/${item.id}`)}>
       <Avatar
         size="100"
         round={true}
-        src={`${MOVIE_DB_IMG_URL}${C_Profile_Path}`}
+        src={`${MOVIE_DB_IMG_URL}${profile_path}`}
       />
-      <h1 className="font-extrabold line-clamp-1">{C_original_name}</h1>
-      <h1 className="opacity-60 text-xs line-clamp-1 ">{C_character}</h1>
-    </div>
+      <OrignalName>{original_name}</OrignalName>
+      <CharacterName>{character}</CharacterName>
+    </Root>
   );
 }
+const Root = styled(Box)(() => ({
+  display: "inline-block",
+  marginInline: "0.5rem",
+  textAlign: "center",
+  flexShrink: "0",
+}));
+const OrignalName = styled(Typography)(() => ({
+  fontWeight: "800",
+  overflow: "hidden",
+  display: "-webkit-box",
+  "-webkit-box-orient": "vertical",
+  "-webkit-line-clamp": 1,
+}));
+const CharacterName = styled(Typography)(() => ({
+  fontSize: "0.75rem",
+  opacity: "0.6",
+  overflow: "hidden",
+  display: "-webkit-box",
+  "-webkit-box-orient": "vertical",
+  "-webkit-line-clamp": 1,
+}));

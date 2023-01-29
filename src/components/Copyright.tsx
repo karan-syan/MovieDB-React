@@ -11,9 +11,8 @@ export default function Copyright(props: any) {
       {"Copyright © "}
       <Link color="inherit" href="https://ktv-movie.web.com/">
         KTV-Movie
-      </Link>{" "}
+      </Link>
       {new Date().getFullYear()}
-      {"."}
     </Typography>
   );
 }

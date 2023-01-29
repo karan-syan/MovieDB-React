@@ -1,6 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
-import React from "react";
-import { MOVIE_DB_IMG_URL } from "../../utils/url";
+import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 interface season {
   air_date: string;
@@ -30,6 +29,7 @@ export default function SeasonList({
                 style={{
                   objectFit: "fill",
                   height: "100%",
+                  borderRadius: "10px",
                 }}
                 alt=""
                 src={`${MOVIE_DB_IMG_URL}${item.poster_path}`}
@@ -63,6 +63,7 @@ const Wrapper = styled(Box)(() => ({
   flexShrink: "0",
   display: "flex",
   width: "100%",
+  margin: "0",
   alignItems: "center",
 }));
 const Container = styled(Box)(() => ({

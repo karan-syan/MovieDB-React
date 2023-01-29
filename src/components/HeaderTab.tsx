@@ -1,3 +1,4 @@
+import { styled, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
 
 interface iprops {
@@ -7,15 +8,19 @@ interface iprops {
 
 export default function HeaderTab({ path, text }: iprops) {
   return (
-    <NavLink
-      to={path}
-      className={({ isActive }) =>
-        isActive
-          ? "border-t-4 md:px-5 sm:px-2 pt-1 mt-0 "
-          : "md:px-5 sm:px-2 pt-1 mt-0"
-      }
-    >
-      <h1>{text}</h1>
-    </NavLink>
+    <NavLinked to={path}>
+      <Typography>{text}</Typography>
+    </NavLinked>
   );
 }
+const NavLinked = styled(NavLink)(({ theme }) => ({
+  paddingTop: "0.25rem",
+  "&.active": {
+    borderTop: "4px solid #fff",
+  },
+  [theme.breakpoints.up("sm")]: {
+    paddingInline: "0.5rem",
+  },
+  [theme.breakpoints.up("md")]: {},
+  paddingInline: "1.25rem",
+}));

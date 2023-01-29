@@ -110,7 +110,11 @@ export default function Movies() {
                 pg = pg + 1;
                 FetchData(false, pg);
               }}
-              style={{ display: "flex", flexWrap: "wrap" }}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-evenly",
+              }}
               hasMore={true}
               loader={<PropagateLoader color="#36d7b7" />}
               endMessage={

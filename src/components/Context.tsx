@@ -1,4 +1,4 @@
-import React from "react";
+import { Box, styled, Typography } from "@mui/material";
 
 export default function Context({
   title,
@@ -8,9 +8,15 @@ export default function Context({
   subtitle: string;
 }) {
   return (
-    <div className="mx-2 mt-2">
-      <h1 className="text-lg">{title}:</h1>
-      <h1 className="opacity-70 text-sm">{subtitle}</h1>
-    </div>
+    <Root>
+      <Typography fontSize={"1.125rem"}>{title}:</Typography>
+      <Typography sx={{ opacity: "0.7" }} fontSize={"0.875rem"}>
+        {subtitle}
+      </Typography>
+    </Root>
   );
 }
+const Root = styled(Box)(() => ({
+  marginInline: "0.5rem",
+  marginTop: "0.5rem",
+}));

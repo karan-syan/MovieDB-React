@@ -1,5 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
-import { MOVIE_DB_IMG_URL } from "../../utils/url";
+import { MOVIE_DB_IMG_URL } from "../utils/url";
 interface network {
   id: number;
   name: string;

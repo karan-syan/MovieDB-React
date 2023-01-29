@@ -1,4 +1,5 @@
-import { BiSearch } from "react-icons/bi";
+import SearchIcon from "@mui/icons-material/Search";
+import { Box, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import Name from "./Name";
 
@@ -6,16 +7,39 @@ export default function DetailsHeader() {
   const navigate = useNavigate();
 
   return (
-    <div className="flex justify-between" style={{ height: "7.5vh" }}>
+    <Root>
       <Name />
-      <div className="flex items-center justify-between mx-2 ml-10 px-2 py-2 sm:mx-0 md:mx-3">
-        <BiSearch
-          className="text-xl sm:text-xl"
+      <Wrapper>
+        <SearchIcon
+          sx={{
+            fontSize: "1.25rem",
+          }}
           onClick={() => {
             navigate("/search");
           }}
         />
-      </div>
-    </div>
+      </Wrapper>
+    </Root>
   );
 }
+
+const Root = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "space-between",
+  height: "7.5vh",
+}));
+
+const Wrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  marginRight: "0.5rem",
+  marginLeft: "2.5rem",
+  padding: "0.5rem 0.5rem",
+  [theme.breakpoints.up("sm")]: {
+    marginInline: "0px",
+  },
+  [theme.breakpoints.up("md")]: {
+    marginInline: "0.75rem",
+  },
+}));
