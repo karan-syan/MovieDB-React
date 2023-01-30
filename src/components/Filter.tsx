@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
 import { useSearchParams } from "react-router-dom";
+import { Box } from "@mui/material";
 
 export default function Filter() {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
@@ -16,7 +17,7 @@ export default function Filter() {
   };
 
   return (
-    <div>
+    <Box>
       <Button
         id="basic-button"
         variant="contained"
@@ -64,6 +65,6 @@ export default function Filter() {
           Tv Shows
         </MenuItem>
       </Menu>
-    </div>
+    </Box>
   );
 }
