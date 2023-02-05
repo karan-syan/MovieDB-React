@@ -58,7 +58,6 @@ const Container = styled(Box)(({ theme }) => ({
   display: "flex",
   scrollBehavior: "smooth",
   "::-webkit-scrollbar": {
-    marginTop: "1rem",
     height: "0.5rem",
   },
   flexWrap: "nowrap",

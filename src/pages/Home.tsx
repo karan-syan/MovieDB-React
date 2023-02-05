@@ -1,3 +1,4 @@
+import { Box, styled } from "@mui/material";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { BarLoader } from "react-spinners";
@@ -24,25 +25,13 @@ export default function Home() {
   }, []);
 
   return (
-    <div
-      className="flex justify-center items-center"
-      style={{
-        width: "100%",
-        height: "100vh",
-        maxWidth: maxWidthScreen,
-        margin: "0px auto",
-        float: "none",
-      }}
-    >
+    <Root>
       {TvRecommend.loading && CrouselSlider.loading ? (
         <BarLoader color="#36d7b7" />
       ) : (
-        <div>
+        <Box>
           <Header />
-          <div
-            className="flex overflow-auto w-full flex-col"
-            style={{ height: "92.5vh" }}
-          >
+          <Wrapper>
             <Crousel item={CrouselSlider.Data} />
             <ListRow item={PopularMovies.Data} title={"Popular Movies"} />
             <ListRow item={TvTrending.Data} title={"Trending Tv Shows"} />
@@ -50,9 +39,27 @@ export default function Home() {
             <ListRow item={UpcomingMovie.Data} title={"Upcoming Movies"} />
             <ListRow item={TvRecommend.Data} title={"Animated Series"} />
             <Footer />
-          </div>
-        </div>
+          </Wrapper>
+        </Box>
       )}
-    </div>
+    </Root>
   );
 }
+
+const Root = styled(Box)(() => ({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  width: "100%",
+  height: "100vh",
+  maxWidth: maxWidthScreen,
+  margin: "0px auto",
+  float: "none",
+}));
+const Wrapper = styled(Box)(() => ({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  height: "92.5vh",
+  overflow: "auto",
+}));

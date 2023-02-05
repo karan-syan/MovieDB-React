@@ -35,12 +35,14 @@ const Root = styled(Box)(() => ({
   display: "inline-flex",
   justifyContent: "center",
   width: "100%",
+  paddingBlock: "3px",
 }));
 const TabButton = styled(Button)<{ buttonType: boolean }>(
   ({ theme, buttonType }) => ({
     paddingInline: "0.25rem",
     fontWeight: "500",
-    borderRadius: "0px",
+    borderRadius: "30px",
+    margin: "2px",
     border: "1px solid #fff",
     paddingBlock: "0.5rem",
     color: `${buttonType ? "#111827" : "#fff"}`,

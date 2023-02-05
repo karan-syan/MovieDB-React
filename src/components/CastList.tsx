@@ -26,4 +26,7 @@ const Title = styled(Typography)(() => ({
 const Container = styled(Box)(() => ({
   display: "flex",
   overflow: "auto",
+  "::-webkit-scrollbar": {
+    height: "0.5rem",
+  },
 }));

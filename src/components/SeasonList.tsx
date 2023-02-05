@@ -25,15 +25,7 @@ export default function SeasonList({
         {item.map((item, index) => (
           <Wrapper key={index}>
             <ImgWrapper>
-              <img
-                style={{
-                  objectFit: "fill",
-                  height: "100%",
-                  borderRadius: "10px",
-                }}
-                alt=""
-                src={`${MOVIE_DB_IMG_URL}${item.poster_path}`}
-              />
+              <Img alt="" src={`${MOVIE_DB_IMG_URL}${item.poster_path}`} />
             </ImgWrapper>
             <TextWrapper>
               <Typography>Name: {item.name}</Typography>
@@ -54,6 +46,11 @@ const Root = styled(Box)(() => ({
   marginTop: "0.5rem",
   width: "100%",
 }));
+const Img = styled("img")(() => ({
+  objectFit: "fill",
+  height: "100%",
+  borderRadius: "10px",
+}));
 const Title = styled(Typography)(() => ({
   marginInline: "0.5rem",
   fontSize: "1.125rem",
@@ -71,6 +68,9 @@ const Container = styled(Box)(() => ({
   display: "flex",
   overflow: "auto",
   flexWrap: "nowrap",
+  "::-webkit-scrollbar": {
+    height: "0.5rem",
+  },
 }));
 
 const ImgWrapper = styled(Box)(({ theme }) => ({
@@ -84,7 +84,7 @@ const ImgWrapper = styled(Box)(({ theme }) => ({
   alignItems: "center",
   height: "100%",
 }));
-const TextWrapper = styled(Box)(({ theme }) => ({
+const TextWrapper = styled(Box)(() => ({
   fontSize: "0.75rem",
   marginInline: "0.5rem",
 }));

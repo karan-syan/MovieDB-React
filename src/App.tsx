@@ -1,13 +1,12 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
+import MovieShows from "./components/MovieShows";
 import Home from "./pages/Home";
-import Movies from "./pages/Movies";
 import MoviesDetails from "./pages/MoviesDetails";
 import PeopleDetails from "./pages/PeopleDetails";
 import Search from "./pages/Search";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import TvDetails from "./pages/TvDetails";
-import TvShows from "./pages/TvShows";
 
 function App() {
   return (
@@ -15,8 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Search" element={<Search />} />
-        <Route path="/shows" element={<TvShows />} />
-        <Route path="/movies" element={<Movies />} />
+        <Route path="/shows" element={<MovieShows varient="tv" />} />
+        <Route path="/movies" element={<MovieShows varient="movie" />} />
         <Route path="/movie/details/:id" element={<MoviesDetails />} />
         <Route path="/tv/details/:id" element={<TvDetails />} />
         <Route path="/people/:id" element={<PeopleDetails />} />

@@ -47,4 +47,7 @@ const Container = styled(Box)(() => ({
   display: "flex",
   overflow: "auto",
   alignItems: "flex-end",
+  "::-webkit-scrollbar": {
+    height: "0.5rem",
+  },
 }));

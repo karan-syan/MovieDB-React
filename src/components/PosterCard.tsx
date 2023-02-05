@@ -1,14 +1,30 @@
+import { Box, styled } from "@mui/material";
 import React from "react";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function PosterCard({ Poster_Path }: { Poster_Path: string }) {
   return (
-    <div className="md:w-1/4">
-      <img
-        alt=""
-        className="w-6/12 mx-auto rounded-xl md:w-full md:ml-7 md:rounded-3xl drop-shadow-2xl shadow-2xl"
-        src={MOVIE_DB_IMG_URL + Poster_Path}
-      />
-    </div>
+    <Root>
+      <Img alt="..." src={MOVIE_DB_IMG_URL + Poster_Path} />
+    </Root>
   );
 }
+
+const Root = styled(Box)(({ theme }) => ({
+  width: "100%",
+  [theme.breakpoints.up("md")]: {
+    width: "25%",
+  },
+}));
+const Img = styled("img")(({ theme }) => ({
+  width: "50%",
+  marginInline: "auto",
+  marginTop: "2rem",
+  borderRadius: "0.75rem",
+  filter: "drop-shadow(0 0 0.75rem #000)",
+  [theme.breakpoints.up("md")]: {
+    width: "100%",
+    marginLeft: "1.75rem",
+    borderRadius: "1.5rem",
+  },
+}));
