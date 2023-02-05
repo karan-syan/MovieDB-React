@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { BarLoader } from "react-spinners";
+import { BarLoader, PropagateLoader } from "react-spinners";
 import ButtonGroup from "../components/ButtonGroup";
 import Crousel from "../components/Crousel";
 import Header from "../components/Header";
@@ -114,13 +114,17 @@ export default function TvShows() {
             </div>
             <InfiniteScroll
               dataLength={MoviesData.Data.length}
-              style={{ display: "flex", flexWrap: "wrap" }}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-evenly",
+              }}
               next={() => {
                 pg = pg + 1;
                 FetchData(false, pg);
               }}
               hasMore={true}
-              loader={<h4>Loading...</h4>}
+              loader={<PropagateLoader color="#36d7b7" />}
               endMessage={
                 <p style={{ textAlign: "center" }}>
                   <b>Yay! You have seen it all</b>

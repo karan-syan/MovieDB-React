@@ -1,7 +1,7 @@
 import { createTheme } from "@mui/material/styles";
 export const Colors = {
-  primary: "#f85e00",
-  secondary: "#0c053e",
+  primary: "#08101c",
+  secondary: "#00040a",
   background: "#000",
   uploadButton: "#448a7e",
   dim_grey: "#696969",

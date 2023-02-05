@@ -3,6 +3,7 @@ import { BiSearch } from "react-icons/bi";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
+import { PropagateLoader } from "react-spinners";
 import Filter from "../components/Filter";
 import MovieBox from "../components/MovieBox";
 import Name from "../components/Name";
@@ -104,18 +105,28 @@ export default function Search() {
           <div className="flex flex-wrap justify-evenly pt-3">
             <InfiniteScroll
               dataLength={MoviesData.Data.length}
-              style={{ display: "flex", flexWrap: "wrap" }}
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-evenly",
+              }}
               next={() => {
                 pg = pg + 1;
                 FetchData();
               }}
               hasMore={true}
-              loader={<h4></h4>}
+              loader={<PropagateLoader color="#36d7b7" />}
+              endMessage={
+                <p style={{ textAlign: "center" }}>
+                  <b>Yay! You have seen it all</b>
+                </p>
+              }
             >
               {MoviesData.Data.map((item, index) => {
                 if (item.poster_path) {
                   return <MovieBox item={item} key={index} />;
                 }
+                return null;
               })}
             </InfiniteScroll>
           </div>

@@ -1,3 +1,4 @@
+import { Box, styled, Typography } from "@mui/material";
 import { IMovie } from "../utils/type";
 import MovieBox from "./MovieBox";
 
@@ -9,24 +10,56 @@ export default function ListRow({
   title?: string;
 }) {
   return (
-    <div
-      className="flex flex-col my-5 mx-3 mb-8"
-      style={{ fontFamily: "Roboto Condensed" }}
-    >
-      {title ? (
-        <div className="flex justify-start items-center">
-          <h1 className="font-extrabold ml-4 sm:text-2xl lg:text-3xl mb-3">
-            {title}
-          </h1>
-        </div>
-      ) : null}
-      <div className="overflow-x-auto whitespace-nowrap flex overflow-auto scroll-smooth scrollbar-hide snap-mandatory snap-x">
+    <Root>
+      {title && (
+        <TitleWrapper>
+          <Title>{title}</Title>
+        </TitleWrapper>
+      )}
+      <Container>
         {item.map((val, index) => {
           if (val.poster_path !== null && val.poster_path !== "") {
             return <MovieBox key={index} item={val} />;
           }
+          return null;
         })}
-      </div>
-    </div>
+      </Container>
+    </Root>
   );
 }
+
+const Root = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  marginTop: "1.25rem",
+  fontFamily: "Roboto Condensed",
+  marginBottom: "2rem",
+  marginInline: "0.75rem",
+}));
+const TitleWrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+}));
+
+const Title = styled(Typography)(({ theme }) => ({
+  fontWeight: "800",
+  marginLeft: "1rem",
+  marginBottom: "0.75rem",
+  [theme.breakpoints.up("sm")]: {
+    fontSize: "1.5rem",
+  },
+  [theme.breakpoints.up("lg")]: {
+    fontSize: "1.875rem",
+  },
+}));
+
+const Container = styled(Box)(({ theme }) => ({
+  overflowX: "auto",
+  display: "flex",
+  scrollBehavior: "smooth",
+  "::-webkit-scrollbar": {
+    marginTop: "1rem",
+    height: "0.5rem",
+  },
+  flexWrap: "nowrap",
+}));
