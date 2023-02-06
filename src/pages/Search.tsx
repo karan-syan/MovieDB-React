@@ -1,17 +1,15 @@
+import { Box, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
-import InfiniteScroll from "react-infinite-scroll-component";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-import { PropagateLoader } from "react-spinners";
 import Filter from "../components/Filter";
-import MovieBox from "../components/MovieBox";
+import InfiniteScrolling from "../components/InfiniteScrolling";
 import Name from "../components/Name";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { CallSearch } from "../redux/Search/action";
 import { maxWidthScreen } from "../utils/constants";
 
-let pg = 1;
 export default function Search() {
   const dispatch = useDispatch();
   const [val, setval] = useState<string>("");
@@ -20,10 +18,10 @@ export default function Search() {
   );
   const [query, setQuery] = useSearchParams();
 
-  function FetchData() {
+  function FetchData(newData: boolean, pg: number) {
     dispatch(
       CallSearch.request({
-        NewData: false,
+        NewData: newData,
         page: pg,
         query: query.get("query"),
         url: "multi",
@@ -36,11 +34,10 @@ export default function Search() {
       setQuery(query);
     }
     if (query.has("query") && query.has("filter")) {
-      pg = 1;
       dispatch(
         CallSearch.request({
           NewData: true,
-          page: pg,
+          page: 1,
           query: query.get("query"),
           url: query.get("filter"),
         })
@@ -48,23 +45,12 @@ export default function Search() {
     }
   }, [dispatch, query.get("query"), query.get("filter")]);
   return (
-    <div
-      style={{
-        width: "100%",
-        height: "100vh",
-        maxWidth: maxWidthScreen,
-        margin: "0px auto",
-        float: "none",
-      }}
-    >
-      <div
-        className="flex items-center justify-between px-3 font-bold"
-        style={{ height: "7.5vh", backgroundColor: "#000814" }}
-      >
-        <div className="hidden sm:block">
+    <Root>
+      <Wrapper style={{}}>
+        <NameWrapper>
           <Name />
-        </div>
-        <div className="flex h-full w-full pl-2 sm:w-5/6">
+        </NameWrapper>
+        <SearchFieldWrapper>
           <input
             className="h-full bg-transparent w-11/12 focus:outline-none"
             placeholder="Search"
@@ -91,8 +77,8 @@ export default function Search() {
             />
             <Filter />
           </div>
-        </div>
-      </div>
+        </SearchFieldWrapper>
+      </Wrapper>
       {query.has("query") ? (
         MoviesData.Data.length === 0 ? (
           <div
@@ -103,35 +89,41 @@ export default function Search() {
           </div>
         ) : (
           <div className="flex flex-wrap justify-evenly pt-3">
-            <InfiniteScroll
-              dataLength={MoviesData.Data.length}
-              style={{
-                display: "flex",
-                flexWrap: "wrap",
-                justifyContent: "space-evenly",
-              }}
-              next={() => {
-                pg = pg + 1;
-                FetchData();
-              }}
-              hasMore={true}
-              loader={<PropagateLoader color="#36d7b7" />}
-              endMessage={
-                <p style={{ textAlign: "center" }}>
-                  <b>Yay! You have seen it all</b>
-                </p>
-              }
-            >
-              {MoviesData.Data.map((item, index) => {
-                if (item.poster_path) {
-                  return <MovieBox item={item} key={index} />;
-                }
-                return null;
-              })}
-            </InfiniteScroll>
+            <InfiniteScrolling fetchData={FetchData} moviesData={MoviesData} />
           </div>
         )
       ) : null}
-    </div>
+    </Root>
   );
 }
+
+const Root = styled(Box)(() => ({
+  width: "100%",
+  height: "100vh",
+  maxWidth: maxWidthScreen,
+  margin: "0px auto",
+  float: "none",
+}));
+const Wrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  justifyContent: "space-between",
+  alignItems: "center",
+  paddingInline: "0.75rem",
+  fontWeight: "700",
+  height: "7.5vh",
+  backgroundColor: theme.palette.primary.main,
+}));
+const NameWrapper = styled(Box)(({ theme }) => ({
+  display: "none",
+  [theme.breakpoints.up("sm")]: {
+    display: "block",
+  },
+}));
+const SearchFieldWrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  height: "100%",
+  paddingLeft: "0.5rem",
+  [theme.breakpoints.up("sm")]: {
+    width: "83%",
+  },
+}));
