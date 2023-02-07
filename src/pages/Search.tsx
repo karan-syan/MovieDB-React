@@ -1,4 +1,4 @@
-import { Box, styled } from "@mui/material";
+import { Box, InputBase, styled } from "@mui/material";
 import { useEffect, useState } from "react";
 import { BiSearch } from "react-icons/bi";
 import { useDispatch, useSelector } from "react-redux";
@@ -51,8 +51,7 @@ export default function Search() {
           <Name />
         </NameWrapper>
         <SearchFieldWrapper>
-          <input
-            className="h-full bg-transparent w-11/12 focus:outline-none"
+          <SearchField
             placeholder="Search"
             value={val}
             onKeyUp={(e) => {
@@ -126,4 +125,12 @@ const SearchFieldWrapper = styled(Box)(({ theme }) => ({
   [theme.breakpoints.up("sm")]: {
     width: "83%",
   },
+}));
+const SearchField = styled(InputBase)(({ theme }) => ({
+  height: "100%",
+  width: "91.66%",
+  outline: "2px solid transparent",
+  outlineOffset: "2px",
+  backgroundColor: "transparent",
+  color: theme.palette.text.secondary,
 }));

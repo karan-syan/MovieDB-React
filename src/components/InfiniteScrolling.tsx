@@ -1,7 +1,6 @@
 import { Typography } from "@mui/material";
-import React from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { PropagateLoader } from "react-spinners";
+import { BeatLoader } from "react-spinners";
 import { IState } from "../utils/InitialState";
 import MovieBox from "./MovieBox";
 
@@ -26,7 +25,13 @@ const InfiniteScrolling = (props: Props) => {
         fetchData(false, pg);
       }}
       hasMore={true}
-      loader={<PropagateLoader color="#36d7b7" />}
+      loader={
+        <>
+          <br />
+          <br />
+          <BeatLoader color="#36d7b7" />
+        </>
+      }
       endMessage={
         <Typography textAlign={"center"} fontWeight={700}>
           Yay! You have seen it all

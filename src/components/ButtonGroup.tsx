@@ -31,22 +31,26 @@ export default function ButtonGroup({ varient }: { varient: "tv" | "movie" }) {
     </Root>
   );
 }
-const Root = styled(Box)(() => ({
+const Root = styled(Box)(({ theme }) => ({
   display: "inline-flex",
   justifyContent: "center",
   width: "100%",
   paddingBlock: "3px",
+  [theme.breakpoints.up("sm")]: {
+    paddingInline: "20%",
+  },
 }));
 const TabButton = styled(Button)<{ buttonType: boolean }>(
   ({ theme, buttonType }) => ({
     paddingInline: "0.25rem",
     fontWeight: "500",
-    borderRadius: "30px",
-    margin: "2px",
-    border: "1px solid #fff",
+    borderRadius: "0",
+    borderBottom: "1px solid #fff",
+    flex: "1",
     paddingBlock: "0.5rem",
     color: `${buttonType ? "#111827" : "#fff"}`,
     backgroundColor: `${buttonType ? "#fff" : "transparent"}`,
+    fontSize: "0.70rem",
     [theme.breakpoints.up("sm")]: {
       fontSize: "0.875rem",
     },
