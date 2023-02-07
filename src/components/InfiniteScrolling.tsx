@@ -1,4 +1,4 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { BeatLoader } from "react-spinners";
 import { IState } from "../utils/InitialState";
@@ -28,8 +28,11 @@ const InfiniteScrolling = (props: Props) => {
       loader={
         <>
           <br />
-          <br />
-          <BeatLoader color="#36d7b7" />
+          <Box
+            sx={{ display: "flex", justifyContent: "center", width: "100%" }}
+          >
+            <BeatLoader color="#36d7b7" />
+          </Box>
         </>
       }
       endMessage={
