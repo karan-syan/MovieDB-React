@@ -10,7 +10,6 @@ import { maxWidthScreen, Popular } from "../utils/constants";
 import { popular_movie_url, popular_tv_url } from "../utils/url";
 import ButtonGroup from "./ButtonGroup";
 import Crousel from "./Crousel";
-import Header from "./Header";
 import InfiniteScrolling from "./InfiniteScrolling";
 import ScroolToTopButton from "./ScroolToTopButton";
 
@@ -20,15 +19,30 @@ interface Props {
 
 const MovieShows = (props: Props) => {
   const { varient } = props;
-  const [prevScrollPos, setPrevScrollPos] = useState(0);
   const dispatch = useDispatch();
   const [query, setQuery] = useSearchParams();
   const crouselSlider = useSelector(
     (state: ApplicationState) => state.tv.CrouselSlider
   );
   const moviesData = useSelector((state: ApplicationState) => state.tv.Tvs);
-  const navRef = useRef<HTMLDivElement>(null);
   const btnGroupRef = useRef<HTMLDivElement>(null);
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const handleScroll = () => {
+    const currentScrollPos = window.scrollY;
+    if (btnGroupRef.current) {
+      if (currentScrollPos < prevScrollPos) {
+        btnGroupRef.current.style.top = "7.4vh";
+      } else {
+        btnGroupRef.current.style.top = "0";
+      }
+    }
+    setPrevScrollPos(currentScrollPos);
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  });
+
   useEffect(() => {
     if (!query.has("type")) {
       setQuery({ type: Popular });
@@ -55,44 +69,25 @@ const MovieShows = (props: Props) => {
       })
     );
   }
-  const handleScroll = () => {
-    const currentScrollPos = window.scrollY;
-    if (navRef.current && btnGroupRef.current) {
-      if (currentScrollPos < prevScrollPos) {
-        navRef.current.style.top = "0";
-        btnGroupRef.current.style.top = "7.4vh";
-      } else {
-        navRef.current.style.top = "-50px";
-        btnGroupRef.current.style.top = "0";
-      }
-    }
-
-    setPrevScrollPos(currentScrollPos);
-  };
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  });
   return (
-    <Root>
-      {moviesData.loading && crouselSlider.loading ? (
-        <BarLoader color="#36d7b7" />
-      ) : (
-        <Wrapper>
-          <HeaderWrapper ref={navRef}>
-            <Header />
-          </HeaderWrapper>
-          <CrouselWrapper>
-            <Crousel item={crouselSlider.Data} />
-          </CrouselWrapper>
-          <ButtonGroupWrapper ref={btnGroupRef}>
-            <ButtonGroup varient={varient} />
-          </ButtonGroupWrapper>
-          <InfiniteScrolling moviesData={moviesData} fetchData={fetchData} />
-        </Wrapper>
-      )}
-      <ScroolToTopButton />
-    </Root>
+    <>
+      <Root>
+        {moviesData.loading && crouselSlider.loading ? (
+          <BarLoader color="#36d7b7" />
+        ) : (
+          <Wrapper>
+            <CrouselWrapper>
+              <Crousel item={crouselSlider.Data} />
+            </CrouselWrapper>
+            <ButtonGroupWrapper ref={btnGroupRef}>
+              <ButtonGroup varient={varient} />
+            </ButtonGroupWrapper>
+            <InfiniteScrolling moviesData={moviesData} fetchData={fetchData} />
+          </Wrapper>
+        )}
+        <ScroolToTopButton />
+      </Root>
+    </>
   );
 };
 
@@ -106,13 +101,6 @@ const Wrapper = styled(Box)(() => ({
   width: "100%",
   maxWidth: maxWidthScreen,
   margin: "0px auto",
-}));
-const HeaderWrapper = styled(Box)(() => ({
-  position: "sticky",
-  top: "0",
-  width: "100%",
-  zIndex: "10px",
-  transition: "all 0.3s",
 }));
 const CrouselWrapper = styled(Box)(() => ({
   width: "100%",

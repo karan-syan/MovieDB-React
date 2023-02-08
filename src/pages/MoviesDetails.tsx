@@ -73,8 +73,8 @@ export default function MoviesDetails() {
     <div
       className="flex justify-center items-center"
       style={{
-        width: "100%",
-        height: "100vh",
+        // width: "100%",
+        // height: "100vh",
         maxWidth: maxWidthScreen,
         margin: "0px auto",
         float: "none",
@@ -88,8 +88,8 @@ export default function MoviesDetails() {
             maxWidth: maxWidthScreen,
             margin: "0px auto",
             float: "none",
-            width: "100vw",
-            height: "100vh",
+            width: "100%",
+            // height: "100vh",
             backgroundImage: "url(" + MOVIE_DB_IMG_URL + backdrop_path + ")",
             backgroundPosition: "center",
             backgroundSize: "cover",
@@ -100,10 +100,10 @@ export default function MoviesDetails() {
             className=" w-full h-full"
             style={{ backdropFilter: "blur(10px) brightness(60%)" }}
           >
-            <DetailsHeader />
+            {/* <DetailsHeader /> */}
             <div
               className="flex flex-col md:flex-row md:justify-between overflow-y-auto md:overflow-y-hidden"
-              style={{ height: "92.5vh" }}
+              // style={{ height: "92.5vh" }}
             >
               <PosterCard Poster_Path={poster_path} />
               <div

@@ -88,6 +88,10 @@ export default function Header() {
       </SearchContainer>
       <Drawer
         anchor={"left"}
+        transitionDuration={{
+          enter: 400,
+          exit: 400,
+        }}
         open={state}
         onClose={toggleDrawer(false)}
         PaperProps={{ sx: { backgroundColor: "#00040a" } }}
@@ -107,6 +111,7 @@ export default function Header() {
                   }}
                   onClick={() => {
                     navigate(e.link);
+                    setState(false);
                   }}
                 >
                   <ListItemIcon sx={{ color: "#fff" }}>{e.icon}</ListItemIcon>

@@ -6,10 +6,9 @@ import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import CastList from "../components/CastList";
 import Context from "../components/Context";
-import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
-import PosterCard from "../components/PosterCard";
 import NetworkList from "../components/NetworkList";
+import PosterCard from "../components/PosterCard";
 import SeasonList from "../components/SeasonList";
 import { CallCast } from "../redux/People/action";
 import { CallRecommend } from "../redux/Recommend/action";
@@ -81,7 +80,6 @@ export default function TvDetails() {
       className="flex justify-center items-center"
       style={{
         width: "100%",
-        height: "100vh",
         maxWidth: maxWidthScreen,
         margin: "0px auto",
         float: "none",
@@ -93,7 +91,6 @@ export default function TvDetails() {
         <div
           style={{
             width: "100vw",
-            height: "100vh",
             backgroundImage: "url(" + MOVIE_DB_IMG_URL + backdrop_path + ")",
             backgroundPosition: "center",
             backgroundSize: "cover",
@@ -104,11 +101,7 @@ export default function TvDetails() {
             className=" w-full h-full"
             style={{ backdropFilter: "blur(10px) brightness(60%)" }}
           >
-            <DetailsHeader />
-            <div
-              className="flex flex-col md:flex-row md:justify-between overflow-y-auto md:overflow-y-hidden"
-              style={{ height: "92.5vh" }}
-            >
+            <div className="flex flex-col md:flex-row md:justify-between overflow-y-auto md:overflow-y-hidden">
               <PosterCard Poster_Path={Poster_Path} />
               <div
                 className="flex mt-5 justify-center pb-6 md:w-2/3 flex-col items-center md:h-full md:overflow-auto md:justify-start md:items-start"
