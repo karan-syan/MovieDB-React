@@ -48,10 +48,10 @@ export default function MovieBox({ item }: { item: IMovie }) {
 }
 const Root = styled(Box)(({ theme }) => ({
   width: "32%",
-  marginInline: "0.5%",
+  marginInline: "0.3%",
   flexShrink: "0",
   display: "inline-block",
-  marginBottom: "0.5rem",
+  marginBottom: "0.3rem",
   overflow: "hidden",
   cursor: "pointer",
   borderRadius: "0.125rem",
@@ -60,10 +60,10 @@ const Root = styled(Box)(({ theme }) => ({
   },
   [theme.breakpoints.up("md")]: {
     width: "19%",
-    marginBottom: "1rem",
+    marginBottom: "0.6rem",
   },
   [theme.breakpoints.up("lg")]: {
-    marginBottom: "1.3rem",
+    marginBottom: "0.8rem",
     width: "15%",
   },
 }));
