@@ -13,7 +13,6 @@ import {
   Drawer,
   List,
   ListItem,
-  ListItemButton,
   ListItemIcon,
   ListItemText,
   styled,
@@ -24,6 +23,8 @@ import Name from "./Name";
 
 export default function Header() {
   const [state, setState] = useState(false);
+  const navigate = useNavigate();
+
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
@@ -35,7 +36,6 @@ export default function Header() {
       }
       setState(open);
     };
-  const navigate = useNavigate();
   const Links = [
     {
       title: "Home",
@@ -82,6 +82,7 @@ export default function Header() {
       <SearchContainer
         onClick={() => {
           navigate("/search");
+          // setOpenSearch(true);
         }}
       >
         <SearchIcon />
@@ -102,34 +103,32 @@ export default function Header() {
             return (
               <ListItem
                 key={index}
-                sx={{ ":hover": { backgroundColor: "#08101c" } }}
+                sx={{
+                  ":hover": { backgroundColor: "#08101c" },
+                  paddingRight: "6em",
+                  paddingBlock: "0.875rem",
+                }}
+                onClick={() => {
+                  navigate(e.link);
+                  setState(false);
+                }}
+                divider
               >
-                <ListItemButton
-                  divider
-                  sx={{
-                    paddingRight: "6em",
-                  }}
-                  onClick={() => {
-                    navigate(e.link);
-                    setState(false);
-                  }}
-                >
-                  <ListItemIcon sx={{ color: "#fff" }}>{e.icon}</ListItemIcon>
-                  <ListItemText
-                    primary={e.title}
-                    primaryTypographyProps={{
-                      sx: {
-                        fontSize: "1em",
-                        opacity: "0.7",
-                        color: "#fff",
-                        transition: "opacity 450ms",
-                        ":hover": {
-                          opacity: "1",
-                        },
+                <ListItemIcon sx={{ color: "#fff" }}>{e.icon}</ListItemIcon>
+                <ListItemText
+                  primary={e.title}
+                  primaryTypographyProps={{
+                    sx: {
+                      fontSize: "1em",
+                      opacity: "0.7",
+                      color: "#fff",
+                      transition: "opacity 450ms",
+                      ":hover": {
+                        opacity: "1",
                       },
-                    }}
-                  />
-                </ListItemButton>
+                    },
+                  }}
+                />
                 <Divider />
               </ListItem>
             );

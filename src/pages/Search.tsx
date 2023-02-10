@@ -64,7 +64,7 @@ export default function Search() {
               setval(e.target.value);
             }}
           />
-          <div className="flex items-center justify-between ml-1 pl-3">
+          <SearchIconContainer>
             <BiSearch
               className="text-xl sm:text-xl mr-2 md:mr-5"
               onClick={() => {
@@ -75,7 +75,7 @@ export default function Search() {
               }}
             />
             <Filter />
-          </div>
+          </SearchIconContainer>
         </SearchFieldWrapper>
       </Wrapper>
       {query.has("query") ? (
@@ -133,4 +133,11 @@ const SearchField = styled(InputBase)(({ theme }) => ({
   outlineOffset: "2px",
   backgroundColor: "transparent",
   color: theme.palette.text.secondary,
+}));
+const SearchIconContainer = styled(Box)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  marginLeft: "0.25rem",
+  paddingLeft: "0.75rem",
 }));

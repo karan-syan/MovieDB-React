@@ -63,7 +63,7 @@ export default function Crousel({ item }: { item: IMovie[] }) {
             <Img
               src={`${MOVIE_DB_IMG_URL}${backdrop_path}`}
               draggable={false}
-              alt="..."
+              alt={title ? title : name}
             />
           </Root>
         );
