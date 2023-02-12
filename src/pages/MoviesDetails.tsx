@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import CastList from "../components/CastList";
 import Context from "../components/Context";
-import DetailsHeader from "../components/DetailsHeader";
 import ListRow from "../components/ListRow";
 import PosterCard from "../components/PosterCard";
 import { CallMovieDetails } from "../redux/Movie/action";

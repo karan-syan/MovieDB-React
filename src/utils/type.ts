@@ -200,3 +200,6 @@ export interface FetchCastPayload {
 export interface FetchCastDetailsPayload {
   url: string;
 }
+export interface RecentDataType {
+  id: number, img: string, date: string, varient: "movies" | "shows"
+}

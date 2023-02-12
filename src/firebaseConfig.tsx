@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
 export const firebaseConfig = {
   apiKey: "AIzaSyAsBF27SUNg7aW8JbcJJMOmcPTIXUgZ-Us",
   authDomain: "ktv-movie.firebaseapp.com",
@@ -11,3 +12,4 @@ export const firebaseConfig = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);

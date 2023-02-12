@@ -11,6 +11,7 @@ import {
   Box,
   Divider,
   Drawer,
+  InputBase,
   List,
   ListItem,
   ListItemIcon,
@@ -23,8 +24,9 @@ import Name from "./Name";
 
 export default function Header() {
   const [state, setState] = useState(false);
+  const [searchShow, setSearchShow] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
-
   const toggleDrawer =
     (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
       if (
@@ -36,6 +38,9 @@ export default function Header() {
       }
       setState(open);
     };
+  const toggleSearch = () => {
+    setSearchShow((prevState) => !prevState);
+  };
   const Links = [
     {
       title: "Home",
@@ -60,7 +65,7 @@ export default function Header() {
     {
       title: "Recent",
       icon: <HistoryToggleOffIcon />,
-      link: "/",
+      link: "/recent",
     },
     {
       title: "Setting",
@@ -75,18 +80,39 @@ export default function Header() {
   ];
   return (
     <Root>
-      <MenuContainer onClick={toggleDrawer(true)}>
-        <MenuIcon />
+      <MenuContainer>
+        <MenuIcon onClick={toggleDrawer(true)} />
+        <Name />
       </MenuContainer>
-      <Name />
-      <SearchContainer
-        onClick={() => {
-          navigate("/search");
-          // setOpenSearch(true);
-        }}
-      >
-        <SearchIcon />
-      </SearchContainer>
+      <Box sx={{ display: "flex" }}>
+        <SearchField
+          placeholder="Search"
+          visibility={searchShow}
+          value={searchValue}
+          onKeyUp={(e) => {
+            // if (val !== null && val !== "" && e.keyCode === 13) {
+            //   query.set("query", encodeURIComponent(val.trim()));
+            //   setQuery(query);
+            // }
+          }}
+          onChange={(e) => {
+            setSearchValue(e.target.value);
+          }}
+          type="search"
+        />
+        <SearchContainer
+          onClick={() => {
+            if (searchShow && searchValue.length !== 0) {
+              navigate(`/search/${searchValue}`);
+              toggleSearch();
+            } else {
+              toggleSearch();
+            }
+          }}
+        >
+          <SearchIcon />
+        </SearchContainer>
+      </Box>
       <Drawer
         anchor={"left"}
         transitionDuration={{
@@ -166,3 +192,13 @@ const SearchContainer = styled(Box)(({ theme }) => ({
   padding: "0,5rem",
   fontSize: "1.875rem",
 }));
+const SearchField = styled(InputBase)<{ visibility: boolean }>(
+  ({ theme, visibility }) => ({
+    display: visibility ? "inline-block" : "none",
+    height: "100%",
+    outline: "2px solid transparent",
+    outlineOffset: "2px",
+    backgroundColor: "transparent",
+    color: theme.palette.text.secondary,
+  })
+);

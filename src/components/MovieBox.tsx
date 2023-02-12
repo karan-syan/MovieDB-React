@@ -4,14 +4,19 @@ import { getAuth } from "firebase/auth";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
+import { setRecentData } from "../firebase/recentData";
 import { firebaseConfig } from "../firebaseConfig";
 import { IMovie_distructing } from "../utils/ApiDistruct";
 import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
-
-export default function MovieBox({ item }: { item: IMovie }) {
+interface Props {
+  id: number;
+  posterPath: string;
+  varient: "movies" | "shows";
+}
+export default function MovieBox(props: Props) {
   const navigate = useNavigate();
-  const { I_name, poster_path, id, title } = IMovie_distructing(item);
+  const { id, posterPath, varient } = props;
   const app = initializeApp(firebaseConfig);
   const user = getAuth(app).currentUser;
   const imgRef = useRef<HTMLImageElement>(null);
@@ -21,9 +26,13 @@ export default function MovieBox({ item }: { item: IMovie }) {
     <Root
       onClick={() => {
         if (user) {
-          I_name
-            ? navigate(`/tv/details/${id}`)
-            : navigate(`/movie/details/${id}`);
+          if (varient === "shows") {
+            setRecentData(id, posterPath, "shows");
+            navigate(`/tv/details/${id}`);
+          } else {
+            setRecentData(id, posterPath, "movies");
+            navigate(`/movie/details/${id}`);
+          }
         } else {
           navigate("/signin");
         }
@@ -31,8 +40,8 @@ export default function MovieBox({ item }: { item: IMovie }) {
     >
       <Img
         ref={imgRef}
-        src={`${MOVIE_DB_IMG_URL}${poster_path}`}
-        alt={title}
+        src={`${MOVIE_DB_IMG_URL}${posterPath}`}
+        alt={id.toString()}
         onLoad={() => {
           if (imgRef.current && loaderRef.current) {
             imgRef.current.style.display = "flex";
@@ -74,6 +83,10 @@ const Img = styled("img")(({ theme }) => ({
   objectFit: "cover",
   display: "none",
   height: "100%",
+  transition: "all 500ms",
+  ":hover": {
+    transform: "scale(1.1)",
+  },
 }));
 const ImgLoader = styled(Box)(({ theme }) => ({
   borderRadius: "0.5rem",

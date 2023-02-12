@@ -6,6 +6,7 @@ import MovieShows from "./components/MovieShows";
 import Home from "./pages/Home";
 import MoviesDetails from "./pages/MoviesDetails";
 import PeopleDetails from "./pages/PeopleDetails";
+import Recent from "./pages/Recent";
 import Search from "./pages/Search";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
@@ -38,12 +39,13 @@ function App() {
       </HeaderWrapper>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/Search" element={<Search />} />
+        <Route path="/search/:search" element={<Search />} />
         <Route path="/shows" element={<MovieShows varient="tv" />} />
         <Route path="/movies" element={<MovieShows varient="movie" />} />
         <Route path="/movie/details/:id" element={<MoviesDetails />} />
         <Route path="/tv/details/:id" element={<TvDetails />} />
         <Route path="/people/:id" element={<PeopleDetails />} />
+        <Route path="/recent" element={<Recent />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>

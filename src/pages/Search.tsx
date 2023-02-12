@@ -1,143 +1,77 @@
-import { Box, InputBase, styled } from "@mui/material";
-import { useEffect, useState } from "react";
-import { BiSearch } from "react-icons/bi";
+import { Box, styled, Typography } from "@mui/material";
+import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useSearchParams } from "react-router-dom";
-import Filter from "../components/Filter";
+import { useParams, useSearchParams } from "react-router-dom";
 import InfiniteScrolling from "../components/InfiniteScrolling";
-import Name from "../components/Name";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { CallSearch } from "../redux/Search/action";
 import { maxWidthScreen } from "../utils/constants";
 
 export default function Search() {
   const dispatch = useDispatch();
-  const [val, setval] = useState<string>("");
+  const { search } = useParams();
   const MoviesData = useSelector(
     (state: ApplicationState) => state.Search.Searched
   );
   const [query, setQuery] = useSearchParams();
 
   function FetchData(newData: boolean, pg: number) {
-    dispatch(
-      CallSearch.request({
-        NewData: newData,
-        page: pg,
-        query: query.get("query"),
-        url: "multi",
-      })
-    );
+    if (search) {
+      console.log(newData, pg, MoviesData.Data.length);
+      dispatch(
+        CallSearch.request({
+          NewData: newData,
+          page: pg,
+          query: search,
+          url: "multi",
+        })
+      );
+    }
   }
   useEffect(() => {
     if (!query.has("filter")) {
       query.set("filter", "multi");
       setQuery(query);
     }
-    if (query.has("query") && query.has("filter")) {
+    if (search && query.has("filter")) {
       dispatch(
         CallSearch.request({
           NewData: true,
           page: 1,
-          query: query.get("query"),
+          query: search,
           url: query.get("filter"),
         })
       );
     }
-  }, [dispatch, query.get("query"), query.get("filter")]);
+  }, []);
   return (
     <Root>
-      <Wrapper style={{}}>
-        <NameWrapper>
-          <Name />
-        </NameWrapper>
-        <SearchFieldWrapper>
-          <SearchField
-            placeholder="Search"
-            value={val}
-            onKeyUp={(e) => {
-              if (val !== null && val !== "" && e.keyCode === 13) {
-                query.set("query", encodeURIComponent(val.trim()));
-                setQuery(query);
-              }
-            }}
-            onChange={(e) => {
-              setval(e.target.value);
-            }}
-          />
-          <SearchIconContainer>
-            <BiSearch
-              className="text-xl sm:text-xl mr-2 md:mr-5"
-              onClick={() => {
-                if (val !== null && val !== "") {
-                  query.set("query", encodeURIComponent(val.trim()));
-                  setQuery(query);
-                }
-              }}
-            />
-            <Filter />
-          </SearchIconContainer>
-        </SearchFieldWrapper>
-      </Wrapper>
-      {query.has("query") ? (
-        MoviesData.Data.length === 0 ? (
-          <div
-            className="flex justify-center items-center"
-            style={{ height: "92.5vh" }}
-          >
-            <h1 className="opacity-40">No data found</h1>
-          </div>
-        ) : (
-          <div className="flex flex-wrap justify-evenly pt-3">
-            <InfiniteScrolling fetchData={FetchData} moviesData={MoviesData} />
-          </div>
-        )
-      ) : null}
+      {MoviesData.Data.length === 0 ? (
+        <Container>
+          <Typography sx={{ opacity: "0.7" }}>No data found</Typography>
+        </Container>
+      ) : (
+        <Wrapper>
+          <InfiniteScrolling fetchData={FetchData} moviesData={MoviesData} />
+        </Wrapper>
+      )}
     </Root>
   );
 }
 
 const Root = styled(Box)(() => ({
   width: "100%",
-  height: "100vh",
+  maxWidth: maxWidthScreen,
+}));
+const Wrapper = styled(Box)(() => ({
+  width: "100%",
   maxWidth: maxWidthScreen,
   margin: "0px auto",
-  float: "none",
 }));
-const Wrapper = styled(Box)(({ theme }) => ({
+const Container = styled(Box)(() => ({
+  height: "92,5vh",
+  maxWidth: maxWidthScreen,
   display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  paddingInline: "0.75rem",
-  fontWeight: "700",
-  height: "7.5vh",
-  backgroundColor: theme.palette.primary.main,
-}));
-const NameWrapper = styled(Box)(({ theme }) => ({
-  display: "none",
-  [theme.breakpoints.up("sm")]: {
-    display: "block",
-  },
-}));
-const SearchFieldWrapper = styled(Box)(({ theme }) => ({
-  display: "flex",
-  height: "100%",
-  paddingLeft: "0.5rem",
-  [theme.breakpoints.up("sm")]: {
-    width: "83%",
-  },
-}));
-const SearchField = styled(InputBase)(({ theme }) => ({
-  height: "100%",
-  width: "91.66%",
-  outline: "2px solid transparent",
-  outlineOffset: "2px",
-  backgroundColor: "transparent",
-  color: theme.palette.text.secondary,
-}));
-const SearchIconContainer = styled(Box)(({ theme }) => ({
-  display: "flex",
-  alignItems: "center",
   justifyContent: "center",
-  marginLeft: "0.25rem",
-  paddingLeft: "0.75rem",
+  alignItems: "center",
 }));

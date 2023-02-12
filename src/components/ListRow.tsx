@@ -18,8 +18,16 @@ export default function ListRow({
       )}
       <Container>
         {item.map((val, index) => {
+          const varient = val.name ? "shows" : "movies";
           if (val.poster_path !== null && val.poster_path !== "") {
-            return <MovieBox key={index} item={val} />;
+            return (
+              <MovieBox
+                key={index}
+                id={val.id}
+                posterPath={val.poster_path}
+                varient={varient}
+              />
+            );
           }
           return null;
         })}

@@ -10,7 +10,7 @@ export default function Name() {
     </Root>
   );
 }
-const Root = styled(Box)(() => ({
+const Root = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   cursor: "pointer",
@@ -18,8 +18,9 @@ const Root = styled(Box)(() => ({
 const Title = styled(Typography)(({ theme }) => ({
   fontWeight: "800",
   marginInline: "0.5rem",
-  paddingTop: "0.25rem",
+  paddingTop: "0.08rem",
   [theme.breakpoints.up("sm")]: {
+    marginLeft: "1rem",
     fontSize: "1.25rem",
   },
 }));

@@ -5,6 +5,7 @@ import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import Carousel from "react-material-ui-carousel";
 import { useNavigate } from "react-router-dom";
+import { setRecentData } from "../firebase/recentData";
 import { firebaseConfig } from "../firebaseConfig";
 import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
@@ -36,37 +37,44 @@ export default function Crousel({ item }: { item: IMovie[] }) {
           release_date,
           backdrop_path,
           id,
+          poster_path,
           overview,
           first_air_date,
           name,
           title,
         } = item;
-        return (
-          <Root
-            key={id}
-            onClick={() => {
-              if (user) {
-                name
-                  ? navigate(`/tv/details/${id}`)
-                  : navigate(`/movie/details/${id}`);
-              } else {
-                navigate("/signin");
-              }
-            }}
-          >
-            <DetailContainer>
-              <Title>{title ? title : name}</Title>
-              <Date>{release_date ? release_date : first_air_date}</Date>
-              <Overview>{overview}</Overview>
-            </DetailContainer>
-            <ImgOverLay />
-            <Img
-              src={`${MOVIE_DB_IMG_URL}${backdrop_path}`}
-              draggable={false}
-              alt={title ? title : name}
-            />
-          </Root>
-        );
+        if (backdrop_path && backdrop_path.length > 0) {
+          return (
+            <Root
+              key={id}
+              onClick={() => {
+                if (user) {
+                  if (name) {
+                    setRecentData(id, poster_path, "shows");
+                    navigate(`/tv/details/${id}`);
+                  } else {
+                    setRecentData(id, poster_path, "movies");
+                    navigate(`/movie/details/${id}`);
+                  }
+                } else {
+                  navigate("/signin");
+                }
+              }}
+            >
+              <DetailContainer>
+                <Title>{title ? title : name}</Title>
+                <Date>{release_date ? release_date : first_air_date}</Date>
+                <Overview>{overview}</Overview>
+              </DetailContainer>
+              <ImgOverLay />
+              <Img
+                src={`${MOVIE_DB_IMG_URL}${backdrop_path}`}
+                draggable={false}
+                alt={title ? title : name}
+              />
+            </Root>
+          );
+        }
       })}
     </Carousel>
   );

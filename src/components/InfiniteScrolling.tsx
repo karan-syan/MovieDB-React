@@ -36,13 +36,31 @@ const InfiniteScrolling = (props: Props) => {
         </>
       }
       endMessage={
-        <Typography textAlign={"center"} fontWeight={700}>
-          Yay! You have seen it all
-        </Typography>
+        <>
+          <br />
+          <Box
+            sx={{ display: "flex", justifyContent: "center", width: "100%" }}
+          >
+            <Typography textAlign={"center"} fontWeight={700}>
+              Yay! You have seen it all
+            </Typography>
+          </Box>
+        </>
       }
     >
-      {moviesData.Data.map((item, index) => {
-        return <MovieBox item={item} key={index} />;
+      {moviesData.Data.map((val, index) => {
+        const varient = val.name ? "shows" : "movies";
+        if (val.poster_path !== null && val.poster_path !== "") {
+          return (
+            <MovieBox
+              key={index}
+              id={val.id}
+              posterPath={val.poster_path}
+              varient={varient}
+            />
+          );
+        }
+        return null;
       })}
     </InfiniteScroll>
   );

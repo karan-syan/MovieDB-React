@@ -90,7 +90,7 @@ export default function TvDetails() {
       ) : (
         <div
           style={{
-            width: "100vw",
+            width: "99.2vw",
             backgroundImage: "url(" + MOVIE_DB_IMG_URL + backdrop_path + ")",
             backgroundPosition: "center",
             backgroundSize: "cover",
