@@ -11,6 +11,7 @@ import Search from "./pages/Search";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import TvDetails from "./pages/TvDetails";
+import WatchList from "./pages/WatchList";
 import { maxWidthScreen } from "./utils/constants";
 
 function App() {
@@ -46,6 +47,7 @@ function App() {
         <Route path="/tv/details/:id" element={<TvDetails />} />
         <Route path="/people/:id" element={<PeopleDetails />} />
         <Route path="/recent" element={<Recent />} />
+        <Route path="/watchlist" element={<WatchList />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
       </Routes>

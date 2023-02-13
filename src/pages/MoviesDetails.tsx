@@ -1,4 +1,6 @@
-import { useEffect, useRef } from "react";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import { Box, styled, Typography } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { IoTime } from "react-icons/io5";
 import { useDispatch, useSelector } from "react-redux";
@@ -8,6 +10,11 @@ import CastList from "../components/CastList";
 import Context from "../components/Context";
 import ListRow from "../components/ListRow";
 import PosterCard from "../components/PosterCard";
+import {
+  addWatchListData,
+  checkWatchListData,
+  removeWatchListData,
+} from "../firebase/watchListData";
 import { CallMovieDetails } from "../redux/Movie/action";
 import { CallCast } from "../redux/People/action";
 import { CallRecommend } from "../redux/Recommend/action";
@@ -17,6 +24,7 @@ import { MOVIE_DB_IMG_URL } from "../utils/url";
 export default function MoviesDetails() {
   const dispatch = useDispatch();
   const elementForScroll = useRef<HTMLDivElement>(null);
+  const [watchListBtn, setWatchListBtn] = useState<boolean>(false);
 
   const MovieDetails = useSelector(
     (state: ApplicationState) => state.details.MovieDetails
@@ -26,6 +34,11 @@ export default function MoviesDetails() {
   );
   const tvCast = useSelector((state: ApplicationState) => state.details.TvCast);
   const { id } = useParams();
+  async function handleWatchListBtn() {
+    if (await checkWatchListData(MovieDetails.Data.id)) {
+      setWatchListBtn(true);
+    }
+  }
   useEffect(() => {
     dispatch(
       CallMovieDetails.request({
@@ -49,6 +62,7 @@ export default function MoviesDetails() {
       left: 0,
       behavior: "smooth",
     });
+    handleWatchListBtn();
   }, [id]);
 
   const {
@@ -69,106 +83,147 @@ export default function MoviesDetails() {
     vote_average,
   } = MovieDetails.Data;
   return (
-    <div
-      className="flex justify-center items-center"
-      style={{
-        // width: "100%",
-        // height: "100vh",
-        maxWidth: maxWidthScreen,
-        margin: "0px auto",
-        float: "none",
-      }}
-    >
+    <>
       {MovieDetails.loading ? (
         <BarLoader color="#36d7b7" />
       ) : (
-        <div
-          style={{
-            maxWidth: maxWidthScreen,
-            margin: "0px auto",
-            float: "none",
-            width: "100%",
-            // height: "100vh",
-            backgroundImage: "url(" + MOVIE_DB_IMG_URL + backdrop_path + ")",
-            backgroundPosition: "center",
-            backgroundSize: "cover",
-            backgroundRepeat: "repeat",
-          }}
-        >
-          <div
-            className=" w-full h-full"
-            style={{ backdropFilter: "blur(10px) brightness(60%)" }}
-          >
-            {/* <DetailsHeader /> */}
-            <div
-              className="flex flex-col md:flex-row md:justify-between overflow-y-auto md:overflow-y-hidden"
-              // style={{ height: "92.5vh" }}
-            >
-              <PosterCard Poster_Path={poster_path} />
-              <div
-                className="flex mt-5 justify-center pb-3 md:w-2/3 flex-col items-center md:h-full md:overflow-auto md:justify-start md:items-start"
-                ref={elementForScroll}
+        <Root backdropPath={backdrop_path}>
+          <Container>
+            <PosterCard Poster_Path={poster_path} />
+            <ContentWrapper ref={elementForScroll}>
+              <Title>{title}</Title>
+              <TagLine>{tagline}</TagLine>
+              <h1 className="text-sm md:text-base opacity-70">
+                {original_language} | {status} | {release_date}
+              </h1>
+              <h1 className="text-sm md:text-base opacity-70 flex items-center">
+                <IoTime className="mx-1" />
+                {runtime} min | {vote_average} | {}
+              </h1>
+              <button
+                className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base"
+                onClick={() => {
+                  if (watchListBtn) {
+                    removeWatchListData(
+                      MovieDetails.Data.id,
+                      poster_path,
+                      "movies"
+                    );
+                    setWatchListBtn(false);
+                  } else {
+                    addWatchListData(
+                      MovieDetails.Data.id,
+                      poster_path,
+                      "movies"
+                    );
+                    setWatchListBtn(true);
+                  }
+                }}
               >
-                <h1 className="text-xl md:text-3xl font-extrabold text-center">
-                  {title}
-                </h1>
-                <h1 className="text-sm italic w-4/5 text-center md:w-full md:text-start opacity-60">
-                  {tagline}
-                </h1>
-                <h1 className="text-sm md:text-base opacity-70">
-                  {original_language} | {status} | {release_date}
-                </h1>
-                <h1 className="text-sm md:text-base opacity-70 flex items-center">
-                  <IoTime className="mx-1" />
-                  {runtime} min | {vote_average} | {}
-                </h1>
-                <button className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base">
-                  WatchList
+                WatchList
+                {watchListBtn ? (
+                  <BookmarkAddedIcon />
+                ) : (
                   <BsBookmarkHeartFill className="ml-2" />
-                </button>
-                <div className="w-full">
-                  <Context title="Synopsis" subtitle={overview} />
-                  <Context
-                    title="Production Companies"
-                    subtitle={production_companies
-                      .map((item) => " " + item.name)
-                      .toString()}
-                  />
-                  <Context
-                    title="Genres"
-                    subtitle={genres.map((item) => " " + item.name).toString()}
-                  />
-                  <Context
-                    title="Spoken Language"
-                    subtitle={spoken_languages
-                      .map((item) => " " + item.english_name)
-                      .toString()}
-                  />
-                  <Context
-                    title="Budget"
-                    subtitle={
-                      budget === 0 ? "N/A" : "$ " + budget.toLocaleString()
-                    }
-                  />
-                  <Context
-                    title="Revenue"
-                    subtitle={
-                      revenue === 0 ? "N/A" : "$ " + revenue.toLocaleString()
-                    }
-                  />
-                </div>
-                <CastList data={tvCast.Data} />
-                {Recommended.Data.length === 0 ? null : (
-                  <div className="w-full mt-2">
-                    <h1 className="text-lg mx-2">Recommended:</h1>
-                    <ListRow item={Recommended.Data} />
-                  </div>
                 )}
+              </button>
+              <div className="w-full">
+                <Context title="Synopsis" subtitle={overview} />
+                <Context
+                  title="Production Companies"
+                  subtitle={production_companies
+                    .map((item) => " " + item.name)
+                    .toString()}
+                />
+                <Context
+                  title="Genres"
+                  subtitle={genres.map((item) => " " + item.name).toString()}
+                />
+                <Context
+                  title="Spoken Language"
+                  subtitle={spoken_languages
+                    .map((item) => " " + item.english_name)
+                    .toString()}
+                />
+                <Context
+                  title="Budget"
+                  subtitle={
+                    budget === 0 ? "N/A" : "$ " + budget.toLocaleString()
+                  }
+                />
+                <Context
+                  title="Revenue"
+                  subtitle={
+                    revenue === 0 ? "N/A" : "$ " + revenue.toLocaleString()
+                  }
+                />
               </div>
-            </div>
-          </div>
-        </div>
+              <CastList data={tvCast.Data} />
+              {Recommended.Data.length === 0 ? null : (
+                <div className="w-full mt-2">
+                  <h1 className="text-lg mx-2">Recommended:</h1>
+                  <ListRow item={Recommended.Data} />
+                </div>
+              )}
+            </ContentWrapper>
+          </Container>
+        </Root>
       )}
-    </div>
+    </>
   );
 }
+const Root = styled(Box)<{ backdropPath: string }>(({ backdropPath }) => ({
+  maxWidth: maxWidthScreen,
+  margin: "0px auto",
+  float: "none",
+  backgroundImage: `url(${MOVIE_DB_IMG_URL + backdropPath})`,
+  backgroundPosition: "center",
+  backgroundSize: "cover",
+  backdropFilter: "blur(10px) brightness(60%)",
+  backgroundRepeat: "repeat",
+}));
+const Container = styled(Box)(({ theme }) => ({
+  display: "flex",
+  flexDirection: "column",
+  overflow: "auto",
+  minHeight: "92.5vh",
+  height: "100%",
+  backdropFilter: "blur(10px) brightness(60%)",
+  [theme.breakpoints.up("md")]: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+}));
+const ContentWrapper = styled(Box)(({ theme }) => ({
+  display: "flex",
+  marginTop: "1.25rem",
+  justifyContent: "center",
+  paddingBottom: "0.75rem",
+  flexDirection: "column",
+  alignItems: "center",
+  [theme.breakpoints.up("md")]: {
+    width: "66.6%",
+    justifyContent: "start",
+    alignItems: "start",
+  },
+}));
+const Title = styled(Typography)(({ theme }) => ({
+  fontSize: "1.5rem",
+  fontWeight: 800,
+  textAlign: "center",
+  [theme.breakpoints.up("md")]: {
+    fontSize: "3rem",
+    textAlign: "start",
+  },
+}));
+const TagLine = styled(Typography)(({ theme }) => ({
+  fontSize: "1rem",
+  fontStyle: "italic",
+  opacity: "0.6",
+  textAlign: "center",
+  [theme.breakpoints.up("md")]: {
+    marginTop: "-0.5rem",
+    textAlign: "start",
+    fontSize: "1.25rem",
+  },
+}));

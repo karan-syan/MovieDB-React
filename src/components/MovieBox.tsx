@@ -6,8 +6,6 @@ import { useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
 import { setRecentData } from "../firebase/recentData";
 import { firebaseConfig } from "../firebaseConfig";
-import { IMovie_distructing } from "../utils/ApiDistruct";
-import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 interface Props {
   id: number;

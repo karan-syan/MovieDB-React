@@ -201,5 +201,13 @@ export interface FetchCastDetailsPayload {
   url: string;
 }
 export interface RecentDataType {
-  id: number, img: string, date: string, varient: "movies" | "shows"
+  id: number; 
+  img: string; 
+  date: string; 
+  varient: "movies" | "shows";
+}
+export interface WatchListDataType {
+  id: number; 
+  img: string; 
+  varient: "movies" | "shows";
 }

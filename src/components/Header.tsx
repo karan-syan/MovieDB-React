@@ -60,7 +60,7 @@ export default function Header() {
     {
       title: "WatchList",
       icon: <AddToQueueIcon />,
-      link: "/",
+      link: "/watchlist",
     },
     {
       title: "Recent",
@@ -90,10 +90,10 @@ export default function Header() {
           visibility={searchShow}
           value={searchValue}
           onKeyUp={(e) => {
-            // if (val !== null && val !== "" && e.keyCode === 13) {
-            //   query.set("query", encodeURIComponent(val.trim()));
-            //   setQuery(query);
-            // }
+            if (searchValue && searchValue !== "" && e.keyCode === 13) {
+              navigate(`/search/${searchValue}`);
+              toggleSearch();
+            }
           }}
           onChange={(e) => {
             setSearchValue(e.target.value);
