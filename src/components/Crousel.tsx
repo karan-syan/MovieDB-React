@@ -106,7 +106,7 @@ const ImgOverLay = styled(Box)(({ theme }) => ({
   position: "absolute",
   width: "20%",
   display: "none",
-  left: "40%",
+  left: "39.98%",
   height: "100%",
   zIndex: 1,
   backgroundImage: `linear-gradient(to right, ${theme.palette.secondary.main}, transparent)`,
