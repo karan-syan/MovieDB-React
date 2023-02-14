@@ -1,5 +1,5 @@
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import { Box, styled, Typography } from "@mui/material";
+import { Box, Button, styled, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { IoTime } from "react-icons/io5";
@@ -100,8 +100,8 @@ export default function MoviesDetails() {
                 <IoTime className="mx-1" />
                 {runtime} min | {vote_average} | {}
               </h1>
-              <button
-                className="bg-pink-400 flex items-center px-2 py-1 rounded-3xl md:text-base"
+              <WatchlistButton
+                variant="contained"
                 onClick={() => {
                   if (watchListBtn) {
                     removeWatchListData(
@@ -120,14 +120,10 @@ export default function MoviesDetails() {
                   }
                 }}
               >
-                WatchList
-                {watchListBtn ? (
-                  <BookmarkAddedIcon />
-                ) : (
-                  <BsBookmarkHeartFill className="ml-2" />
-                )}
-              </button>
-              <div className="w-full">
+                WatchList &nbsp;
+                {watchListBtn ? <BookmarkAddedIcon /> : <BsBookmarkHeartFill />}
+              </WatchlistButton>
+              <Box sx={{ width: "100%" }}>
                 <Context title="Synopsis" subtitle={overview} />
                 <Context
                   title="Production Companies"
@@ -157,13 +153,13 @@ export default function MoviesDetails() {
                     revenue === 0 ? "N/A" : "$ " + revenue.toLocaleString()
                   }
                 />
-              </div>
+              </Box>
               <CastList data={tvCast.Data} />
               {Recommended.Data.length === 0 ? null : (
-                <div className="w-full mt-2">
-                  <h1 className="text-lg mx-2">Recommended:</h1>
+                <Recommendation>
+                  <Heading className="text-lg ml-2">Recommended:</Heading>
                   <ListRow item={Recommended.Data} />
-                </div>
+                </Recommendation>
               )}
             </ContentWrapper>
           </Container>
@@ -226,4 +222,27 @@ const TagLine = styled(Typography)(({ theme }) => ({
     textAlign: "start",
     fontSize: "1.25rem",
   },
+}));
+const WatchlistButton = styled(Button)(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  paddingInline: "1rem",
+  paddingBlock: "0.25rem",
+  backgroundColor: "#F472B6",
+  color: "white",
+  borderRadius: "1.5rem",
+  [theme.breakpoints.up("md")]: {
+    fontSize: "1rem",
+  },
+  ":hover": {
+    backgroundColor: "#863B62",
+  },
+}));
+const Recommendation = styled(Box)(({ theme }) => ({
+  width: "100%",
+  marginTop: "0.5rem",
+}));
+const Heading = styled(Typography)(({ theme }) => ({
+  fontSize: "1.125rem",
+  marginInline: "0.5rem",
 }));
