@@ -1,20 +1,19 @@
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { Alert, Snackbar } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
-import Link from "@mui/material/Link";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
+import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useFormik } from "formik";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import Copyright from "../components/Copyright";
 
 const SignInSchema = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Required"),
@@ -24,6 +23,7 @@ const SignInSchema = Yup.object().shape({
 });
 
 export default function SignIn() {
+  const [loginSnakbar, setLoginSnakbar] = useState<boolean>(false);
   const auth = getAuth();
   const navigate = useNavigate();
   const formik = useFormik({
@@ -35,101 +35,113 @@ export default function SignIn() {
           // Signed in
           const user = userCredential.user;
           console.log(user);
-          navigate("/");
           // ...
         })
         .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
+          setLoginSnakbar(true);
+          formik.setValues({ email: "", password: "" });
         });
     },
   });
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="bg-white w-1/3 rounded-3xl mt-10">
-        <ThemeProvider theme={theme}>
-          <Container component="main" maxWidth="xs">
-            <CssBaseline />
-            <Box
-              sx={{
-                marginTop: 8,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-              }}
-            >
-              <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-                {/* <LockOutlinedIcon /> */}
-              </Avatar>
-              <Typography component="h1" variant="h5">
-                Sign in
-              </Typography>
-              <Box sx={{ mt: 1 }}>
-                <form onSubmit={formik.handleSubmit}>
-                  {formik.isValid ? null : (
-                    <h1 className="text-red-600">
-                      Please Enter all field Correctly
-                    </h1>
-                  )}
-                  <TextField
-                    margin="normal"
-                    required
-                    fullWidth
-                    id="email"
-                    onChange={formik.handleChange}
-                    value={formik.values.email}
-                    label="Email Address"
-                    name="email"
-                    autoComplete="email"
-                    autoFocus
-                  />
-                  <TextField
-                    margin="normal"
-                    onChange={formik.handleChange}
-                    value={formik.values.password}
-                    required
-                    fullWidth
-                    name="password"
-                    label="Password"
-                    type="password"
-                    id="password"
-                    autoComplete="current-password"
-                  />
-                  <FormControlLabel
-                    control={<Checkbox value="remember" color="primary" />}
-                    label="Remember me"
-                  />
-                  <Button
-                    type="submit"
-                    fullWidth
-                    variant="contained"
-                    sx={{ mt: 3, mb: 2 }}
-                  >
-                    Sign In
-                  </Button>
-                </form>
-                <Grid container>
-                  <Grid item>
-                    <Link
-                      className="cursor-pointer"
-                      variant="body2"
-                      onClick={() => {
-                        navigate("/signup");
-                      }}
-                    >
-                      {"Don't have an account? Sign Up"}
-                    </Link>
-                  </Grid>
-                </Grid>
-              </Box>
-            </Box>
-            <Copyright sx={{ mt: 8, mb: 4 }} />
-          </Container>
-        </ThemeProvider>
-      </div>
-    </div>
+    <Container maxWidth={"xs"}>
+      <Wrapper>
+        <Avatar sx={{ m: 1 }}>
+          <LockOutlinedIcon />
+        </Avatar>
+        <Typography variant="h5">Sign in</Typography>
+        <Box sx={{ mt: 3 }}>
+          <form onSubmit={formik.handleSubmit}>
+            {formik.touched.email && (
+              <Typography color={"red"}>{formik.errors.email}</Typography>
+            )}
+            <InputField
+              required
+              id="email"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
+              placeholder="Email Address"
+              name="email"
+              autoComplete="email"
+              autoFocus
+            />
+            {formik.touched.password && (
+              <Typography color={"red"}>{formik.errors.password}</Typography>
+            )}
+            <InputField
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.password}
+              required
+              name="password"
+              placeholder="Password"
+              type="password"
+              id="password"
+              autoComplete="current-password"
+            />
+            <FormControlLabel
+              control={<Checkbox value="remember" color="default" />}
+              label="Remember me"
+            />
+            <SignInBtn type="submit" variant="contained">
+              Sign In
+            </SignInBtn>
+          </form>
+          <Grid container>
+            <Grid item>
+              <NoAccount onClick={() => navigate("/signup")}>
+                {"Don't have an account? Sign Up"}
+              </NoAccount>
+            </Grid>
+          </Grid>
+        </Box>
+      </Wrapper>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={loginSnakbar}
+      >
+        <Alert
+          severity="error"
+          onClose={() => {
+            setLoginSnakbar(false);
+          }}
+        >
+          Login Failed - Please Retry!
+        </Alert>
+      </Snackbar>
+    </Container>
   );
 }
 
-const theme = createTheme();
+const Wrapper = styled(Box)(() => ({
+  marginTop: 20,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+}));
+const InputField = styled("input")(() => ({
+  color: "white",
+  marginBlock: "1rem",
+  outlineColor: "transparent",
+  width: "100%",
+  background: "none",
+  outline: "none",
+  paddingBlock: "1rem",
+  paddingInline: "0.3rem",
+  borderRadius: "5px",
+  border: "2px solid #ffffff59",
+  ":focus": {
+    border: "2px solid #ffffff99",
+  },
+}));
+const NoAccount = styled(Typography)(() => ({
+  color: "white",
+  cursor: "pointer",
+  mt: 10,
+}));
+const SignInBtn = styled(Button)(() => ({
+  marginBlock: 3,
+  width: "100%",
+}));
