@@ -11,7 +11,6 @@ import { popular_movie_url, popular_tv_url } from "../utils/url";
 import ButtonGroup from "./ButtonGroup";
 import Crousel from "./Crousel";
 import InfiniteScrolling from "./InfiniteScrolling";
-import ScroolToTopButton from "./ScroolToTopButton";
 
 interface Props {
   varient: "movie" | "tv";
@@ -27,20 +26,16 @@ const MovieShows = (props: Props) => {
   const moviesData = useSelector((state: ApplicationState) => state.tv.Tvs);
   const btnGroupRef = useRef<HTMLDivElement>(null);
   const [prevScrollPos, setPrevScrollPos] = useState(0);
-  const handleScroll = () => {
+  window.addEventListener("scroll", () => {
     const currentScrollPos = window.scrollY;
     if (btnGroupRef.current) {
       if (currentScrollPos < prevScrollPos) {
-        btnGroupRef.current.style.top = "7.4vh";
+        btnGroupRef.current.style.top = "7.5vh";
       } else {
         btnGroupRef.current.style.top = "0";
       }
     }
     setPrevScrollPos(currentScrollPos);
-  };
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   });
 
   useEffect(() => {
@@ -85,7 +80,6 @@ const MovieShows = (props: Props) => {
             <InfiniteScrolling moviesData={moviesData} fetchData={fetchData} />
           </Wrapper>
         )}
-        <ScroolToTopButton />
       </Root>
     </>
   );
@@ -108,12 +102,12 @@ const CrouselWrapper = styled(Box)(() => ({
   margin: "0px auto",
   float: "none",
 }));
-const ButtonGroupWrapper = styled(Box)(() => ({
-  backgroundImage: "linear-gradient(to right, #00040a, #08101c)",
+const ButtonGroupWrapper = styled(Box)(({ theme }) => ({
+  backgroundImage: `linear-gradient(to right, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`,
   justifyContent: "center",
   paddingInline: "0.5rem",
   marginBottom: "0.75rem",
   position: "sticky",
   zIndex: "20",
-  transition: "all 0.3s",
+  transition: "all 300ms ",
 }));
