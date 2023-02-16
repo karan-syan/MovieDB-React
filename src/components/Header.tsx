@@ -8,36 +8,32 @@ import SearchIcon from "@mui/icons-material/Search";
 import SettingsIcon from "@mui/icons-material/Settings";
 import TvIcon from "@mui/icons-material/Tv";
 import {
+  Avatar,
   Box,
+  Button,
   Divider,
-  Drawer,
   InputBase,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   styled,
+  SwipeableDrawer,
+  useTheme,
 } from "@mui/material";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ApplicationState } from "../redux/root/rootReducer";
 import Name from "./Name";
 
 export default function Header() {
   const [state, setState] = useState(false);
   const [searchShow, setSearchShow] = useState(false);
   const [searchValue, setSearchValue] = useState("");
+  const theme = useTheme();
+  const user = useSelector((state: ApplicationState) => state.user);
   const navigate = useNavigate();
-  const toggleDrawer =
-    (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
-      if (
-        event.type === "keydown" &&
-        ((event as React.KeyboardEvent).key === "Tab" ||
-          (event as React.KeyboardEvent).key === "Shift")
-      ) {
-        return;
-      }
-      setState(open);
-    };
   const toggleSearch = () => {
     setSearchShow((prevState) => !prevState);
   };
@@ -81,7 +77,7 @@ export default function Header() {
   return (
     <Root>
       <MenuContainer>
-        <MenuIcon onClick={toggleDrawer(true)} />
+        <MenuIcon onClick={() => setState((prev) => !prev)} />
         <Name />
       </MenuContainer>
       <Box sx={{ display: "flex" }}>
@@ -113,24 +109,30 @@ export default function Header() {
           <SearchIcon />
         </SearchContainer>
       </Box>
-      <Drawer
+      <SwipeableDrawer
+        onOpen={() => setState(true)}
         anchor={"left"}
         transitionDuration={{
           enter: 400,
           exit: 400,
         }}
         open={state}
-        onClose={toggleDrawer(false)}
-        PaperProps={{ sx: { backgroundColor: "#00040a" } }}
+        onClose={() => setState(false)}
+        PaperProps={{ sx: { backgroundColor: theme.palette.primary.main } }}
       >
-        <Box></Box>
-        <List>
+        <List sx={{ mt: "6.4vh" }}>
+          <UserProfile>
+            <Avatar src={user?.photoURL || ""} sx={{ width: 64, height: 64 }} />
+            <UserBtn variant="contained">
+              {user ? "User Profile" : "Sign In"}
+            </UserBtn>
+          </UserProfile>
           {Links.map((e, index) => {
             return (
               <ListItem
                 key={index}
                 sx={{
-                  ":hover": { backgroundColor: "#08101c" },
+                  ":hover": { backgroundColor: theme.palette.secondary.main },
                   paddingRight: "6em",
                   paddingBlock: "0.875rem",
                 }}
@@ -160,7 +162,7 @@ export default function Header() {
             );
           })}
         </List>
-      </Drawer>
+      </SwipeableDrawer>
     </Root>
   );
 }
@@ -172,11 +174,12 @@ const Root = styled(Box)(() => ({
   paddingInline: "0.75rem",
   fontWeight: "800",
   justifyContent: "space-between",
+  boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
   height: "7.5vh",
   backgroundImage: "linear-gradient(to right, #08101c, #00040a)",
 }));
 
-const MenuContainer = styled(Box)(({ theme }) => ({
+const MenuContainer = styled(Box)(() => ({
   cursor: "pointer",
   marginLeft: "0.5rem",
   fontSize: "1.875rem",
@@ -184,13 +187,25 @@ const MenuContainer = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   display: "flex",
 }));
-const SearchContainer = styled(Box)(({ theme }) => ({
+const SearchContainer = styled(Box)(() => ({
   alignItems: "center",
   justifyContent: "center",
   display: "flex",
   cursor: "pointer",
   padding: "0,5rem",
   fontSize: "1.875rem",
+}));
+const UserProfile = styled(Box)(({ theme }) => ({
+  alignItems: "center",
+  justifyContent: "center",
+  display: "flex",
+  flexDirection: "column",
+  color: "white",
+  paddingBlock: "1rem",
+  background: theme.palette.primary.main,
+}));
+const UserBtn = styled(Button)(() => ({
+  marginTop: "1rem",
 }));
 const SearchField = styled(InputBase)<{ visibility: boolean }>(
   ({ theme, visibility }) => ({

@@ -2,7 +2,7 @@
 
 # dependencies
 /node_modules
-/src/firebaseConfig
+/src/firebaseConfig.tsx
 /.pnp
 .pnp.js
 .env

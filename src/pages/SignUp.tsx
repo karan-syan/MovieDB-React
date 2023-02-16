@@ -7,60 +7,19 @@ import Container from "@mui/material/Container";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { initializeApp } from "firebase/app";
-import {
-  createUserWithEmailAndPassword,
-  getAuth,
-  sendEmailVerification,
-  updateProfile,
-} from "firebase/auth";
 import { useFormik } from "formik";
 // import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-import { firebaseConfig } from "../firebaseConfig";
-
-const SignUpSchema = Yup.object().shape({
-  username: Yup.string()
-    .min(2, "Too short!!")
-    .required("Please enter your username"),
-  email: Yup.string()
-    .email("Invalid email")
-    .required("Please enter your email"),
-  password: Yup.string()
-    .min(8, "Password must be 8 character long")
-    .required("Please enter your password"),
-  confirm_password: Yup.string()
-    .required("Please Confirm your password")
-    .oneOf([Yup.ref("password"), null], "Password must match"),
-});
+import { createUser } from "../firebase/Authentication";
+import { signUpInit } from "../utils/init";
+import { SignUpSchema } from "../utils/schema";
 
 export default function SignUp() {
-  const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
-
-  // const navigate = useNavigate();
   const formik = useFormik({
-    initialValues: {
-      username: "",
-      email: "",
-      password: "",
-      confirm_password: "",
-    },
+    initialValues: signUpInit,
     validationSchema: SignUpSchema,
     onSubmit: (values) => {
-      console.log("hello");
-      createUserWithEmailAndPassword(auth, values.email, values.password)
-        .then(async (userCredential) => {
-          const user = userCredential.user;
-          console.log(user);
-          await updateProfile(user, {
-            displayName: values.username,
-          });
-          sendEmailVerification(userCredential.user).then(() => {});
-        })
-        .catch((error: Error) => {
-          console.log(error);
-        });
+      const { username, email, password } = values;
+      createUser(username, email, password);
     },
   });
 
