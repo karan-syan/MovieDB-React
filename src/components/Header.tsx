@@ -64,11 +64,6 @@ export default function Header() {
       link: "/recent",
     },
     {
-      title: "Setting",
-      icon: <SettingsIcon />,
-      link: "/",
-    },
-    {
       title: "About",
       icon: <HelpOutlineIcon />,
       link: "/",
@@ -124,7 +119,7 @@ export default function Header() {
           <UserProfile>
             <Avatar src={user?.photoURL || ""} sx={{ width: 64, height: 64 }} />
             <UserBtn variant="contained">
-              {user ? "User Profile" : "Sign In"}
+              {user ? "My Profile" : "Sign In"}
             </UserBtn>
           </UserProfile>
           {Links.map((e, index) => {
@@ -167,16 +162,16 @@ export default function Header() {
   );
 }
 
-const Root = styled(Box)(() => ({
+const Root = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   width: "100%",
   paddingInline: "0.75rem",
   fontWeight: "800",
   justifyContent: "space-between",
-  boxShadow: "0 0 10px rgba(0, 0, 0, 0.3)",
+  boxShadow: "0 0 10px #000",
   height: "7.5vh",
-  backgroundImage: "linear-gradient(to right, #08101c, #00040a)",
+  backgroundImage: `linear-gradient(to right, ${theme.palette.primary.main}, ${theme.palette.secondary.main})`,
 }));
 
 const MenuContainer = styled(Box)(() => ({

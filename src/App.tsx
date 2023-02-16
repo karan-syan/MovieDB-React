@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import MovieShows from "./components/MovieShows";
+import ScroolToTopButton from "./components/ScroolToTopButton";
 import { app } from "./firebaseConfig";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
@@ -61,6 +62,7 @@ function App() {
         <Route path="/signin" element={<SignIn />} />
         <Route path="*" element={<ErrorPage />} />
       </Routes>
+      <ScroolToTopButton />
     </Wrapper>
   );
 }
