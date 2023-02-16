@@ -1,8 +1,12 @@
 import { Box, styled } from "@mui/material";
+import { getAuth } from "firebase/auth";
 import { useEffect, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
 import MovieShows from "./components/MovieShows";
+import { app } from "./firebaseConfig";
+import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import MoviesDetails from "./pages/MoviesDetails";
 import PeopleDetails from "./pages/PeopleDetails";
@@ -12,12 +16,15 @@ import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import TvDetails from "./pages/TvDetails";
 import WatchList from "./pages/WatchList";
+import { setUser } from "./redux/User/action";
 import { maxWidthScreen } from "./utils/constants";
 
 function App() {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const navRef = useRef<HTMLDivElement>(null);
-  const handleScroll = () => {
+  const dispatch = useDispatch();
+
+  window.addEventListener("scroll", () => {
     const currentScrollPos = window.scrollY;
     if (navRef.current) {
       if (currentScrollPos < prevScrollPos) {
@@ -26,13 +33,15 @@ function App() {
         navRef.current.style.top = "-7.5vh";
       }
     }
-
     setPrevScrollPos(currentScrollPos);
-  };
-  useEffect(() => {
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
   });
+
+  useEffect(() => {
+    getAuth(app).onAuthStateChanged((user) => {
+      dispatch(setUser(user));
+    });
+  }, [dispatch]);
+
   return (
     <Wrapper>
       <HeaderWrapper ref={navRef}>
@@ -50,6 +59,7 @@ function App() {
         <Route path="/watchlist" element={<WatchList />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Wrapper>
   );
@@ -65,6 +75,6 @@ const HeaderWrapper = styled(Box)(() => ({
   position: "sticky",
   top: "0",
   width: "100%",
-  zIndex: "100",
-  transition: "all 0.3s",
+  zIndex: "999999",
+  transition: "all 300ms",
 }));

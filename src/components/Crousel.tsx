@@ -1,20 +1,18 @@
 // import FiberManualRecordIcon from "@mui/icons-material/FiberManualRecord";
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import { Box, createTheme, styled, Typography } from "@mui/material";
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 import Carousel from "react-material-ui-carousel";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setRecentData } from "../firebase/recentData";
-import { firebaseConfig } from "../firebaseConfig";
+import { ApplicationState } from "../redux/root/rootReducer";
 import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function Crousel({ item }: { item: IMovie[] }) {
   const navigate = useNavigate();
-  const app = initializeApp(firebaseConfig);
-  const user = getAuth(app).currentUser;
   const theme = createTheme();
+  const user = useSelector((state: ApplicationState) => state.user);
   return (
     <Carousel
       autoPlay={true}
@@ -49,12 +47,16 @@ export default function Crousel({ item }: { item: IMovie[] }) {
               key={id}
               onClick={() => {
                 if (user) {
-                  if (name) {
-                    setRecentData(id, poster_path, "shows");
-                    navigate(`/tv/details/${id}`);
+                  if (user.emailVerified) {
+                    if (name) {
+                      setRecentData(id, poster_path, "shows");
+                      navigate(`/tv/details/${id}`);
+                    } else {
+                      setRecentData(id, poster_path, "movies");
+                      navigate(`/movie/details/${id}`);
+                    }
                   } else {
-                    setRecentData(id, poster_path, "movies");
-                    navigate(`/movie/details/${id}`);
+                    alert("verify your email first");
                   }
                 } else {
                   navigate("/signin");
@@ -75,6 +77,7 @@ export default function Crousel({ item }: { item: IMovie[] }) {
             </Root>
           );
         }
+        return null;
       })}
     </Carousel>
   );

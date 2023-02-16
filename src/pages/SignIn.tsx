@@ -9,41 +9,29 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import * as Yup from "yup";
-
-const SignInSchema = Yup.object().shape({
-  email: Yup.string().email("Invalid email").required("Required"),
-  password: Yup.string()
-    .min(8, "Password must be 8 character long")
-    .required("Required"),
-});
+import { userLogin } from "../firebase/Authentication";
+import { signIpInit } from "../utils/init";
+import { SignInSchema } from "../utils/schema";
 
 export default function SignIn() {
   const [loginSnakbar, setLoginSnakbar] = useState<boolean>(false);
-  const auth = getAuth();
   const navigate = useNavigate();
   const formik = useFormik({
-    initialValues: { email: "", password: "" },
+    initialValues: signIpInit,
     validationSchema: SignInSchema,
     onSubmit: (values) => {
-      signInWithEmailAndPassword(auth, values.email, values.password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user);
-          // ...
-        })
-        .catch((error) => {
-          setLoginSnakbar(true);
-          formik.setValues({ email: "", password: "" });
-        });
+      const { email, password } = values;
+      userLogin(email, password, loginFailed);
     },
   });
 
+  function loginFailed() {
+    setLoginSnakbar(true);
+    formik.setValues({ email: "", password: "" });
+  }
   return (
     <Container maxWidth={"xs"}>
       <Wrapper>
@@ -99,7 +87,7 @@ export default function SignIn() {
         </Box>
       </Wrapper>
       <Snackbar
-        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
         open={loginSnakbar}
       >
         <Alert

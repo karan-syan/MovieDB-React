@@ -1,11 +1,10 @@
 import { Box, styled } from "@mui/material";
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
 import { useRef } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
 import { setRecentData } from "../firebase/recentData";
-import { firebaseConfig } from "../firebaseConfig";
+import { ApplicationState } from "../redux/root/rootReducer";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 interface Props {
   id: number;
@@ -15,8 +14,7 @@ interface Props {
 export default function MovieBox(props: Props) {
   const navigate = useNavigate();
   const { id, posterPath, varient } = props;
-  const app = initializeApp(firebaseConfig);
-  const user = getAuth(app).currentUser;
+  const user = useSelector((state: ApplicationState) => state.user);
   const imgRef = useRef<HTMLImageElement>(null);
   const loaderRef = useRef<HTMLDivElement>(null);
 
@@ -24,12 +22,16 @@ export default function MovieBox(props: Props) {
     <Root
       onClick={() => {
         if (user) {
-          if (varient === "shows") {
-            setRecentData(id, posterPath, "shows");
-            navigate(`/tv/details/${id}`);
+          if (user.emailVerified) {
+            if (varient === "shows") {
+              setRecentData(id, posterPath, "shows");
+              navigate(`/tv/details/${id}`);
+            } else {
+              setRecentData(id, posterPath, "movies");
+              navigate(`/movie/details/${id}`);
+            }
           } else {
-            setRecentData(id, posterPath, "movies");
-            navigate(`/movie/details/${id}`);
+            alert("verify your email first");
           }
         } else {
           navigate("/signin");

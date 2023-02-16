@@ -43,7 +43,7 @@ export default function Search() {
         })
       );
     }
-  }, []);
+  }, [dispatch, query, search, setQuery]);
   return (
     <Root>
       {MoviesData.Data.length === 0 ? (
