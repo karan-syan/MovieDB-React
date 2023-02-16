@@ -45,6 +45,3 @@ const TextWrapper = styled(Box)(() => ({
 const Wrapper = styled(Box)(() => ({
   display: "flex",
 }));
-const Img = styled(Box)(() => ({
-  display: "flex",
-}));
