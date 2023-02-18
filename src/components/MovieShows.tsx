@@ -10,7 +10,7 @@ import { maxWidthScreen, Popular } from "../utils/constants";
 import { popular_movie_url, popular_tv_url } from "../utils/url";
 import ButtonGroup from "./ButtonGroup";
 import Crousel from "./Crousel";
-import InfiniteScrolling from "./InfiniteScrolling";
+import PaginatedData from "./PaginatedData";
 
 interface Props {
   varient: "movie" | "tv";
@@ -77,7 +77,7 @@ const MovieShows = (props: Props) => {
             <ButtonGroupWrapper ref={btnGroupRef}>
               <ButtonGroup varient={varient} />
             </ButtonGroupWrapper>
-            <InfiniteScrolling moviesData={moviesData} fetchData={fetchData} />
+            <PaginatedData moviesData={moviesData} fetchData={fetchData} />
           </Wrapper>
         )}
       </Root>

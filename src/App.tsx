@@ -1,8 +1,8 @@
 import { Box, styled } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { Route, Routes } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
 import MovieShows from "./components/MovieShows";
 import ScroolToTopButton from "./components/ScroolToTopButton";
@@ -11,12 +11,14 @@ import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
 import MoviesDetails from "./pages/MoviesDetails";
 import PeopleDetails from "./pages/PeopleDetails";
+import Profile from "./pages/Profile";
 import Recent from "./pages/Recent";
 import Search from "./pages/Search";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
 import TvDetails from "./pages/TvDetails";
 import WatchList from "./pages/WatchList";
+import { ApplicationState } from "./redux/root/rootReducer";
 import { setUser } from "./redux/User/action";
 import { maxWidthScreen } from "./utils/constants";
 
@@ -53,11 +55,54 @@ function App() {
         <Route path="/search/:search" element={<Search />} />
         <Route path="/shows" element={<MovieShows varient="tv" />} />
         <Route path="/movies" element={<MovieShows varient="movie" />} />
-        <Route path="/movie/details/:id" element={<MoviesDetails />} />
-        <Route path="/tv/details/:id" element={<TvDetails />} />
-        <Route path="/people/:id" element={<PeopleDetails />} />
-        <Route path="/recent" element={<Recent />} />
-        <Route path="/watchlist" element={<WatchList />} />
+        <Route
+          path="/movie/details/:id"
+          element={
+            <ProptectedRoute>
+              <MoviesDetails />
+            </ProptectedRoute>
+          }
+        />
+        <Route
+          path="/tv/details/:id"
+          element={
+            <ProptectedRoute>
+              <TvDetails />
+            </ProptectedRoute>
+          }
+        />
+        <Route
+          path="/people/:id"
+          element={
+            <ProptectedRoute>
+              <PeopleDetails />
+            </ProptectedRoute>
+          }
+        />
+        <Route
+          path="/recent"
+          element={
+            <ProptectedRoute>
+              <Recent />
+            </ProptectedRoute>
+          }
+        />
+        <Route
+          path="/watchlist"
+          element={
+            <ProptectedRoute>
+              <WatchList />
+            </ProptectedRoute>
+          }
+        />
+        <Route
+          path="/profile"
+          element={
+            <ProptectedRoute>
+              <Profile />
+            </ProptectedRoute>
+          }
+        />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/signin" element={<SignIn />} />
         <Route path="*" element={<ErrorPage />} />
@@ -67,6 +112,18 @@ function App() {
   );
 }
 export default App;
+
+const ProptectedRoute = ({ children }: { children: JSX.Element }) => {
+  const user = useSelector((state: ApplicationState) => state.user);
+  const navigate = useNavigate();
+  if (!user) {
+    navigate("/signin");
+  }
+  // else (!user.emailVerified) {
+
+  // }
+  return children;
+};
 
 const Wrapper = styled(Box)(() => ({
   width: "100%",

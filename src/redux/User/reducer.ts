@@ -8,9 +8,10 @@ export const UserDetailReducer = (
 ) => {
   switch (action.type) {
     case getType(actions.setUser):
-      state = action.payload
+      console.log("dddd");
+      state = action.payload;
       return state;
-      
+
     default:
       return state;
   }

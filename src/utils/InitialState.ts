@@ -2,7 +2,7 @@ import { ICast, IMovie, IMovieDetails, Iperson, ITvDetails } from "./type";
 
 export interface IState {
   loading: boolean;
-  Data: IMovie[];
+  Data: IMovie;
 }
 
 export interface IStateDetails {
@@ -27,7 +27,10 @@ export const InitialStateCast: IStateCast = {
 };
 
 export const InitialState: IState = {
-  Data: [],
+  Data: {
+    total_pages: 0,
+    results :[],
+  },
   loading: true,
 };
 

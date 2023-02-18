@@ -2,7 +2,7 @@ import { Box, styled, Typography } from "@mui/material";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams, useSearchParams } from "react-router-dom";
-import InfiniteScrolling from "../components/InfiniteScrolling";
+import PaginatedData from "../components/PaginatedData";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { CallSearch } from "../redux/Search/action";
 import { maxWidthScreen } from "../utils/constants";
@@ -17,7 +17,7 @@ export default function Search() {
 
   function FetchData(newData: boolean, pg: number) {
     if (search) {
-      console.log(newData, pg, MoviesData.Data.length);
+      console.log(newData, pg, MoviesData.Data.results.length);
       dispatch(
         CallSearch.request({
           NewData: newData,
@@ -46,13 +46,13 @@ export default function Search() {
   }, [dispatch, query, search, setQuery]);
   return (
     <Root>
-      {MoviesData.Data.length === 0 ? (
+      {MoviesData.Data.results.length === 0 ? (
         <Container>
           <Typography sx={{ opacity: "0.7" }}>No data found</Typography>
         </Container>
       ) : (
         <Wrapper>
-          <InfiniteScrolling fetchData={FetchData} moviesData={MoviesData} />
+          <PaginatedData fetchData={FetchData} moviesData={MoviesData} />
         </Wrapper>
       )}
     </Root>

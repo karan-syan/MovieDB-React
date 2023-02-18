@@ -8,19 +8,10 @@ export const RecommendReducer = (
 ) => {
   switch (action.type) {
     case getType(actions.CallRecommend.request):
-      if (action.payload.NewData) {
-        return {
-          ...state,
-          Data: [],
-          loading: true,
-        };
-      } else {
         return {
           ...state,
           loading: true,
         };
-      }
-
     case getType(actions.CallRecommend.success):
       return {
         ...state,

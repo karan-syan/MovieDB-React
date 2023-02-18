@@ -2,17 +2,14 @@
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import { Box, createTheme, styled, Typography } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setRecentData } from "../firebase/recentData";
-import { ApplicationState } from "../redux/root/rootReducer";
 import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
-export default function Crousel({ item }: { item: IMovie[] }) {
+export default function Crousel({ item }: { item: IMovie }) {
   const navigate = useNavigate();
   const theme = createTheme();
-  const user = useSelector((state: ApplicationState) => state.user);
   return (
     <Carousel
       autoPlay={true}
@@ -30,7 +27,7 @@ export default function Crousel({ item }: { item: IMovie[] }) {
       animation={"slide"}
       stopAutoPlayOnHover
     >
-      {item.slice(0, 13).map((item, i) => {
+      {item.results.slice(0, 13).map((item, i) => {
         const {
           release_date,
           backdrop_path,
@@ -46,20 +43,12 @@ export default function Crousel({ item }: { item: IMovie[] }) {
             <Root
               key={id}
               onClick={() => {
-                if (user) {
-                  if (user.emailVerified) {
-                    if (name) {
-                      setRecentData(id, poster_path, "shows");
-                      navigate(`/tv/details/${id}`);
-                    } else {
-                      setRecentData(id, poster_path, "movies");
-                      navigate(`/movie/details/${id}`);
-                    }
-                  } else {
-                    alert("verify your email first");
-                  }
+                if (name) {
+                  setRecentData(id, poster_path, "shows");
+                  navigate(`/tv/details/${id}`);
                 } else {
-                  navigate("/signin");
+                  setRecentData(id, poster_path, "movies");
+                  navigate(`/movie/details/${id}`);
                 }
               }}
             >

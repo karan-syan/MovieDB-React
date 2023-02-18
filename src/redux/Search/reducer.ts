@@ -8,24 +8,21 @@ export const SearchReducer = (
 ) => {
   switch (action.type) {
     case getType(actions.CallSearch.request):
-      if (action.payload.NewData) {
-        return {
-          ...state,
-          Data: [],
-          loading: true,
-        };
-      } else {
+
         return {
           ...state,
           loading: true,
         };
-      }
+      
 
     case getType(actions.CallSearch.success):
       return {
         ...state,
         loading: false,
-        Data: [...state.Data, ...action.payload],
+        Data: {
+          total_pages:action.payload.total_pages,
+          results:action.payload.results,
+        },
       };
 
     default:
