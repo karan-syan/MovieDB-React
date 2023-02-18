@@ -5,4 +5,4 @@ export const CallMovies = createAsyncAction(
   "FETCH_MOVIES_REQUEST",
   "FETCH_MOVIES_SUCCESS",
   "FETCH_MOVIES_FAILURE"
-)<FetchMoviePayload, IMovie[], Error>();
+)<FetchMoviePayload, IMovie, Error>();

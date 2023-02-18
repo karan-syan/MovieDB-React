@@ -6,9 +6,10 @@ export default function ListRow({
   item,
   title,
 }: {
-  item: IMovie[];
+  item: IMovie;
   title?: string;
 }) {
+  const { results } = item;
   return (
     <Root>
       {title && (
@@ -17,7 +18,7 @@ export default function ListRow({
         </TitleWrapper>
       )}
       <Container>
-        {item.map((val, index) => {
+        {results.map((val, index) => {
           const varient = val.name ? "shows" : "movies";
           if (val.poster_path !== null && val.poster_path !== "") {
             return (

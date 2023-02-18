@@ -155,7 +155,7 @@ export default function MoviesDetails() {
                 />
               </Box>
               <CastList data={tvCast.Data} />
-              {Recommended.Data.length === 0 ? null : (
+              {Recommended.Data.results.length === 0 ? null : (
                 <Recommendation>
                   <Heading className="text-lg ml-2">Recommended:</Heading>
                   <ListRow item={Recommended.Data} />

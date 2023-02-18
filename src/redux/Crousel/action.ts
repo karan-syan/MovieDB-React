@@ -5,4 +5,4 @@ export const CallCrouselSlider = createAsyncAction(
   "FETCH_MOVIE_SLIDER_REQUEST",
   "FETCH_MOVIE_SLIDER_SUCCESS",
   "FETCH_MOVIE_SLIDER_FAILURE"
-)<FetchMoviePayload, IMovie[], Error>();
+)<FetchMoviePayload, IMovie, Error>();

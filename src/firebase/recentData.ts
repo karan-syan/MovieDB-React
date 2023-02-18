@@ -17,6 +17,9 @@ export const getRecentData = async () => {
 
 export const setRecentData = async (id: number, img: string, varient: "movies" | "shows") => {
     const user = getAuth(app).currentUser;
+    if(!user?.emailVerified){
+        return null;
+    }
     if (user?.uid) {
         const docRef = doc(db, "recent", user?.uid);
         const docSnap = await getDoc(docRef);

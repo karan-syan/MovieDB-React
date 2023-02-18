@@ -20,6 +20,7 @@ import {
   SwipeableDrawer,
   useTheme,
 } from "@mui/material";
+
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -116,8 +117,18 @@ export default function Header() {
       >
         <List sx={{ mt: "6.4vh" }}>
           <UserProfile>
-            <Avatar src={user?.photoURL || ""} sx={{ width: 64, height: 64 }} />
-            <UserBtn variant="contained">
+            <Avatar
+              src={user?.photoURL || ""}
+              sx={{ width: 64, height: 64 }}
+              draggable="false"
+            />
+            <UserBtn
+              variant="contained"
+              onClick={() => {
+                user ? navigate("/profile") : navigate("/signin");
+                setState(false);
+              }}
+            >
               {user ? "My Profile" : "Sign In"}
             </UserBtn>
           </UserProfile>
@@ -129,6 +140,7 @@ export default function Header() {
                   ":hover": { backgroundColor: theme.palette.secondary.main },
                   paddingRight: "6em",
                   paddingBlock: "0.875rem",
+                  cursor: "pointer",
                 }}
                 onClick={() => {
                   navigate(e.link);
@@ -143,7 +155,6 @@ export default function Header() {
                     sx: {
                       fontSize: "1em",
                       opacity: "0.7",
-                      color: "#fff",
                       transition: "opacity 450ms",
                       ":hover": {
                         opacity: "1",
@@ -208,6 +219,5 @@ const SearchField = styled(InputBase)<{ visibility: boolean }>(
     outline: "2px solid transparent",
     outlineOffset: "2px",
     backgroundColor: "transparent",
-    color: theme.palette.text.secondary,
   })
 );

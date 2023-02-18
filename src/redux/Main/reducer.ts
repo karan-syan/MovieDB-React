@@ -8,24 +8,20 @@ export const MainReducer = (
 ) => {
   switch (action.type) {
     case getType(actions.CallMovies.request):
-      if (action.payload.NewData) {
-        return {
-          ...state,
-          Data: [],
-          loading: true,
-        };
-      } else {
         return {
           ...state,
           loading: true,
+          Data:{
+            total_pages:0,
+            results:[]
+          }
         };
-      }
 
     case getType(actions.CallMovies.success):
       return {
         ...state,
         loading: false,
-        Data: [...state.Data, ...action.payload],
+        Data: action.payload,
       };
 
     default:

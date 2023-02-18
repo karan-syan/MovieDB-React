@@ -10,23 +10,21 @@ export default function ButtonGroup({ varient }: { varient: "tv" | "movie" }) {
       {buttonName.map((item, index) => {
         if (varient === "tv" && item === Upcoming) {
           return null;
-        } else {
-          console.log(item);
-          return (
-            <TabButton
-              key={index}
-              variant={"contained"}
-              buttonType={query.get("type") === item}
-              onClick={() =>
-                setQuery({
-                  type: item,
-                })
-              }
-            >
-              {item.charAt(0).toUpperCase() + item.slice(1).replace("_", " ")}
-            </TabButton>
-          );
         }
+        return (
+          <TabButton
+            key={index}
+            variant={"contained"}
+            buttonType={query.get("type") === item}
+            onClick={() =>
+              setQuery({
+                type: item,
+              })
+            }
+          >
+            {item.charAt(0).toUpperCase() + item.slice(1).replace("_", " ")}
+          </TabButton>
+        );
       })}
     </Root>
   );

@@ -1,12 +1,13 @@
 export interface IMovie {
-  backdrop_path: string;
+  total_pages:number;
+  results :{backdrop_path: string;
   id: number;
   title?: string;
   name?: string;
   overview: string;
   poster_path: string;
   release_date?: string;
-  first_air_date?: string;
+  first_air_date?: string;}[]
 }
 
 export interface ITvDetails {

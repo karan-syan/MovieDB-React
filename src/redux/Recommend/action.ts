@@ -5,4 +5,4 @@ export const CallRecommend = createAsyncAction(
   "FETCH_RECOMMEND_REQUEST",
   "FETCH_RECOMMEND_SUCCESS",
   "FETCH_RECOMMEND_FAILURE"
-)<FetchMoviePayload, IMovie[], Error>();
+)<FetchMoviePayload, IMovie, Error>();

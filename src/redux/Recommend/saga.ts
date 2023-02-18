@@ -6,7 +6,7 @@ import { CallRecommend } from "./action";
 
 export function* Recommend(params: ActionType<typeof CallRecommend.request>) {
   try {
-    const payload: IMovie[] = yield call(FetchApiRecommend, params.payload);
+    const payload: IMovie = yield call(FetchApiRecommend, params.payload);
     yield put(CallRecommend.success(payload));
   } catch (error) {
     yield put({ type: CallRecommend.failure, error });

@@ -6,7 +6,7 @@ import { CallMovies } from "./action";
 
 export function* Movies(params: ActionType<typeof CallMovies.request>) {
   try {
-    const payload: IMovie[] = yield call(FetchApi, params.payload);
+    const payload: IMovie = yield call(FetchApi, params.payload);
     yield put(CallMovies.success(payload));
   } catch (error) {
     yield put({ type: CallMovies.failure, error });

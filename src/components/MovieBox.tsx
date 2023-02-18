@@ -1,10 +1,8 @@
 import { Box, styled } from "@mui/material";
 import { useRef } from "react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { CircleLoader } from "react-spinners";
 import { setRecentData } from "../firebase/recentData";
-import { ApplicationState } from "../redux/root/rootReducer";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 interface Props {
   id: number;
@@ -14,27 +12,18 @@ interface Props {
 export default function MovieBox(props: Props) {
   const navigate = useNavigate();
   const { id, posterPath, varient } = props;
-  const user = useSelector((state: ApplicationState) => state.user);
   const imgRef = useRef<HTMLImageElement>(null);
   const loaderRef = useRef<HTMLDivElement>(null);
 
   return (
     <Root
       onClick={() => {
-        if (user) {
-          if (user.emailVerified) {
-            if (varient === "shows") {
-              setRecentData(id, posterPath, "shows");
-              navigate(`/tv/details/${id}`);
-            } else {
-              setRecentData(id, posterPath, "movies");
-              navigate(`/movie/details/${id}`);
-            }
-          } else {
-            alert("verify your email first");
-          }
+        if (varient === "shows") {
+          setRecentData(id, posterPath, "shows");
+          navigate(`/tv/details/${id}`);
         } else {
-          navigate("/signin");
+          setRecentData(id, posterPath, "movies");
+          navigate(`/movie/details/${id}`);
         }
       }}
     >
@@ -56,7 +45,7 @@ export default function MovieBox(props: Props) {
   );
 }
 const Root = styled(Box)(({ theme }) => ({
-  width: "32%",
+  width: "32.5%",
   marginInline: "0.3%",
   flexShrink: "0",
   display: "inline-block",
@@ -68,12 +57,8 @@ const Root = styled(Box)(({ theme }) => ({
     borderRadius: "0.75rem",
   },
   [theme.breakpoints.up("md")]: {
-    width: "19%",
+    width: "19.25%",
     marginBottom: "0.6rem",
-  },
-  [theme.breakpoints.up("lg")]: {
-    marginBottom: "0.8rem",
-    width: "15%",
   },
 }));
 
