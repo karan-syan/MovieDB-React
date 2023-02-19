@@ -31,7 +31,7 @@ export default function SeasonList({
               <Typography>Name: {item.name}</Typography>
               <Typography>Season: {item.season_number}</Typography>
               <Typography>Total Episodes: {item.episode_count}</Typography>
-              <PremieredText className="hidden md:flex">
+              <PremieredText>
                 {item.name} of {TvName} premiered on {item.air_date}
               </PremieredText>
             </TextWrapper>

@@ -2,7 +2,11 @@ import { Box, Button, styled } from "@mui/material";
 import { useSearchParams } from "react-router-dom";
 import { Now_playing, Popular, Top_rated, Upcoming } from "../utils/constants";
 
-export default function ButtonGroup({ varient }: { varient: "tv" | "movie" }) {
+interface Props {
+  varient: "tv" | "movie";
+}
+export default function ButtonGroup(props: Props) {
+  const { varient } = props;
   const [query, setQuery] = useSearchParams();
   const buttonName = [Popular, Top_rated, Now_playing, Upcoming];
   return (

@@ -44,10 +44,10 @@ export default function Crousel({ item }: { item: IMovie }) {
               key={id}
               onClick={() => {
                 if (name) {
-                  setRecentData(id, poster_path, "shows");
+                  setRecentData(id, poster_path, "tv");
                   navigate(`/tv/details/${id}`);
                 } else {
-                  setRecentData(id, poster_path, "movies");
+                  setRecentData(id, poster_path, "movie");
                   navigate(`/movie/details/${id}`);
                 }
               }}

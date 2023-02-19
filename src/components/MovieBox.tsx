@@ -19,10 +19,10 @@ export default function MovieBox(props: Props) {
     <Root
       onClick={() => {
         if (varient === "shows") {
-          setRecentData(id, posterPath, "shows");
+          setRecentData(id, posterPath, "tv");
           navigate(`/tv/details/${id}`);
         } else {
-          setRecentData(id, posterPath, "movies");
+          setRecentData(id, posterPath, "movie");
           navigate(`/movie/details/${id}`);
         }
       }}

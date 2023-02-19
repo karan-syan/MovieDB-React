@@ -1,19 +1,12 @@
 import { combineReducers } from "redux";
 import { CrouselSliderReducer } from "./Crousel/reducer";
+import { DetailReducer } from "./Detail/reducer";
 import { MainReducer } from "./Main/reducer";
-import {
-  MovieDetailsReducer,
-  PopularMovieReducer,
-  UpcomingMovieReducer,
-} from "./Movie/reducer";
+import { PopularMovieReducer, UpcomingMovieReducer } from "./Movie/reducer";
 import { TvCastReducer, TvPersonReducer } from "./People/reducer";
 import { RecommendReducer } from "./Recommend/reducer";
 import { SearchReducer } from "./Search/reducer";
-import {
-  PopularShowsReducer,
-  TvDetailsReducer,
-  TvTrendingReducer,
-} from "./Tv/reducer";
+import { PopularShowsReducer, TvTrendingReducer } from "./Tv/reducer";
 
 export const movieReducer = combineReducers({
   CrouselSlider: CrouselSliderReducer,
@@ -31,8 +24,7 @@ export const AllSearchReducer = combineReducers({
 });
 
 export const DetailsReducer = combineReducers({
-  TvDetails: TvDetailsReducer,
-  MovieDetails: MovieDetailsReducer,
+  Details: DetailReducer,
   TvCast: TvCastReducer,
   PersonDetails: TvPersonReducer,
 });

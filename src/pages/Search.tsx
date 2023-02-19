@@ -17,7 +17,6 @@ export default function Search() {
 
   function FetchData(newData: boolean, pg: number) {
     if (search) {
-      console.log(newData, pg, MoviesData.Data.results.length);
       dispatch(
         CallSearch.request({
           NewData: newData,

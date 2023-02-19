@@ -8,8 +8,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
-// import { useNavigate } from "react-router-dom";
-import { createUser } from "../firebase/Authentication";
+import { createUser } from "../firebase/authentication";
 import { signUpInit } from "../utils/init";
 import { SignUpSchema } from "../utils/schema";
 

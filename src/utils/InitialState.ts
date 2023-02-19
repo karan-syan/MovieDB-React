@@ -1,4 +1,4 @@
-import { ICast, IMovie, IMovieDetails, Iperson, ITvDetails } from "./type";
+import { ICast, IDetails, IMovie, Iperson } from "./type";
 
 export interface IState {
   loading: boolean;
@@ -7,11 +7,7 @@ export interface IState {
 
 export interface IStateDetails {
   loading: boolean;
-  Data: ITvDetails;
-}
-export interface IMovieStateDetails {
-  loading: boolean;
-  Data: IMovieDetails;
+  Data: IDetails;
 }
 export interface IStateCast {
   loading: boolean;
@@ -29,106 +25,37 @@ export const InitialStateCast: IStateCast = {
 export const InitialState: IState = {
   Data: {
     total_pages: 0,
-    results :[],
+    results: [],
   },
   loading: true,
 };
 
-export const InitialStateTvDetail: IStateDetails = {
+export const InitialStateDetail: IStateDetails = {
   Data: {
-    adult: false,
     backdrop_path: "",
-    created_by: [],
-    episode_run_time: [],
+    id: 0,
+    episode_run_time: undefined,
     first_air_date: "",
     genres: [],
-    homepage: "",
-    id: 0,
-    in_production: false,
-    languages: [],
-    last_air_date: "",
-    last_episode_to_air: {
-      air_date: "",
-      episode_number: 0,
-      id: 0,
-      name: "",
-      overview: "",
-      production_code: "",
-      runtime: 0,
-      season_number: 0,
-      show_id: 0,
-      still_path: "",
-      vote_average: 0,
-      vote_count: 0,
-    },
-    name: "",
-    next_episode_to_air: {
-      air_date: "",
-      episode_number: 0,
-      id: 0,
-      name: "",
-      overview: "",
-      production_code: "",
-      runtime: 0,
-      season_number: 0,
-      show_id: 0,
-      still_path: "",
-      vote_average: 0,
-      vote_count: 0,
-    },
-    networks: [],
-    number_of_episodes: 0,
-    number_of_seasons: 0,
-    origin_country: [],
-    original_language: "",
+    name: undefined,
+    networks: undefined,
+    number_of_episodes: undefined,
     original_name: "",
-    overview: "",
-    popularity: 0,
-    poster_path: "",
-    production_companies: [],
-    production_countries: [],
-    seasons: [],
-    spoken_languages: [],
-    status: "",
-    tagline: "",
-    type: "",
-    vote_average: 0,
-    vote_count: 0,
-  },
-  loading: true,
-};
-export const InitialStateMovieDetail: IMovieStateDetails = {
-  Data: {
-    adult: false,
-    backdrop_path: "",
-    belongs_to_collection: {
-      id: 0,
-      name: "",
-      poster_path: "",
-      backdrop_path: "",
-    },
-    budget: 0,
-    genres: [],
-    homepage: "",
-    id: 0,
-    imdb_id: "",
+    runtime: undefined,
+    seasons: undefined,
+    type: undefined,
+    budget: undefined,
     original_language: "",
-    original_title: "",
     overview: "",
-    popularity: 0,
     poster_path: "",
     production_companies: [],
-    production_countries: [],
-    release_date: "",
-    revenue: 0,
-    runtime: 0,
+    release_date: undefined,
+    revenue: undefined,
     spoken_languages: [],
-    status: "",
+    status: undefined,
     tagline: "",
-    title: "",
-    video: false,
+    title: undefined,
     vote_average: 0,
-    vote_count: 0,
   },
   loading: true,
 };

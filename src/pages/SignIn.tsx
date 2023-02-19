@@ -10,14 +10,17 @@ import Grid from "@mui/material/Grid";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { userLogin } from "../firebase/Authentication";
+import { userLogin } from "../firebase/authentication";
+import { ApplicationState } from "../redux/root/rootReducer";
 import { signIpInit } from "../utils/init";
 import { SignInSchema } from "../utils/schema";
 
 export default function SignIn() {
   const [loginSnakbar, setLoginSnakbar] = useState<boolean>(false);
+  const user = useSelector((state: ApplicationState) => state.user);
   const navigate = useNavigate();
   const formik = useFormik({
     initialValues: signIpInit,
@@ -27,6 +30,10 @@ export default function SignIn() {
       userLogin(email, password, loginFailed);
     },
   });
+
+  useEffect(() => {
+    user && navigate("/");
+  }, [navigate, user]);
 
   function loginFailed() {
     setLoginSnakbar(true);

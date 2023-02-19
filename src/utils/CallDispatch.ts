@@ -1,8 +1,13 @@
 import { CallCrouselSlider } from "../redux/Crousel/action";
 import { CallMoviePopular, CallMovieUpcoming } from "../redux/Movie/action";
+import { CallCast } from "../redux/People/action";
 import { CallRecommend } from "../redux/Recommend/action";
 import store from "../redux/store";
-import { CallTvPopular, CallTvTrending } from "../redux/Tv/action";
+import {
+  CallTvDetails,
+  CallTvPopular,
+  CallTvTrending,
+} from "../redux/Tv/action";
 import {
   popular_movie_url,
   popular_tv_url,
@@ -56,4 +61,24 @@ export const HomePageDispatch = () => {
       })
     ),
   ]);
+};
+
+export const DetailDispatch = (id: string, varient: "tv" | "movie") => {
+  store.dispatch(
+    CallTvDetails.request({
+      url: `/${varient}/${id}`,
+    })
+  );
+  store.dispatch(
+    CallCast.request({
+      url: `/${varient}/${id}/credits`,
+    })
+  );
+  store.dispatch(
+    CallRecommend.request({
+      url: `${varient}/${id}/recommendations`,
+      page: 1,
+      NewData: true,
+    })
+  );
 };

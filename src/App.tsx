@@ -7,16 +7,15 @@ import Header from "./components/Header";
 import MovieShows from "./components/MovieShows";
 import ScroolToTopButton from "./components/ScroolToTopButton";
 import { app } from "./firebaseConfig";
+import Detail from "./pages/Detail";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
-import MoviesDetails from "./pages/MoviesDetails";
 import PeopleDetails from "./pages/PeopleDetails";
 import Profile from "./pages/Profile";
 import Recent from "./pages/Recent";
 import Search from "./pages/Search";
 import SignIn from "./pages/SignIn";
 import SignUp from "./pages/SignUp";
-import TvDetails from "./pages/TvDetails";
 import WatchList from "./pages/WatchList";
 import { ApplicationState } from "./redux/root/rootReducer";
 import { setUser } from "./redux/User/action";
@@ -59,7 +58,7 @@ function App() {
           path="/movie/details/:id"
           element={
             <ProptectedRoute>
-              <MoviesDetails />
+              <Detail varient="movie" />
             </ProptectedRoute>
           }
         />
@@ -67,7 +66,7 @@ function App() {
           path="/tv/details/:id"
           element={
             <ProptectedRoute>
-              <TvDetails />
+              <Detail varient="tv" />
             </ProptectedRoute>
           }
         />

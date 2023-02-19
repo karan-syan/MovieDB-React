@@ -3,60 +3,44 @@ import { Box, Button, styled, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import { BsBookmarkHeartFill } from "react-icons/bs";
 import { IoTime } from "react-icons/io5";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import CastList from "../components/CastList";
 import Context from "../components/Context";
 import ListRow from "../components/ListRow";
+import NetworkList from "../components/NetworkList";
 import PosterCard from "../components/PosterCard";
+import SeasonList from "../components/SeasonList";
 import {
   addWatchListData,
   checkWatchListData,
   removeWatchListData,
 } from "../firebase/watchListData";
-import { CallMovieDetails } from "../redux/Movie/action";
-import { CallCast } from "../redux/People/action";
-import { CallRecommend } from "../redux/Recommend/action";
 import { ApplicationState } from "../redux/root/rootReducer";
+import { DetailDispatch } from "../utils/CallDispatch";
 import { maxWidthScreen } from "../utils/constants";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
-export default function MoviesDetails() {
-  const dispatch = useDispatch();
+interface Props {
+  varient: "tv" | "movie";
+}
+export default function Detail(props: Props) {
+  const { varient } = props;
   const elementForScroll = useRef<HTMLDivElement>(null);
   const [watchListBtn, setWatchListBtn] = useState<boolean>(false);
-
-  const MovieDetails = useSelector(
-    (state: ApplicationState) => state.details.MovieDetails
+  const details = useSelector(
+    (state: ApplicationState) => state.details.Details
   );
   const Recommended = useSelector(
-    (state: ApplicationState) => state.movie.MovieRecommend
+    (state: ApplicationState) => state.tv.TvRecommend
   );
   const tvCast = useSelector((state: ApplicationState) => state.details.TvCast);
   const { id } = useParams();
-  async function handleWatchListBtn() {
-    if (await checkWatchListData(MovieDetails.Data.id)) {
-      setWatchListBtn(true);
-    }
-  }
+
   useEffect(() => {
-    dispatch(
-      CallMovieDetails.request({
-        url: `movie/${id}`,
-      })
-    );
-    dispatch(
-      CallRecommend.request({
-        url: `movie/${id}/recommendations`,
-        NewData: true,
-        page: 1,
-      })
-    );
-    dispatch(
-      CallCast.request({
-        url: `movie/${id}/credits`,
-      })
-    );
+    if (id) {
+      DetailDispatch(id, varient);
+    }
     elementForScroll.current?.scrollTo({
       top: 0,
       left: 0,
@@ -66,59 +50,71 @@ export default function MoviesDetails() {
   }, [id]);
 
   const {
-    poster_path,
     backdrop_path,
-    release_date,
+    episode_run_time,
+    first_air_date,
     genres,
+    name,
+    networks,
+    number_of_episodes,
     original_language,
-    status,
     overview,
-    runtime,
+    poster_path,
     budget,
+    release_date,
     revenue,
-    production_companies,
-    tagline,
-    spoken_languages,
     title,
+    production_companies,
+    seasons,
+    spoken_languages,
+    status,
+    tagline,
+    type,
+    runtime,
     vote_average,
-  } = MovieDetails.Data;
+  } = details.Data;
+
+  async function handleWatchListBtn() {
+    if (details.Data) {
+      if (await checkWatchListData(details.Data.id)) {
+        setWatchListBtn(true);
+      }
+    }
+  }
+  const handleWatchListBtnClick = () => {
+    if (details.Data) {
+      if (watchListBtn) {
+        removeWatchListData(details.Data.id, poster_path, varient);
+        setWatchListBtn(false);
+      } else {
+        addWatchListData(details.Data.id, poster_path, varient);
+        setWatchListBtn(true);
+      }
+    }
+  };
   return (
     <>
-      {MovieDetails.loading ? (
+      {details.loading ? (
         <BarLoader color="#36d7b7" />
       ) : (
         <Root backdropPath={backdrop_path}>
           <Container>
             <PosterCard Poster_Path={poster_path} />
             <ContentWrapper ref={elementForScroll}>
-              <Title>{title}</Title>
+              <Title>{name || title}</Title>
               <TagLine>{tagline}</TagLine>
               <h1 className="text-sm md:text-base opacity-70">
-                {original_language} | {status} | {release_date}
+                {original_language} | {status} |{" "}
+                {first_air_date || release_date}
               </h1>
               <h1 className="text-sm md:text-base opacity-70 flex items-center">
+                Ep {number_of_episodes} |
                 <IoTime className="mx-1" />
-                {runtime} min | {vote_average} | {}
+                {episode_run_time || runtime} min | {vote_average} | {type}
               </h1>
               <WatchlistButton
                 variant="contained"
-                onClick={() => {
-                  if (watchListBtn) {
-                    removeWatchListData(
-                      MovieDetails.Data.id,
-                      poster_path,
-                      "movies"
-                    );
-                    setWatchListBtn(false);
-                  } else {
-                    addWatchListData(
-                      MovieDetails.Data.id,
-                      poster_path,
-                      "movies"
-                    );
-                    setWatchListBtn(true);
-                  }
-                }}
+                onClick={handleWatchListBtnClick}
               >
                 WatchList &nbsp;
                 {watchListBtn ? <BookmarkAddedIcon /> : <BsBookmarkHeartFill />}
@@ -141,23 +137,29 @@ export default function MoviesDetails() {
                     .map((item) => " " + item.english_name)
                     .toString()}
                 />
-                <Context
-                  title="Budget"
-                  subtitle={
-                    budget === 0 ? "N/A" : "$ " + budget.toLocaleString()
-                  }
-                />
-                <Context
-                  title="Revenue"
-                  subtitle={
-                    revenue === 0 ? "N/A" : "$ " + revenue.toLocaleString()
-                  }
-                />
+                {budget && (
+                  <Context
+                    title="Budget"
+                    subtitle={
+                      budget === 0 ? "N/A" : "$ " + budget.toLocaleString()
+                    }
+                  />
+                )}
+                {revenue && (
+                  <Context
+                    title="Revenue"
+                    subtitle={
+                      revenue === 0 ? "N/A" : "$ " + revenue.toLocaleString()
+                    }
+                  />
+                )}
+                {networks && <NetworkList item={networks} />}
+                <CastList data={tvCast.Data} />
               </Box>
-              <CastList data={tvCast.Data} />
+              {seasons && <SeasonList item={seasons} TvName={name || ""} />}
               {Recommended.Data.results.length === 0 ? null : (
                 <Recommendation>
-                  <Heading className="text-lg ml-2">Recommended:</Heading>
+                  <Heading>Recommended:</Heading>
                   <ListRow item={Recommended.Data} />
                 </Recommendation>
               )}
@@ -168,6 +170,7 @@ export default function MoviesDetails() {
     </>
   );
 }
+
 const Root = styled(Box)<{ backdropPath: string }>(({ backdropPath }) => ({
   maxWidth: maxWidthScreen,
   margin: "0px auto",

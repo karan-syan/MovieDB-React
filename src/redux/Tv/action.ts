@@ -2,8 +2,8 @@ import { createAsyncAction } from "typesafe-actions";
 import {
   FetchDetailsPayload,
   FetchMoviePayload,
+  IDetails,
   IMovie,
-  ITvDetails,
 } from "../../utils/type";
 
 export const CallTvPopular = createAsyncAction(
@@ -16,7 +16,7 @@ export const CallTvDetails = createAsyncAction(
   "FETCH_TV_DETAILS_REQUEST",
   "FETCH_TV_DETAILS_SUCCESS",
   "FETCH_TV_DETAILS_FAILURE"
-)<FetchDetailsPayload, ITvDetails, Error>();
+)<FetchDetailsPayload, IDetails, Error>();
 
 export const CallTvTrending = createAsyncAction(
   "FETCH_TV_TRENDING_REQUEST",

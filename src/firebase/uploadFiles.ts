@@ -17,7 +17,7 @@ export const uploadUserImg = (file: File) => {
       updateProfile(user, {
         photoURL: url,
       }).then(() => {
-        store.dispatch(setUser(user));
+        store.dispatch(setUser(getAuth(app).currentUser));
       });
     });
   });
