@@ -6,27 +6,31 @@ import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import { styled } from "@mui/material/styles";
 import Typography from "@mui/material/Typography";
-import { updateProfile } from "firebase/auth";
 import { useFormik } from "formik";
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { userLogOut } from "../firebase/authentication";
-import { updateUsername } from "../firebase/profile";
+import {
+  resendEmailVerificationLink,
+  updateUsername,
+} from "../firebase/profile";
 import { uploadUserImg } from "../firebase/uploadFiles";
 import { ApplicationState } from "../redux/root/rootReducer";
-import { SignUpSchema } from "../utils/schema";
+import { ProfileUpdateSchema } from "../utils/schema";
 
 export default function Profile() {
   const imgFileNodeRef = useRef<HTMLInputElement | null>(null);
+  const navigate = useNavigate();
   const user = useSelector((state: ApplicationState) => state.user);
   const [username, setUsername] = useState<string>(user?.displayName || "");
   const [email, setEmail] = useState<string>(user?.email || "");
   const formik = useFormik({
     initialValues: {
       username: username,
-      email: email,
     },
-    validationSchema: SignUpSchema,
+    enableReinitialize: true,
+    validationSchema: ProfileUpdateSchema,
     onSubmit: (values) => updateUsername(values.username),
   });
 
@@ -65,17 +69,14 @@ export default function Profile() {
           }}
         />
         <Box>
-          <form
-            onSubmit={formik.handleSubmit}
+          <Box
             style={{
               borderBottom: "1px solid #ffffff88",
-              marginBlock: "1rem",
+              marginTop: "1rem",
+              marginBottom: "1rem",
               paddingBottom: "1rem",
             }}
           >
-            {formik.touched.email && (
-              <Typography color={"red"}>{formik.errors.email}</Typography>
-            )}
             <Typography sx={{ opacity: "0.5", ml: 1 }}>
               Email Address *Immutable*
             </Typography>
@@ -83,41 +84,54 @@ export default function Profile() {
               required
               type={"email"}
               id="email"
-              value={formik.values.email || ""}
+              onChange={() => {}}
+              value={email}
               placeholder="Email Address"
               name="email"
               autoComplete="email"
             />
-            {formik.touched.username && (
-              <Typography color={"red"}>{formik.errors.username}</Typography>
-            )}
-            <Typography sx={{ opacity: "0.5", ml: 1 }}>Username</Typography>
-            <InputField
-              required
-              type={"text"}
-              id="username"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.username || ""}
-              placeholder="Username"
-              name="username"
-              autoComplete="username"
-              autoFocus
-            />
-            <UpdateBtn type="submit" variant="contained">
-              Save Changes
-            </UpdateBtn>
-          </form>
-          {user?.emailVerified && (
-            <UpdateBtn variant="contained">
+            <form onSubmit={formik.handleSubmit}>
+              {formik.touched.username && (
+                <Typography color={"red"}>{formik.errors.username}</Typography>
+              )}
+              <Typography sx={{ opacity: "0.5", ml: 1 }}>Username</Typography>
+              <InputField
+                required
+                type={"text"}
+                id="username"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                value={formik.values.username || ""}
+                placeholder="Username"
+                name="username"
+                autoComplete="username"
+                autoFocus
+              />
+              <CustomButton type="submit" variant="contained">
+                Save Changes
+              </CustomButton>
+            </form>
+          </Box>
+          {!user?.emailVerified && (
+            <CustomButton
+              variant="contained"
+              onClick={resendEmailVerificationLink}
+            >
               Send Email Verification Link
-            </UpdateBtn>
+            </CustomButton>
           )}
           <Box sx={{ display: "flex", width: "100%" }}>
-            <UpdateBtn variant="contained">Reset Password</UpdateBtn>
-            <UpdateBtn variant="contained" onClick={userLogOut}>
-              Log Out
-            </UpdateBtn>
+            <CustomButton variant="contained">Reset Password</CustomButton>
+            <CustomButton
+              variant="contained"
+              onClick={() =>
+                userLogOut(() => {
+                  navigate("/signin");
+                })
+              }
+            >
+              Sign Out
+            </CustomButton>
           </Box>
         </Box>
       </Wrapper>
@@ -133,23 +147,22 @@ const Wrapper = styled(Box)(() => ({
 }));
 const InputField = styled("input")(() => ({
   color: "white",
-  marginBlock: "0.5rem",
+  marginTop: "0.5rem",
+  marginBottom: "0.5rem",
   outlineColor: "transparent",
   width: "100%",
   background: "none",
   outline: "none",
-  paddingBlock: "0.8rem",
-  paddingInline: "0.3rem",
+  padding: "0.8rem 0.3rem",
   borderRadius: "5px",
   border: "2px solid #ffffff59",
   ":focus": {
     border: "2px solid #ffffff99",
   },
 }));
-const UpdateBtn = styled(Button)(() => ({
-  marginBlock: 3,
+const CustomButton = styled(Button)(() => ({
+  margin: "3px 1px",
   width: "100%",
-  marginInline: 1,
 }));
 const EditBtn = styled(Box)(() => ({
   position: "absolute",

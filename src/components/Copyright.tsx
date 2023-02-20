@@ -1,18 +1,23 @@
-import { Link, Typography } from "@mui/material";
+import { Link, styled, Typography } from "@mui/material";
 
-export default function Copyright(props: any) {
+export default function Copyright() {
   return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
+    <CopyrightText>
+      Copyright © &nbsp;
       <Link color="inherit" href="https://ktv-movie.web.com/">
         KTV-Movie
       </Link>
+      &nbsp;
       {new Date().getFullYear()}
-    </Typography>
+    </CopyrightText>
   );
 }
+
+const CopyrightText = styled(Typography)(({ theme }) => ({
+  opacity: "0.5",
+  textAlign: "center",
+  fontSize: "0.7rem",
+  [theme.breakpoints.up("md")]: {
+    fontSize: "1rem",
+  },
+}));

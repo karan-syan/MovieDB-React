@@ -29,6 +29,7 @@ export const checkWatchListData = async (id: number) => {
     if (docSnap.exists()) {
       return docSnap.data().list.find((e: WatchListDataType) => e.id === id);
     } else {
+      return null;
     }
   }
 };

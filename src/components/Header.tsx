@@ -139,7 +139,8 @@ export default function Header() {
                 sx={{
                   ":hover": { backgroundColor: theme.palette.secondary.main },
                   paddingRight: "6em",
-                  paddingBlock: "0.875rem",
+                  paddingTop: "0.875rem",
+                  paddingBottom: "0.875rem",
                   cursor: "pointer",
                 }}
                 onClick={() => {
@@ -176,7 +177,8 @@ const Root = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   width: "100%",
-  paddingInline: "0.75rem",
+  paddingLeft: "0.75rem",
+  paddingRight: "0.75rem",
   fontWeight: "800",
   justifyContent: "space-between",
   boxShadow: "0 0 10px #000",
@@ -206,7 +208,8 @@ const UserProfile = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   color: "white",
-  paddingBlock: "1rem",
+  paddingTop: "1rem",
+  paddingBottom: "1rem",
   background: theme.palette.primary.main,
 }));
 const UserBtn = styled(Button)(() => ({

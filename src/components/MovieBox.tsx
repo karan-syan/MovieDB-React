@@ -46,7 +46,8 @@ export default function MovieBox(props: Props) {
 }
 const Root = styled(Box)(({ theme }) => ({
   width: "32.5%",
-  marginInline: "0.3%",
+  marginLeft: "0.3%",
+  marginRight: "0.3%",
   flexShrink: "0",
   display: "inline-block",
   marginBottom: "0.3rem",

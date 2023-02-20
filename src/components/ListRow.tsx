@@ -43,7 +43,8 @@ const Root = styled(Box)(({ theme }) => ({
   marginTop: "1.25rem",
   fontFamily: "Roboto Condensed",
   marginBottom: "2rem",
-  marginInline: "0.75rem",
+  marginLeft: "0.75rem",
+  marginRight: "0.75rem",
 }));
 const TitleWrapper = styled(Box)(({ theme }) => ({
   display: "flex",

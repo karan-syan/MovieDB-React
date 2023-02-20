@@ -118,13 +118,13 @@ const Wrapper = styled(Box)(() => ({
 }));
 const InputField = styled("input")(() => ({
   color: "white",
-  marginBlock: "1rem",
+  marginTop: "1rem",
+  marginBottom: "1rem",
   outlineColor: "transparent",
   width: "100%",
   background: "none",
   outline: "none",
-  paddingBlock: "1rem",
-  paddingInline: "0.3rem",
+  padding: "1rem 0.3rem",
   borderRadius: "5px",
   border: "2px solid #ffffff59",
   ":focus": {
@@ -137,6 +137,7 @@ const NoAccount = styled(Typography)(() => ({
   mt: 10,
 }));
 const SignInBtn = styled(Button)(() => ({
-  marginBlock: 3,
+  marginTop: 3,
+  marginBottom: 3,
   width: "100%",
 }));

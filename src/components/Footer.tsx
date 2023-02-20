@@ -1,17 +1,17 @@
 import { Box, styled, Typography } from "@mui/material";
+import Copyright from "./Copyright";
 
 export default function Footer() {
   return (
     <Root>
-      <Typography sx={{ opacity: 0.5 }}>
-        @ 2023 KTV-Movie. All rights reserved.
-      </Typography>
+      <Copyright />
     </Root>
   );
 }
 
 const Root = styled(Box)(({ theme }) => ({
-  paddingBlock: "1.5rem",
+  paddingTop: "1rem",
+  paddingBottom: "1rem",
   marginTop: "0.5rem",
   display: "flex",
   justifyContent: "center",

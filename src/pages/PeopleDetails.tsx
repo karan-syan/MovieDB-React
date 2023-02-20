@@ -81,6 +81,7 @@ const Title = styled(Typography)(({ theme }) => ({
   fontSize: "1.5rem",
   fontWeight: 800,
   textAlign: "center",
+  width: "100%",
   [theme.breakpoints.up("md")]: {
     fontSize: "3rem",
     textAlign: "start",
@@ -104,7 +105,7 @@ const ContentWrapper = styled(Box)(({ theme }) => ({
   justifyContent: "center",
   paddingBottom: "0.75rem",
   flexDirection: "column",
-  alignItems: "center",
+  alignItems: "start",
   [theme.breakpoints.up("md")]: {
     width: "66.6%",
     justifyContent: "start",

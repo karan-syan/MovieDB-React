@@ -30,18 +30,21 @@ const Root = styled(Box)(() => ({
   width: "100%",
 }));
 const Title = styled(Typography)(() => ({
-  marginInline: "0.5rem",
+  marginLeft: "0.5rem",
+  marginRight: "0.5rem",
   fontSize: "1.125rem",
 }));
 const Wrapper = styled(Box)(() => ({
   borderRadius: "9999px",
-  marginInline: "0.5rem",
+  marginLeft: "0.5rem",
+  marginRight: "0.5rem",
   width: "20%",
   flexShrink: "0",
   height: "20%",
 }));
 const Container = styled(Box)(() => ({
-  marginInline: "0.5rem",
+  marginLeft: "0.5rem",
+  marginRight: "0.5rem",
   opacity: "0.7",
   fontSize: "0.875rem",
   display: "flex",

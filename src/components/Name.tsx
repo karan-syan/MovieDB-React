@@ -17,7 +17,8 @@ const Root = styled(Box)(({ theme }) => ({
 }));
 const Title = styled(Typography)(({ theme }) => ({
   fontWeight: "800",
-  marginInline: "0.5rem",
+  marginLeft: "0.5rem",
+  marginRight: "0.5rem",
   paddingTop: "0.08rem",
   [theme.breakpoints.up("sm")]: {
     marginLeft: "1rem",

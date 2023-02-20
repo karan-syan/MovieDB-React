@@ -17,6 +17,7 @@ export default function Context({
   );
 }
 const Root = styled(Box)(() => ({
-  marginInline: "0.5rem",
+  marginLeft: "0.5rem",
+  marginRight: "0.5rem",
   marginTop: "0.5rem",
 }));

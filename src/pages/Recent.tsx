@@ -30,4 +30,6 @@ const Wrapper = styled(Box)(() => ({
   width: "100%",
   maxWidth: maxWidthScreen,
   margin: "0px auto",
+  display: "flex",
+  flexWrap: "wrap",
 }));

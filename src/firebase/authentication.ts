@@ -40,6 +40,9 @@ export const createUser = (
     })
     .catch((error: Error) => {});
 };
-export const userLogOut = () => {
-  signOut(auth);
+export const userLogOut = (navigate: () => void) => {
+  signOut(auth).then(() => {
+    store.dispatch(setUser(null));
+    navigate();
+  });
 };

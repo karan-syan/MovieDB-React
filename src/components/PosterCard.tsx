@@ -18,7 +18,7 @@ const Root = styled(Box)(({ theme }) => ({
 }));
 const Img = styled("img")(({ theme }) => ({
   width: "50%",
-  marginInline: "auto",
+  margin: "0 auto",
   marginTop: "2rem",
   borderRadius: "0.75rem",
   filter: "drop-shadow(0 0 0.75rem #000)",

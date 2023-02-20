@@ -45,7 +45,8 @@ const PaginatedData = (props: Props) => {
           width: "100%",
           display: "flex",
           justifyContent: "center",
-          paddingBlock: "0.5rem",
+          paddingTop: "0.5rem",
+          paddingBottom: "0.5rem",
         }}
       >
         <Pagination

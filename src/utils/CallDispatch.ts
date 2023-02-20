@@ -1,13 +1,10 @@
 import { CallCrouselSlider } from "../redux/Crousel/action";
+import { CallDetails } from "../redux/Detail/action";
 import { CallMoviePopular, CallMovieUpcoming } from "../redux/Movie/action";
 import { CallCast } from "../redux/People/action";
 import { CallRecommend } from "../redux/Recommend/action";
 import store from "../redux/store";
-import {
-  CallTvDetails,
-  CallTvPopular,
-  CallTvTrending,
-} from "../redux/Tv/action";
+import { CallTvPopular, CallTvTrending } from "../redux/Tv/action";
 import {
   popular_movie_url,
   popular_tv_url,
@@ -65,7 +62,7 @@ export const HomePageDispatch = () => {
 
 export const DetailDispatch = (id: string, varient: "tv" | "movie") => {
   store.dispatch(
-    CallTvDetails.request({
+    CallDetails.request({
       url: `/${varient}/${id}`,
     })
   );

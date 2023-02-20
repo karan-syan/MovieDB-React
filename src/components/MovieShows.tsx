@@ -105,7 +105,8 @@ const CrouselWrapper = styled(Box)(() => ({
 const ButtonGroupWrapper = styled(Box)(({ theme }) => ({
   backgroundImage: `linear-gradient(to right, ${theme.palette.secondary.main}, ${theme.palette.primary.main})`,
   justifyContent: "center",
-  paddingInline: "0.5rem",
+  paddingLeft: "0.5rem",
+  paddingRight: "0.5rem",
   marginBottom: "0.75rem",
   position: "sticky",
   zIndex: "20",

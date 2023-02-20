@@ -19,7 +19,7 @@ export default function ButtonGroup(props: Props) {
           <TabButton
             key={index}
             variant={"contained"}
-            buttonType={query.get("type") === item}
+            buttontype={query.get("type") === item}
             onClick={() =>
               setQuery({
                 type: item,
@@ -37,28 +37,33 @@ const Root = styled(Box)(({ theme }) => ({
   display: "inline-flex",
   justifyContent: "center",
   width: "100%",
-  paddingBlock: "3px",
+  paddingTop: "3px",
+  paddingBottom: "3px",
   [theme.breakpoints.up("sm")]: {
-    paddingInline: "20%",
+    paddingLeft: "20%",
+    paddingRight: "20%",
   },
 }));
-const TabButton = styled(Button)<{ buttonType: boolean }>(
-  ({ theme, buttonType }) => ({
-    paddingInline: "0.25rem",
+const TabButton = styled(Button)<{ buttontype: boolean }>(
+  ({ theme, buttontype }) => ({
+    paddingLeft: "0.25rem",
+    paddingRight: "0.25rem",
     fontWeight: "500",
     borderRadius: "0",
     borderBottom: "1px solid #fff",
     flex: "1",
-    paddingBlock: "0.5rem",
-    color: `${buttonType ? "#111827" : "#fff"}`,
-    backgroundColor: `${buttonType ? "#fff" : "transparent"}`,
+    paddingTop: "0.5rem",
+    paddingBottom: "0.5rem",
+    color: `${buttontype ? "#111827" : "#fff"}`,
+    backgroundColor: `${buttontype ? "#fff" : "transparent"}`,
     fontSize: "0.70rem",
     [theme.breakpoints.up("sm")]: {
       fontSize: "0.875rem",
     },
     [theme.breakpoints.up("md")]: {
       fontSize: "1rem",
-      paddingInline: "1rem",
+      paddingLeft: "1rem",
+      paddingRight: "1rem",
     },
     ":hover": {
       backgroundColor: "#111827",

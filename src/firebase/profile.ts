@@ -1,11 +1,17 @@
-import { getAuth, updateProfile } from "firebase/auth";
+import { getAuth, sendEmailVerification, updateProfile } from "firebase/auth";
 import { app } from "../firebaseConfig";
 
-const user = getAuth(app).currentUser;
-
 export const updateUsername = (username: string) => {
-  if (user && username.length > 2)
+  const user = getAuth(app).currentUser;
+  if (user) {
     updateProfile(user, {
       displayName: username,
     });
+  }
+};
+export const resendEmailVerificationLink = () => {
+  const user = getAuth(app).currentUser;
+  if (user) {
+    sendEmailVerification(user);
+  }
 };

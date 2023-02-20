@@ -78,6 +78,8 @@ export default function Detail(props: Props) {
     if (details.Data) {
       if (await checkWatchListData(details.Data.id)) {
         setWatchListBtn(true);
+      } else {
+        setWatchListBtn(false);
       }
     }
   }
@@ -95,7 +97,7 @@ export default function Detail(props: Props) {
   return (
     <>
       {details.loading ? (
-        <BarLoader color="#36d7b7" />
+        <BarLoader color="#36d7b7" style={{ width: "100%" }} />
       ) : (
         <Root backdropPath={backdrop_path}>
           <Container>
@@ -174,7 +176,9 @@ export default function Detail(props: Props) {
 const Root = styled(Box)<{ backdropPath: string }>(({ backdropPath }) => ({
   maxWidth: maxWidthScreen,
   margin: "0px auto",
+  width: "100%",
   float: "none",
+  height: "92.5vh",
   backgroundImage: `url(${MOVIE_DB_IMG_URL + backdropPath})`,
   backgroundPosition: "center",
   backgroundSize: "cover",
@@ -185,7 +189,6 @@ const Container = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   overflow: "auto",
-  minHeight: "92.5vh",
   height: "100%",
   backdropFilter: "blur(10px) brightness(60%)",
   [theme.breakpoints.up("md")]: {
@@ -195,12 +198,13 @@ const Container = styled(Box)(({ theme }) => ({
 }));
 const ContentWrapper = styled(Box)(({ theme }) => ({
   display: "flex",
-  marginTop: "1.25rem",
+  paddingTop: "1.25rem",
   justifyContent: "center",
   paddingBottom: "0.75rem",
   flexDirection: "column",
   alignItems: "center",
   [theme.breakpoints.up("md")]: {
+    overflow: "auto",
     width: "66.6%",
     justifyContent: "start",
     alignItems: "start",
@@ -229,8 +233,8 @@ const TagLine = styled(Typography)(({ theme }) => ({
 const WatchlistButton = styled(Button)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
-  paddingInline: "1rem",
-  paddingBlock: "0.25rem",
+  marginTop: "0.5rem",
+  padding: "0.25rem 1rem",
   backgroundColor: "#F472B6",
   color: "white",
   borderRadius: "1.5rem",
@@ -247,5 +251,6 @@ const Recommendation = styled(Box)(({ theme }) => ({
 }));
 const Heading = styled(Typography)(({ theme }) => ({
   fontSize: "1.125rem",
-  marginInline: "0.5rem",
+  marginLeft: "0.5rem",
+  marginri: "0.5rem",
 }));

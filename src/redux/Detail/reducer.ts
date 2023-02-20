@@ -10,8 +10,7 @@ export const DetailReducer = (
     case getType(actions.CallDetails.request):
       return {
         ...state,
-        loading: true,
-        Data: InitialStateDetail.Data,
+        ...InitialStateDetail,
       };
 
     case getType(actions.CallDetails.success):

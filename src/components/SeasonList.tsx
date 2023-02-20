@@ -48,15 +48,17 @@ const Root = styled(Box)(() => ({
 }));
 const Img = styled("img")(() => ({
   objectFit: "fill",
-  height: "100%",
   borderRadius: "10px",
 }));
 const Title = styled(Typography)(() => ({
-  marginInline: "0.5rem",
+  marginLeft: "0.5rem",
+  marginRight: "0.5rem",
   fontSize: "1.125rem",
 }));
 const Wrapper = styled(Box)(() => ({
-  marginInline: "0.5rem",
+  marginRight: "0.5rem",
+  marginLeft: "0.5rem",
+  scrollSnapAlign: "start",
   flexShrink: "0",
   display: "flex",
   width: "100%",
@@ -64,8 +66,10 @@ const Wrapper = styled(Box)(() => ({
   alignItems: "center",
 }));
 const Container = styled(Box)(() => ({
-  marginInline: "0.5rem",
+  marginRight: "0.5rem",
+  marginLeft: "0.5rem",
   display: "flex",
+  scrollSnapType: "x mandatory",
   overflow: "auto",
   flexWrap: "nowrap",
   "::-webkit-scrollbar": {
@@ -74,11 +78,12 @@ const Container = styled(Box)(() => ({
 }));
 
 const ImgWrapper = styled(Box)(({ theme }) => ({
-  width: "20%",
-  marginInline: "0.5rem",
+  width: "32%",
+  marginLeft: "0.5rem",
+  marginRight: "0.5rem",
   flexShrink: "0",
   [theme.breakpoints.up("md")]: {
-    width: "25%",
+    width: "20%",
   },
   display: "flex",
   alignItems: "center",
@@ -86,7 +91,8 @@ const ImgWrapper = styled(Box)(({ theme }) => ({
 }));
 const TextWrapper = styled(Box)(() => ({
   fontSize: "0.75rem",
-  marginInline: "0.5rem",
+  marginLeft: "0.5rem",
+  marginRight: "0.5rem",
 }));
 const PremieredText = styled(Box)(({ theme }) => ({
   display: "none",
