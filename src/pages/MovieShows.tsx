@@ -8,9 +8,9 @@ import { CallMovies } from "../redux/Main/action";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { maxWidthScreen, Popular } from "../utils/constants";
 import { popular_movie_url, popular_tv_url } from "../utils/url";
-import ButtonGroup from "./ButtonGroup";
-import Crousel from "./Crousel";
-import PaginatedData from "./PaginatedData";
+import ButtonGroup from "../components/ButtonGroup";
+import Crousel from "../components/Crousel";
+import PaginatedData from "../components/PaginatedData";
 
 interface Props {
   varient: "movie" | "tv";

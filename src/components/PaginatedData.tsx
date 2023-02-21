@@ -52,9 +52,7 @@ const PaginatedData = (props: Props) => {
         <Pagination
           count={total_pages > 500 ? 500 : total_pages}
           color="secondary"
-          sx={{}}
           onChange={handleChange}
-          size="large"
         />
       </Box>
     </Box>

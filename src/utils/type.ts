@@ -129,3 +129,8 @@ export interface WatchListDataType {
   img: string;
   varient: "movies" | "shows";
 }
+export interface CommentData {
+  text: string;
+  time: string;
+  userId: string;
+}

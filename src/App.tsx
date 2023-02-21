@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import Header from "./components/Header";
-import MovieShows from "./components/MovieShows";
+import MovieShows from "./pages/MovieShows";
 import ScroolToTopButton from "./components/ScroolToTopButton";
 import { app } from "./firebaseConfig";
 import Detail from "./pages/Detail";

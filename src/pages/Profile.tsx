@@ -120,19 +120,16 @@ export default function Profile() {
               Send Email Verification Link
             </CustomButton>
           )}
-          <Box sx={{ display: "flex", width: "100%" }}>
-            <CustomButton variant="contained">Reset Password</CustomButton>
-            <CustomButton
-              variant="contained"
-              onClick={() =>
-                userLogOut(() => {
-                  navigate("/signin");
-                })
-              }
-            >
-              Sign Out
-            </CustomButton>
-          </Box>
+          <CustomButton
+            variant="contained"
+            onClick={() =>
+              userLogOut(() => {
+                navigate("/signin");
+              })
+            }
+          >
+            Sign Out
+          </CustomButton>
         </Box>
       </Wrapper>
     </Container>

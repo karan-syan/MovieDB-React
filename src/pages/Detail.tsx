@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
 import CastList from "../components/CastList";
+import CommentField from "../components/CommentField";
 import Context from "../components/Context";
 import ListRow from "../components/ListRow";
 import NetworkList from "../components/NetworkList";
@@ -165,6 +166,7 @@ export default function Detail(props: Props) {
                   <ListRow item={Recommended.Data} />
                 </Recommendation>
               )}
+              <CommentField id={details.Data.id} varient={varient} />
             </ContentWrapper>
           </Container>
         </Root>
