@@ -18,6 +18,7 @@ export const getWatchListData = async () => {
     if (docSnap.exists()) {
       return docSnap.data().list.reverse();
     } else {
+      return [];
     }
   }
 };

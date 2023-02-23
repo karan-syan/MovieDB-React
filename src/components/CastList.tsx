@@ -12,7 +12,10 @@ export default function CastList({ data }: { data: ICast[] }) {
         {data.map((item, index) => {
           const { original_name, character, profile_path } = item;
           return (
-            <Wrapper onClick={() => navigate(`/people/${item.id}`)}>
+            <Wrapper
+              onClick={() => navigate(`/people/${item.id}`)}
+              key={item.id}
+            >
               <Avatar
                 sx={{ width: 100, height: 100 }}
                 draggable="false"

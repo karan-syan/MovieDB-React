@@ -100,7 +100,7 @@ export default function Detail(props: Props) {
       {details.loading ? (
         <BarLoader color="#36d7b7" style={{ width: "100%" }} />
       ) : (
-        <Root backdropPath={backdrop_path}>
+        <Root backdroppath={backdrop_path}>
           <Container>
             <PosterCard Poster_Path={poster_path} />
             <ContentWrapper ref={elementForScroll}>
@@ -175,13 +175,13 @@ export default function Detail(props: Props) {
   );
 }
 
-const Root = styled(Box)<{ backdropPath: string }>(({ backdropPath }) => ({
+const Root = styled(Box)<{ backdroppath: string }>(({ backdroppath }) => ({
   maxWidth: maxWidthScreen,
   margin: "0px auto",
   width: "100%",
   float: "none",
   height: "92.5vh",
-  backgroundImage: `url(${MOVIE_DB_IMG_URL + backdropPath})`,
+  backgroundImage: `url(${MOVIE_DB_IMG_URL + backdroppath})`,
   backgroundPosition: "center",
   backgroundSize: "cover",
   backdropFilter: "blur(10px) brightness(60%)",

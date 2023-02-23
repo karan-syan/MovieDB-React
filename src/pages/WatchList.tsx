@@ -6,7 +6,7 @@ import { maxWidthScreen } from "../utils/constants";
 import { WatchListDataType } from "../utils/type";
 
 const WatchList = () => {
-  const [movieDate, setMovieData] = useState<WatchListDataType[]>([]);
+  const [movieData, setMovieData] = useState<WatchListDataType[]>([]);
   useEffect(() => {
     getWatchListData().then((res) => {
       setMovieData(res);
@@ -15,12 +15,12 @@ const WatchList = () => {
 
   return (
     <Wrapper>
-      {movieDate.map((item, index) => {
+      {movieData.map((item, index) => {
         const { id, img, varient } = item;
         return (
           <MovieBox id={id} posterPath={img} varient={varient} key={index} />
         );
-      })}
+      }) || []}
     </Wrapper>
   );
 };

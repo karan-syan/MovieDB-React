@@ -87,7 +87,9 @@ export default function SignUp() {
               required
               onBlur={formik.handleBlur}
               name="confirm_password"
-              placeholder="Confirm Password"
+              placeholder="Confirm 
+              
+              "
               type="password"
               id="confirm_password"
               autoComplete="current-password"
