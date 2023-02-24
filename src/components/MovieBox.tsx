@@ -7,7 +7,7 @@ import { MOVIE_DB_IMG_URL } from "../utils/url";
 interface Props {
   id: number;
   posterPath: string;
-  varient: "movies" | "shows";
+  varient: "movie" | "tv";
 }
 export default function MovieBox(props: Props) {
   const navigate = useNavigate();
@@ -18,13 +18,8 @@ export default function MovieBox(props: Props) {
   return (
     <Root
       onClick={() => {
-        if (varient === "shows") {
-          setRecentData(id, posterPath, "tv");
-          navigate(`/tv/details/${id}`);
-        } else {
-          setRecentData(id, posterPath, "movie");
-          navigate(`/movie/details/${id}`);
-        }
+        setRecentData(id, posterPath, varient);
+        navigate(`/${varient}/details/${id}`);
       }}
     >
       <Img

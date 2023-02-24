@@ -122,12 +122,12 @@ export interface RecentDataType {
   id: number;
   img: string;
   date: string;
-  varient: "movies" | "shows";
+  varient: "movie" | "tv";
 }
 export interface WatchListDataType {
   id: number;
   img: string;
-  varient: "movies" | "shows";
+  varient: "movie" | "tv";
 }
 export interface CommentData {
   text: string;

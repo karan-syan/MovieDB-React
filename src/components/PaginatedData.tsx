@@ -27,7 +27,7 @@ const PaginatedData = (props: Props) => {
       }}
     >
       {results.map((val, index) => {
-        const varient = val.name ? "shows" : "movies";
+        const varient = val.name ? "tv" : "movie";
         if (val.poster_path !== null && val.poster_path !== "") {
           return (
             <MovieBox

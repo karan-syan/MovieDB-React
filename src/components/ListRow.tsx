@@ -1,15 +1,37 @@
 import { Box, styled, Typography } from "@mui/material";
+import { useRef, useState } from "react";
 import { IMovie } from "../utils/type";
+import { LeftScrollBtn } from "./LeftScrollBtn";
 import MovieBox from "./MovieBox";
-
-export default function ListRow({
-  item,
-  title,
-}: {
+import { RightScrollBtn } from "./RightScrollBtn";
+interface Props {
   item: IMovie;
   title?: string;
-}) {
+}
+export default function ListRow({ item, title }: Props) {
   const { results } = item;
+  const scrollRef = useRef<HTMLInputElement>(null);
+  const [rightBtnVis, SetRightBtnVis] = useState<boolean>(true);
+  const [LeftBtnVis, SetLeftBtnVis] = useState<boolean>(false);
+  const scroll = (scrollOffset: number) => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft += scrollOffset;
+      if (
+        scrollRef.current.scrollWidth <=
+        scrollRef.current.offsetWidth + scrollRef.current.scrollLeft + 2
+      )
+        SetRightBtnVis(false);
+      else if (
+        scrollRef.current.scrollWidth >
+        scrollRef.current.offsetWidth + scrollRef.current.scrollLeft + 2
+      )
+        SetRightBtnVis(true);
+
+      scrollRef.current.scrollLeft > 0
+        ? SetLeftBtnVis(true)
+        : SetLeftBtnVis(false);
+    }
+  };
   return (
     <Root>
       {title && (
@@ -17,9 +39,11 @@ export default function ListRow({
           <Title>{title}</Title>
         </TitleWrapper>
       )}
-      <Container>
+      <RightScrollBtn scroll={scroll} visibity={rightBtnVis} />
+      <LeftScrollBtn scroll={scroll} visibity={LeftBtnVis} />
+      <Container ref={scrollRef}>
         {results.map((val, index) => {
-          const varient = val.name ? "shows" : "movies";
+          const varient = val.name ? "tv" : "movie";
           if (val.poster_path !== null && val.poster_path !== "") {
             return (
               <MovieBox
@@ -41,6 +65,7 @@ const Root = styled(Box)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
   marginTop: "1.25rem",
+  position: "relative",
   fontFamily: "Roboto Condensed",
   marginBottom: "2rem",
   marginLeft: "0.75rem",

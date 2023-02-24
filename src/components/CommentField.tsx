@@ -90,6 +90,7 @@ const Root = styled(Box)(() => ({
   display: "flex",
   flexDirection: "column",
   width: "90%",
+  marginTop: "1rem",
 }));
 const Wrapper = styled(Box)(() => ({
   display: "flex",
@@ -108,6 +109,6 @@ const InputField = styled("input")(() => ({
 }));
 
 const CommentWrapper = styled(Box)(() => ({
-  height: 340,
+  maxHeight: 340,
   overflowY: "auto",
 }));
