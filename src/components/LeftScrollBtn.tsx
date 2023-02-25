@@ -1,61 +1,45 @@
-import { Button } from "@mui/material";
-import { makeStyles } from "@mui/styles";
+import { Button, styled } from "@mui/material";
 import { Box } from "@mui/system";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 interface Props {
   visibity: boolean;
-  scroll: (num: number) => void;
+  scroll: (e: "left" | "right") => void;
 }
 export const LeftScrollBtn = ({ scroll, visibity }: Props) => {
-  const BtnStyle = ButtonStyles();
-  const BtnWrapperStyle = ButtonWrapperStyles();
   return (
     <>
       {visibity ? (
-        <Box className={BtnWrapperStyle.LeftBtnWrapper}>
-          <Button
-            className={BtnStyle.LeftBtn}
-            variant="contained"
-            onClick={() => scroll(-window.screen.width)}
-          >
+        <LeftBtnWrapper>
+          <LeftBtn variant="contained" onClick={() => scroll("left")}>
             <ArrowBackIosIcon color="primary" />
-          </Button>
-        </Box>
+          </LeftBtn>
+        </LeftBtnWrapper>
       ) : null}
     </>
   );
 };
 
-export const ButtonStyles = makeStyles({
-  LeftBtn: {
-    "&.MuiButton-contained": {
-      background: "#fff",
-      borderRadius: "10em",
-      display: "flex",
-      justifyContent: "Center",
-      margin: "3em",
-      minWidth: "0px",
-      padding: "0.8em",
-      size: "small",
-      border: "none",
-      "&:hover": {
-        background: "#fff",
-      },
-      boxShadow:
-        "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
-    },
+const LeftBtnWrapper = styled(Box)(() => ({
+  height: "100%",
+  zIndex: "4",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  position: "absolute",
+  left: "0em",
+}));
+const LeftBtn = styled(Button)(() => ({
+  background: "#fff",
+  borderRadius: "10em",
+  display: "flex",
+  justifyContent: "Center",
+  marginLeft: "0.2rem",
+  minWidth: "0px",
+  padding: "0.8em",
+  size: "small",
+  border: "none",
+  "&:hover": {
+    background: "#fff",
   },
-});
-
-export const ButtonWrapperStyles = makeStyles({
-  LeftBtnWrapper: {
-    height: "100%",
-    zIndex: "4",
-    display: "flex",
-    paddingLeft: "1em",
-    justifyContent: "center",
-    alignItems: "center",
-    position: "absolute",
-    left: "0em",
-  },
-});
+  boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
+}));
