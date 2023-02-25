@@ -1,5 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { IMovie } from "../utils/type";
 import { LeftScrollBtn } from "./LeftScrollBtn";
 import MovieBox from "./MovieBox";

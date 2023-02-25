@@ -2,14 +2,14 @@ import { Box, styled } from "@mui/material";
 import { getAuth } from "firebase/auth";
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import Header from "./components/Header";
-import MovieShows from "./pages/MovieShows";
 import ScroolToTopButton from "./components/ScroolToTopButton";
 import { app } from "./firebaseConfig";
 import Detail from "./pages/Detail";
 import ErrorPage from "./pages/ErrorPage";
 import Home from "./pages/Home";
+import MovieShows from "./pages/MovieShows";
 import PeopleDetails from "./pages/PeopleDetails";
 import Profile from "./pages/Profile";
 import Recent from "./pages/Recent";
@@ -114,13 +114,9 @@ export default App;
 
 const ProptectedRoute = ({ children }: { children: JSX.Element }) => {
   const user = useSelector((state: ApplicationState) => state.user);
-  const navigate = useNavigate();
-  if (!user) {
-    navigate("/signin");
+  if (!user?.emailVerified) {
+    return <Navigate to={"/signin"} />;
   }
-  // else (!user.emailVerified) {
-
-  // }
   return children;
 };
 

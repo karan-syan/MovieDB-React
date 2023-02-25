@@ -2,14 +2,17 @@
 import HorizontalRuleIcon from "@mui/icons-material/HorizontalRule";
 import { Box, createTheme, styled, Typography } from "@mui/material";
 import Carousel from "react-material-ui-carousel";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setRecentData } from "../firebase/recentData";
+import { ApplicationState } from "../redux/root/rootReducer";
 import { IMovie } from "../utils/type";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
 
 export default function Crousel({ item }: { item: IMovie }) {
   const navigate = useNavigate();
   const theme = createTheme();
+  const user = useSelector((state: ApplicationState) => state.user);
   return (
     <Carousel
       autoPlay={true}
@@ -43,7 +46,9 @@ export default function Crousel({ item }: { item: IMovie }) {
             <Root
               key={id}
               onClick={() => {
-                if (name) {
+                if (!user?.emailVerified) {
+                  navigate("/signin");
+                } else if (name) {
                   setRecentData(id, poster_path, "tv");
                   navigate(`/tv/details/${id}`);
                 } else {

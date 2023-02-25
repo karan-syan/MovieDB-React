@@ -8,14 +8,7 @@ export const UserDetailReducer = (
 ) => {
   switch (action.type) {
     case getType(actions.setUser):
-      if (action.payload) {
-        return {
-          ...state,
-          ...action.payload,
-        };
-      } else {
-        return state;
-      }
+      return action.payload;
 
     default:
       return state;
