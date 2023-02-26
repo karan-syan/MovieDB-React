@@ -1,5 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IMovie } from "../utils/type";
 import { LeftScrollBtn } from "./LeftScrollBtn";
 import MovieBox from "./MovieBox";
@@ -10,30 +10,37 @@ interface Props {
 }
 export default function ListRow({ item, title }: Props) {
   const { results } = item;
-  const scrollRef = useRef<HTMLInputElement>(null);
+  const scrollRef = useRef<HTMLDivElement | null>(null);
   const [rightBtnVis, SetRightBtnVis] = useState<boolean>(true);
+  const [scrollLeft, SetScrollLeft] = useState<number>(0);
   const [LeftBtnVis, SetLeftBtnVis] = useState<boolean>(false);
 
   const scroll = (scrollTo: "left" | "right") => {
     if (scrollRef.current) {
+      const val = scrollRef.current.clientWidth || 0;
       if (scrollTo === "right") {
-        scrollRef.current.scrollLeft += scrollRef.current.clientWidth;
+        SetScrollLeft((prev) => prev + val);
       } else {
-        scrollRef.current.scrollLeft -= scrollRef.current.clientWidth;
+        SetScrollLeft((prev) => prev - val);
       }
+    }
+  };
+
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollLeft;
+      console.log(scrollLeft);
       if (
         scrollRef.current.scrollWidth <=
-        scrollRef.current.offsetWidth + scrollRef.current.scrollLeft + 10
+        scrollRef.current.offsetWidth + scrollLeft + 2
       ) {
         SetRightBtnVis(false);
       } else {
         SetRightBtnVis(true);
-        scrollRef.current.scrollLeft
-          ? SetLeftBtnVis(true)
-          : SetLeftBtnVis(false);
+        scrollLeft ? SetLeftBtnVis(true) : SetLeftBtnVis(false);
       }
     }
-  };
+  }, [scrollLeft]);
 
   return (
     <Root>
