@@ -1,5 +1,6 @@
 import { Box, styled, Typography } from "@mui/material";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
+import HorizontalScrollBtnWrapper from "./HorizontalScrollBtnWrapper";
 
 interface season {
   air_date: string;
@@ -21,30 +22,35 @@ export default function SeasonList({
   return (
     <Root>
       <Title>Seasons:</Title>
-      <Container>
-        {item.map((item, index) => (
-          <Wrapper key={index}>
-            <ImgWrapper>
-              <Img alt="" src={`${MOVIE_DB_IMG_URL}${item.poster_path}`} />
-            </ImgWrapper>
-            <TextWrapper>
-              <Typography>Name: {item.name}</Typography>
-              <Typography>Season: {item.season_number}</Typography>
-              <Typography>Total Episodes: {item.episode_count}</Typography>
-              <PremieredText>
-                {item.name} of {TvName} premiered on {item.air_date}
-              </PremieredText>
-            </TextWrapper>
-          </Wrapper>
-        ))}
-      </Container>
+      <HorizontalScrollBtnWrapper item={
+        <>
+          {item.map((item, index) => (
+            <Wrapper key={index}>
+              <ImgWrapper>
+                <Img alt="" src={`${MOVIE_DB_IMG_URL}${item.poster_path}`} />
+              </ImgWrapper>
+              <TextWrapper>
+                <Typography>Name: {item.name}</Typography>
+                <Typography>Season: {item.season_number}</Typography>
+                <Typography>Total Episodes: {item.episode_count}</Typography>
+                <PremieredText>
+                  {item.name} of {TvName} premiered on {item.air_date}
+                </PremieredText>
+              </TextWrapper>
+            </Wrapper>
+          ))}
+        </>
+      } />
     </Root>
   );
 }
 
 const Root = styled(Box)(() => ({
-  marginTop: "0.5rem",
   width: "100%",
+  marginTop: "0.5rem",
+  position: "relative",
+  display: "flex",
+  flexDirection: "column"
 }));
 const Img = styled("img")(() => ({
   objectFit: "fill",

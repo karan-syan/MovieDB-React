@@ -11,7 +11,7 @@ export const RightScrollBtn = ({ scroll, visibity }: Props) => {
       {visibity ? (
         <RightBtnWrapper>
           <RightBtn variant="contained" onClick={() => scroll("right")}>
-            <ArrowForwardIosIcon color="primary" />
+            <ArrowForwardIosIcon />
           </RightBtn>
         </RightBtnWrapper>
       ) : null}
@@ -28,8 +28,8 @@ const RightBtnWrapper = styled(Box)(() => ({
   position: "absolute",
   right: "0",
 }));
-const RightBtn = styled(Button)(() => ({
-  background: "#fff",
+const RightBtn = styled(Button)(({ theme }) => ({
+  background: theme.palette.primary.main,
   borderRadius: "10em",
   display: "flex",
   justifyContent: "Center",
@@ -39,7 +39,7 @@ const RightBtn = styled(Button)(() => ({
   size: "small",
   border: "none",
   "&:hover": {
-    background: "#fff",
+    background: theme.palette.secondary.main,
   },
   boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
 }));

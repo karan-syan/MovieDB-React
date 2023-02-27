@@ -1,6 +1,6 @@
 import { Button, styled } from "@mui/material";
 import { Box } from "@mui/system";
-import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 interface Props {
   visibity: boolean;
   scroll: (e: "left" | "right") => void;
@@ -11,7 +11,7 @@ export const LeftScrollBtn = ({ scroll, visibity }: Props) => {
       {visibity ? (
         <LeftBtnWrapper>
           <LeftBtn variant="contained" onClick={() => scroll("left")}>
-            <ArrowBackIosIcon color="primary" />
+            <ArrowBackIosNewIcon />
           </LeftBtn>
         </LeftBtnWrapper>
       ) : null}
@@ -28,8 +28,8 @@ const LeftBtnWrapper = styled(Box)(() => ({
   position: "absolute",
   left: "0em",
 }));
-const LeftBtn = styled(Button)(() => ({
-  background: "#fff",
+const LeftBtn = styled(Button)(({ theme }) => ({
+  background: theme.palette.primary.main,
   borderRadius: "10em",
   display: "flex",
   justifyContent: "Center",
@@ -39,7 +39,7 @@ const LeftBtn = styled(Button)(() => ({
   size: "small",
   border: "none",
   "&:hover": {
-    background: "#fff",
+    background: theme.palette.secondary.main,
   },
   boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
 }));

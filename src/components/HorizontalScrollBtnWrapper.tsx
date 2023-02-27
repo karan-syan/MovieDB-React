@@ -36,7 +36,7 @@ function HorizontalScrollBtnWrapper({ item }: Props) {
                 scrollLeft ? SetLeftBtnVis(true) : SetLeftBtnVis(false);
             }
         }
-    }, [scrollLeft]);
+    }, [scrollLeft, item]);
 
     return (
         <>
