@@ -1,47 +1,13 @@
 import { Box, styled, Typography } from "@mui/material";
-import { useEffect, useRef, useState } from "react";
 import { IMovie } from "../utils/type";
-import { LeftScrollBtn } from "./LeftScrollBtn";
+import HorizontalScrollBtnWrapper from "./HorizontalScrollBtnWrapper";
 import MovieBox from "./MovieBox";
-import { RightScrollBtn } from "./RightScrollBtn";
 interface Props {
   item: IMovie;
   title?: string;
 }
 export default function ListRow({ item, title }: Props) {
   const { results } = item;
-  const scrollRef = useRef<HTMLDivElement | null>(null);
-  const [rightBtnVis, SetRightBtnVis] = useState<boolean>(true);
-  const [scrollLeft, SetScrollLeft] = useState<number>(0);
-  const [LeftBtnVis, SetLeftBtnVis] = useState<boolean>(false);
-
-  const scroll = (scrollTo: "left" | "right") => {
-    if (scrollRef.current) {
-      const val = scrollRef.current.clientWidth || 0;
-      if (scrollTo === "right") {
-        SetScrollLeft((prev) => prev + val);
-      } else {
-        SetScrollLeft((prev) => prev - val);
-      }
-    }
-  };
-
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollLeft = scrollLeft;
-      console.log(scrollLeft);
-      if (
-        scrollRef.current.scrollWidth <=
-        scrollRef.current.offsetWidth + scrollLeft + 2
-      ) {
-        SetRightBtnVis(false);
-      } else {
-        SetRightBtnVis(true);
-        scrollLeft ? SetLeftBtnVis(true) : SetLeftBtnVis(false);
-      }
-    }
-  }, [scrollLeft]);
-
   return (
     <Root>
       {title && (
@@ -49,24 +15,26 @@ export default function ListRow({ item, title }: Props) {
           <Title>{title}</Title>
         </TitleWrapper>
       )}
-      <RightScrollBtn scroll={scroll} visibity={rightBtnVis} />
-      <LeftScrollBtn scroll={scroll} visibity={LeftBtnVis} />
-      <Container ref={scrollRef}>
-        {results.map((val, index) => {
-          const varient = val.name ? "tv" : "movie";
-          if (val.poster_path !== null && val.poster_path !== "") {
-            return (
-              <MovieBox
-                key={index}
-                id={val.id}
-                posterPath={val.poster_path}
-                varient={varient}
-              />
-            );
+      <HorizontalScrollBtnWrapper item={
+        <>
+          {
+            results.map((val, index) => {
+              const varient = val.name ? "tv" : "movie";
+              if (val.poster_path !== null && val.poster_path !== "") {
+                return (
+                  <MovieBox
+                    key={index}
+                    id={val.id}
+                    posterPath={val.poster_path}
+                    varient={varient}
+                  />
+                );
+              }
+              return null;
+            })
           }
-          return null;
-        })}
-      </Container>
+        </>
+      } />
     </Root>
   );
 }
@@ -96,14 +64,4 @@ const Title = styled(Typography)(({ theme }) => ({
   [theme.breakpoints.up("lg")]: {
     fontSize: "1.875rem",
   },
-}));
-
-const Container = styled(Box)(({ theme }) => ({
-  overflowX: "auto",
-  display: "flex",
-  scrollBehavior: "smooth",
-  "::-webkit-scrollbar": {
-    height: "0.5rem",
-  },
-  flexWrap: "nowrap",
 }));
