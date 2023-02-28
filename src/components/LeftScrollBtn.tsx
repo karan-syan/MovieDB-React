@@ -29,7 +29,9 @@ const LeftBtnWrapper = styled(Box)(() => ({
   left: "0em",
 }));
 const LeftBtn = styled(Button)(({ theme }) => ({
-  background: theme.palette.primary.main,
+  backgroundColor: "transparent",
+  backdropFilter: "blur(2px) brightness(60%)",
+  transition: "all 200ms",
   borderRadius: "10em",
   display: "flex",
   justifyContent: "Center",
@@ -39,7 +41,8 @@ const LeftBtn = styled(Button)(({ theme }) => ({
   size: "small",
   border: "none",
   "&:hover": {
-    background: theme.palette.secondary.main,
+    backgroundColor: "transparent",
+    backdropFilter: "blur(2px) brightness(50%)",
   },
   boxShadow: "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)",
 }));
