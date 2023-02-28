@@ -1,5 +1,6 @@
 import { Box, styled, Typography } from "@mui/material";
 import { MOVIE_DB_IMG_URL } from "../utils/url";
+import HorizontalScrollBtnWrapper from "./HorizontalScrollBtnWrapper";
 interface network {
   id: number;
   name: string;
@@ -11,23 +12,28 @@ export default function NetworkList({ item }: { item: network[] }) {
   return (
     <Root>
       <Title>Networks:</Title>
-      <Container>
-        {item.map((item, index) => {
-          return (
-            <Wrapper key={index}>
-              <img src={MOVIE_DB_IMG_URL + item.logo_path} alt="NetworkIcon" />
-              <Typography textAlign={"center"}>{item.name}</Typography>
-            </Wrapper>
-          );
-        })}
-      </Container>
+      <HorizontalScrollBtnWrapper alignItem="end" item={
+        <>
+          {item.map((item, index) => {
+            return (
+              <Wrapper key={index}>
+                <img src={MOVIE_DB_IMG_URL + item.logo_path} alt="NetworkIcon" />
+                <Typography textAlign={"center"}>{item.name}</Typography>
+              </Wrapper>
+            );
+          })}
+        </>
+      } />
     </Root>
   );
 }
 
 const Root = styled(Box)(() => ({
-  marginTop: "0.5rem",
   width: "100%",
+  marginTop: "0.5rem",
+  position: "relative",
+  display: "flex",
+  flexDirection: "column"
 }));
 const Title = styled(Typography)(() => ({
   marginLeft: "0.5rem",
@@ -42,15 +48,4 @@ const Wrapper = styled(Box)(() => ({
   flexShrink: "0",
   height: "20%",
 }));
-const Container = styled(Box)(() => ({
-  marginLeft: "0.5rem",
-  marginRight: "0.5rem",
-  opacity: "0.7",
-  fontSize: "0.875rem",
-  display: "flex",
-  overflow: "auto",
-  alignItems: "flex-end",
-  "::-webkit-scrollbar": {
-    height: "0.5rem",
-  },
-}));
+

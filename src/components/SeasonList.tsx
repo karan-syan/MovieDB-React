@@ -22,25 +22,27 @@ export default function SeasonList({
   return (
     <Root>
       <Title>Seasons:</Title>
-      <HorizontalScrollBtnWrapper item={
-        <>
-          {item.map((item, index) => (
-            <Wrapper key={index}>
-              <ImgWrapper>
-                <Img alt="" src={`${MOVIE_DB_IMG_URL}${item.poster_path}`} />
-              </ImgWrapper>
-              <TextWrapper>
-                <Typography>Name: {item.name}</Typography>
-                <Typography>Season: {item.season_number}</Typography>
-                <Typography>Total Episodes: {item.episode_count}</Typography>
-                <PremieredText>
-                  {item.name} of {TvName} premiered on {item.air_date}
-                </PremieredText>
-              </TextWrapper>
-            </Wrapper>
-          ))}
-        </>
-      } />
+      <HorizontalScrollBtnWrapper
+        alignItem="stretch"
+        item={
+          <>
+            {item.map((item, index) => (
+              <Wrapper key={index}>
+                <ImgWrapper>
+                  <Img alt="" src={`${MOVIE_DB_IMG_URL}${item.poster_path}`} />
+                </ImgWrapper>
+                <TextWrapper>
+                  <Typography>Name: {item.name}</Typography>
+                  <Typography>Season: {item.season_number}</Typography>
+                  <Typography>Total Episodes: {item.episode_count}</Typography>
+                  <PremieredText>
+                    {item.name} of {TvName} premiered on {item.air_date}
+                  </PremieredText>
+                </TextWrapper>
+              </Wrapper>
+            ))}
+          </>
+        } />
     </Root>
   );
 }
@@ -70,17 +72,6 @@ const Wrapper = styled(Box)(() => ({
   width: "100%",
   margin: "0",
   alignItems: "center",
-}));
-const Container = styled(Box)(() => ({
-  marginRight: "0.5rem",
-  marginLeft: "0.5rem",
-  display: "flex",
-  scrollSnapType: "x mandatory",
-  overflow: "auto",
-  flexWrap: "nowrap",
-  "::-webkit-scrollbar": {
-    height: "0.5rem",
-  },
 }));
 
 const ImgWrapper = styled(Box)(({ theme }) => ({

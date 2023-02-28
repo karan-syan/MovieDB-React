@@ -39,7 +39,7 @@ export default function PeopleDetails() {
   return (
     <>
       {personDetails.loading ? (
-        <BarLoader color="#36d7b7" />
+        <BarLoader color="#36d7b7" style={{ width: "100%" }} />
       ) : (
         <Root backdropPath={profile_path}>
           <Container>

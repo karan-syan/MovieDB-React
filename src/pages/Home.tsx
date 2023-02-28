@@ -25,7 +25,7 @@ export default function Home() {
   return (
     <>
       {TvRecommend.loading && CrouselSlider.loading ? (
-        <BarLoader color="#36d7b7" />
+        <BarLoader color="#36d7b7" style={{ width: "100%" }} />
       ) : (
         <Wrapper>
           <Crousel item={CrouselSlider.Data} />

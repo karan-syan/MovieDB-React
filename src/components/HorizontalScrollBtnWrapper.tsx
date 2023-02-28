@@ -4,8 +4,9 @@ import { LeftScrollBtn } from "./LeftScrollBtn";
 import { RightScrollBtn } from "./RightScrollBtn";
 interface Props {
     item: JSX.Element;
+    alignItem: "end" | "stretch";
 }
-function HorizontalScrollBtnWrapper({ item }: Props) {
+function HorizontalScrollBtnWrapper({ item, alignItem }: Props) {
     const scrollRef = useRef<HTMLDivElement | null>(null);
     const [rightBtnVis, SetRightBtnVis] = useState<boolean>(true);
     const [scrollLeft, SetScrollLeft] = useState<number>(0);
@@ -31,6 +32,7 @@ function HorizontalScrollBtnWrapper({ item }: Props) {
                 scrollRef.current.offsetWidth + scrollLeft + 2
             ) {
                 SetRightBtnVis(false);
+                scrollLeft ? SetLeftBtnVis(true) : SetLeftBtnVis(false);
             } else {
                 SetRightBtnVis(true);
                 scrollLeft ? SetLeftBtnVis(true) : SetLeftBtnVis(false);
@@ -42,7 +44,7 @@ function HorizontalScrollBtnWrapper({ item }: Props) {
         <>
             <RightScrollBtn scroll={scroll} visibity={rightBtnVis} />
             <LeftScrollBtn scroll={scroll} visibity={LeftBtnVis} />
-            <Container ref={scrollRef}>
+            <Container ref={scrollRef} sx={{ alignItems: alignItem }}>
                 {item}
             </Container>
         </>
@@ -54,7 +56,7 @@ const Container = styled(Box)(({ theme }) => ({
     display: "flex",
     scrollBehavior: "smooth",
     "::-webkit-scrollbar": {
-        height: "0.5rem",
+        height: "0",
     },
     flexWrap: "nowrap",
 }));

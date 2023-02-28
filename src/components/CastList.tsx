@@ -10,6 +10,7 @@ export default function CastList({ data }: { data: ICast[] }) {
     <Root>
       <Title>Casts:</Title>
       <HorizontalScrollBtnWrapper
+        alignItem="stretch"
         item={
           <>
             {

@@ -15,26 +15,28 @@ export default function ListRow({ item, title }: Props) {
           <Title>{title}</Title>
         </TitleWrapper>
       )}
-      <HorizontalScrollBtnWrapper item={
-        <>
-          {
-            results.map((val, index) => {
-              const varient = val.name ? "tv" : "movie";
-              if (val.poster_path !== null && val.poster_path !== "") {
-                return (
-                  <MovieBox
-                    key={index}
-                    id={val.id}
-                    posterPath={val.poster_path}
-                    varient={varient}
-                  />
-                );
-              }
-              return null;
-            })
-          }
-        </>
-      } />
+      <HorizontalScrollBtnWrapper
+        alignItem="stretch"
+        item={
+          <>
+            {
+              results.map((val, index) => {
+                const varient = val.name ? "tv" : "movie";
+                if (val.poster_path !== null && val.poster_path !== "") {
+                  return (
+                    <MovieBox
+                      key={index}
+                      id={val.id}
+                      posterPath={val.poster_path}
+                      varient={varient}
+                    />
+                  );
+                }
+                return null;
+              })
+            }
+          </>
+        } />
     </Root>
   );
 }
