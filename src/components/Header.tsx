@@ -11,13 +11,13 @@ import {
   Box,
   Button,
   Divider,
+  Drawer,
   InputBase,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   styled,
-  SwipeableDrawer,
   useTheme,
 } from "@mui/material";
 
@@ -72,7 +72,9 @@ export default function Header() {
   return (
     <Root>
       <MenuContainer>
-        <MenuIcon onClick={() => setState((prev) => !prev)} />
+        <MenuIcon onClick={() => setState((prev) => !prev)} sx={{
+          paddingLeft: "0.5rem",
+        }} />
         <Name />
       </MenuContainer>
       <Box sx={{ display: "flex" }}>
@@ -104,8 +106,7 @@ export default function Header() {
           <SearchIcon />
         </SearchContainer>
       </Box>
-      <SwipeableDrawer
-        onOpen={() => setState(true)}
+      <Drawer
         anchor={"left"}
         transitionDuration={{
           enter: 400,
@@ -168,7 +169,7 @@ export default function Header() {
             );
           })}
         </List>
-      </SwipeableDrawer>
+      </Drawer>
     </Root>
   );
 }
@@ -177,8 +178,6 @@ const Root = styled(Box)(({ theme }) => ({
   display: "flex",
   alignItems: "center",
   width: "100%",
-  paddingLeft: "0.75rem",
-  paddingRight: "0.75rem",
   fontWeight: "800",
   justifyContent: "space-between",
   boxShadow: "0 0 10px #000",
@@ -188,7 +187,6 @@ const Root = styled(Box)(({ theme }) => ({
 
 const MenuContainer = styled(Box)(() => ({
   cursor: "pointer",
-  marginLeft: "0.5rem",
   fontSize: "1.875rem",
   alignItems: "center",
   justifyContent: "center",
@@ -199,7 +197,7 @@ const SearchContainer = styled(Box)(() => ({
   justifyContent: "center",
   display: "flex",
   cursor: "pointer",
-  padding: "0,5rem",
+  padding: "0 0.5rem",
   fontSize: "1.875rem",
 }));
 const UserProfile = styled(Box)(({ theme }) => ({

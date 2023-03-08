@@ -21,7 +21,7 @@ export const RightScrollBtn = ({ scroll, visibity }: Props) => {
 
 const RightBtnWrapper = styled(Box)(() => ({
   height: "100%",
-  zIndex: "4",
+  zIndex: "2",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",

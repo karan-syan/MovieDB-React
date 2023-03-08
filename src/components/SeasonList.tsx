@@ -54,9 +54,11 @@ const Root = styled(Box)(() => ({
   display: "flex",
   flexDirection: "column"
 }));
-const Img = styled("img")(() => ({
-  objectFit: "fill",
+const Img = styled("img")(({ theme }) => ({
+  width: "100%",
   borderRadius: "10px",
+  objectFit: "cover",
+  height: "100%",
 }));
 const Title = styled(Typography)(() => ({
   marginLeft: "0.5rem",

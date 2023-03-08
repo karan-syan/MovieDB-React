@@ -1,8 +1,8 @@
+import AccessTimeFilledIcon from '@mui/icons-material/AccessTimeFilled';
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import BookmarkAddIcon from '@mui/icons-material/BookmarkAdd';
 import { Box, Button, styled, Typography } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
-import { BsBookmarkHeartFill } from "react-icons/bs";
-import { IoTime } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { BarLoader } from "react-spinners";
@@ -16,7 +16,7 @@ import SeasonList from "../components/SeasonList";
 import {
   addWatchListData,
   checkWatchListData,
-  removeWatchListData,
+  removeWatchListData
 } from "../firebase/watchListData";
 import { ApplicationState } from "../redux/root/rootReducer";
 import { DetailDispatch } from "../utils/CallDispatch";
@@ -106,21 +106,21 @@ export default function Detail(props: Props) {
             <ContentWrapper ref={elementForScroll}>
               <Title>{name || title}</Title>
               <TagLine>{tagline}</TagLine>
-              <h1 className="text-sm md:text-base opacity-70">
-                {original_language} | {status} |{" "}
+              <ExtraDetail>
+                {original_language} | {status} |
                 {first_air_date || release_date}
-              </h1>
-              <h1 className="text-sm md:text-base opacity-70 flex items-center">
-                Ep {number_of_episodes} |
-                <IoTime className="mx-1" />
-                {episode_run_time || runtime} min | {vote_average} | {type}
-              </h1>
+              </ExtraDetail>
+              <ExtraDetail >
+                {number_of_episodes && `Ep ${number_of_episodes} |`}
+                <AccessTimeFilledIcon sx={{ marginInline: "0.25rem" }} />
+                {episode_run_time || runtime} min | {vote_average}  {type && `| ${type}`}
+              </ExtraDetail>
               <WatchlistButton
                 variant="contained"
                 onClick={handleWatchListBtnClick}
               >
                 WatchList &nbsp;
-                {watchListBtn ? <BookmarkAddedIcon /> : <BsBookmarkHeartFill />}
+                {watchListBtn ? <BookmarkAddedIcon /> : <BookmarkAddIcon />}
               </WatchlistButton>
               <Box sx={{ width: "100%" }}>
                 <Context title="Synopsis" subtitle={overview} />
@@ -251,8 +251,17 @@ const Recommendation = styled(Box)(({ theme }) => ({
   width: "100%",
   marginTop: "0.5rem",
 }));
+
 const Heading = styled(Typography)(({ theme }) => ({
   fontSize: "1.125rem",
   marginLeft: "0.5rem",
   marginri: "0.5rem",
+}));
+const ExtraDetail = styled(Typography)(({ theme }) => ({
+  fontSize: "0.875rem",
+  opacity: "0.7",
+  [theme.breakpoints.up("md")]: {
+    fontSize: "1rem",
+
+  }
 }));

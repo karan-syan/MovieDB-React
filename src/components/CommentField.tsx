@@ -102,6 +102,7 @@ const InputField = styled("input")(() => ({
   color: "white",
   margin: "0.5rem",
   width: "100%",
+  border: "none",
   background: "none",
   outline: "none",
   padding: "0.5rem 0",

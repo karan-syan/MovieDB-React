@@ -11,14 +11,15 @@ export default function PosterCard({ Poster_Path }: { Poster_Path: string }) {
 }
 
 const Root = styled(Box)(({ theme }) => ({
-  width: "100%",
-  [theme.breakpoints.up("md")]: {
-    width: "25%",
+  width: "25%",
+  [theme.breakpoints.down("md")]: {
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
   },
 }));
 const Img = styled("img")(({ theme }) => ({
   width: "50%",
-  margin: "0 auto",
   marginTop: "2rem",
   borderRadius: "0.75rem",
   filter: "drop-shadow(0 0 0.75rem #000)",

@@ -10,6 +10,7 @@ const ScroolToTopButton = () => {
     width: "4rem",
     height: "4rem",
     padding: "10px",
+    color: "#fff",
     borderRadius: "100px",
     alignItems: "center",
     backgroundColor: theme.palette.primary.main,

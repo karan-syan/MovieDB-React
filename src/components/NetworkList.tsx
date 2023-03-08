@@ -17,7 +17,7 @@ export default function NetworkList({ item }: { item: network[] }) {
           {item.map((item, index) => {
             return (
               <Wrapper key={index}>
-                <img src={MOVIE_DB_IMG_URL + item.logo_path} alt="NetworkIcon" />
+                <Img src={MOVIE_DB_IMG_URL + item.logo_path} alt="NetworkIcon" />
                 <Typography textAlign={"center"}>{item.name}</Typography>
               </Wrapper>
             );
@@ -41,11 +41,15 @@ const Title = styled(Typography)(() => ({
   fontSize: "1.125rem",
 }));
 const Wrapper = styled(Box)(() => ({
-  borderRadius: "9999px",
   marginLeft: "0.5rem",
   marginRight: "0.5rem",
   width: "20%",
-  flexShrink: "0",
+  overflow: "hidden",
   height: "20%",
 }));
 
+const Img = styled("img")(({ theme }) => ({
+  width: "100%",
+  objectFit: "cover",
+  height: "100%",
+}));
