@@ -36,13 +36,10 @@ export default function ButtonGroup(props: Props) {
 const Root = styled(Box)(({ theme }) => ({
   display: "inline-flex",
   justifyContent: "center",
+  alignItems: "center",
   width: "100%",
   paddingTop: "3px",
   paddingBottom: "3px",
-  [theme.breakpoints.up("sm")]: {
-    paddingLeft: "20%",
-    paddingRight: "20%",
-  },
 }));
 const TabButton = styled(Button)<{ buttontype: boolean }>(
   ({ theme, buttontype }) => ({
